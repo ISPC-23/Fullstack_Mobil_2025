@@ -1,15 +1,15 @@
-#built application files
+# Built application files
 *.apk
 *.ap_
 *.aab
 
-# files for the dex VM
+# Files for the dex VM
 *.dex
 
 # Java class files
 *.class
 
-# generated files
+# Generated files
 bin/
 gen/
 
@@ -24,14 +24,25 @@ Thumbs.db
 
 # Android Studio
 *.iml
-.idea
-#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
-.gradle
+.idea/
+.gradle/
 build/
 .navigation
 captures/
 output.json
 
-#NDK
+# NDK
 obj/
 .externalNativeBuild
+
+# Keystore files (important for release signing)
+*.keystore
+
+# Gradle files
+/gradle-wrapper.jar
+/gradle/wrapper/
+
+# Miscellaneous
+*.log
+*.swp
+*.tmp
