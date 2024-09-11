@@ -46,3 +46,5 @@ obj/
 *.log
 *.swp
 *.tmp
+
+gradle/caches/
