@@ -1,4 +1,4 @@
-package com.example.tiendafull.UI;
+package com.example.tiendafull.UI.UI;
 
 import android.os.Bundle;
 
