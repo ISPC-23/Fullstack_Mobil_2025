@@ -9,10 +9,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tiendafull.R;
+import com.example.tiendafull.UI.Adapter.AdaptadorProducto;
+import com.example.tiendafull.UI.Data.Data;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private AdaptadorProducto adaptadorProducto;
 
 
     @Override
@@ -25,11 +32,17 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        recyclerView=findViewById(R.id.rv1);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adaptadorProducto= new AdaptadorProducto();
+        recyclerView.setAdapter(adaptadorProducto);
+        Data.initializeProducts();
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menudeopciones,menu);
-        return true;
-    }
+
+
 }
