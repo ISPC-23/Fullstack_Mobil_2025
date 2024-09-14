@@ -1,12 +1,15 @@
-package com.example.tiendafull;
+package com.example.tiendafull.UI.UI;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.tiendafull.R;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -20,5 +23,9 @@ public class DetailActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void retornar(View v){
+        finish();
     }
 }

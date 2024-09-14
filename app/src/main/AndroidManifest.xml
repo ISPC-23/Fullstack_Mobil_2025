@@ -13,7 +13,7 @@
         android:theme="@style/Theme.TiendaFull"
         tools:targetApi="31">
         <activity
-            android:name=".DetailActivity"
+            android:name=".UI.UI.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".UI.UI.login"
