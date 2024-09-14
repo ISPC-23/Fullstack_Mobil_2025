@@ -10,6 +10,18 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tiendafull.R;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 public class ContactActivity extends AppCompatActivity {
 
     @Override
@@ -23,13 +35,14 @@ public class ContactActivity extends AppCompatActivity {
             return insets;
         });
     }
+
     private String getGeocodingUrl(String address) {
         String apiKey = "TU_API_KEY_DE_GOOGLE";
         return "https://maps.googleapis.com/maps/api/geocode/json?address=" +
                 address.replace(" ", "+") + "&key=" + apiKey;
     }
 
-    private void getCoordinates(String address, Callback callback) {
+    private void getCoordinates(String address, GeocodingCallback callback) {
         OkHttpClient client = new OkHttpClient();
         String url = getGeocodingUrl(address);
         Request request = new Request.Builder()
@@ -40,9 +53,9 @@ public class ContactActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
             }
+
             @Override
-            public void onResponse(Call call, Response response) throws
-                    IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
                     try {
@@ -63,7 +76,9 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
     }
-    interface Callback {
+
+    // Renombra tu interfaz personalizada para evitar conflicto con Callback de OkHttp
+    interface GeocodingCallback {
         void onCoordinatesReceived(double lat, double lng);
     }
 }
