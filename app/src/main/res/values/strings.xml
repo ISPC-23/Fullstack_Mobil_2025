@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Tienda Full</string>
+    <string name="logo_description">Logo Tienda Full</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="recuerdame">Recuérdame</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="sin_cuenta">Si no tienes cuenta,</string>
+    <string name="registrate">regístrate</string>
+    <string name="recuperar_contraseña">Recuperar contraseña</string>
+    <string name="productos">Nuestros Productos</string>
+
 </resources>
