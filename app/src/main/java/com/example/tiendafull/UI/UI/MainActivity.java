@@ -5,8 +5,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.AdaptadorProducto;
 import com.example.tiendafull.UI.Data.Data;
-import com.example.tiendafull.UI.UI.ContactActivity;
-import com.example.tiendafull.UI.UI.DetailActivity;
-import com.example.tiendafull.UI.UI.login;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                                                  item) {
         int nro = item.getItemId();
         if (nro == R.id.entrar) {
-            startActivity(new Intent(this, login.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, LoginActivity.class)); // Assuming LoginActivity exists
             return true;
         } else if (nro == R.id.productos) {
             // Already in MainActivity, no need for intent
