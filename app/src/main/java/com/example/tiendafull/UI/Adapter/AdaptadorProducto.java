@@ -43,8 +43,8 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
 
         public void imprimir(int position) {
             tv1.setText("Nombre: "+Data.products.get(position).getModelo());
-            tv1.setText("Descripcion: "+Data.products.get(position).getDetalle());
-            tv1.setText("Precio: "+Data.products.get(position).getPrecio());
+            tv2.setText("Descripcion: "+Data.products.get(position).getDetalle());
+            tv3.setText("Precio: "+Data.products.get(position).getPrecio());
             iv1.setImageResource(Data.products.get(position).getImagen());
         }
     }
