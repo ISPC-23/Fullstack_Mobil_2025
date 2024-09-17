@@ -44,9 +44,4 @@ public class MainActivity extends AppCompatActivity {
         Data.initializeProducts();
 
     }
-
-    public void irAlDetalle(View v){
-        Intent intento = new Intent(this, DetailActivity.class);
-        startActivity(intento);
-    }
 }
