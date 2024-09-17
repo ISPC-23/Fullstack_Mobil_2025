@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
     public void irAlDetalle(View v) {
         Intent intento = new Intent(this, DetailActivity.class);
         startActivity(intento);
