@@ -106,7 +106,7 @@ public class DetailActivity extends AppCompatActivity {
         if (this.getClass().equals(LoginActivity.class)) {
             loginItem.setVisible(false);
         }
-        if (this.getClass().equals(MainActivity.class)) {
+        if (this.getClass().equals(MainActivity.class) || this.getClass().equals(DetailActivity.class)) {
             productoItem.setVisible(false);
         }
         if (this.getClass().equals(ContactActivity.class)) {

@@ -20,7 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".UI.UI.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name=".UI.UI.MainActivity"
             android:exported="true">

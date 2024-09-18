@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
             return true;
         } else if (nro == R.id.productos) {
-            startActivity(new Intent(this, MainActivity.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, MainActivity.class));
             return true;
         } else if (nro == R.id.contacto) {
-            startActivity(new Intent(this, ContactActivity.class)); // Assuming ContactActivity exists
+            startActivity(new Intent(this, ContactActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
