@@ -75,8 +75,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem
-                                                 item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int nro = item.getItemId();
         if (nro == R.id.entrar) {
             startActivity(new Intent(this, LoginActivity.class));
