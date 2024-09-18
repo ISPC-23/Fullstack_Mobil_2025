@@ -38,11 +38,11 @@ public class DetailActivity extends AppCompatActivity {
         String marca = getIntent().getStringExtra("marca");
         String estilo = getIntent().getStringExtra("estilo");
         String color = getIntent().getStringExtra("color");
-        int rodado = getIntent().getIntExtra("rodado", 0);  // int para el rodado
+        int rodado = getIntent().getIntExtra("rodado", 0);
         String descripcion = getIntent().getStringExtra("descripcion");
-        // int imagen = getIntent().getIntExtra("imagen", R.drawable.default_image);
+        int imagen = getIntent().getIntExtra("imagen", R.drawable.bici4);
 
-        // ImageView imgView = findViewById(R.id.img);
+        ImageView imgView = findViewById(R.id.img);
         TextView titleTextView = findViewById(R.id.title);
         TextView priceTextView = findViewById(R.id.price);
         TextView materialTextView = findViewById(R.id.tv1);
@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         TextView detailTextView = findViewById(R.id.detail);
 
 
-        // imgView.setImageResource(imagen);
+        imgView.setImageResource(imagen);
         titleTextView.setText(nombre);
         priceTextView.setText("$" + String.valueOf(precio));
         materialTextView.setText(material);
@@ -79,18 +79,18 @@ public class DetailActivity extends AppCompatActivity {
                                                  item) {
         int nro = item.getItemId();
         if (nro == R.id.entrar) {
-            startActivity(new Intent(this, LoginActivity.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, LoginActivity.class));
             return true;
         } else if (nro == R.id.productos) {
-            // Already in MainActivity, no need for intent
             return true;
         } else if (nro == R.id.contacto) {
-            startActivity(new Intent(this, ContactActivity.class)); // Assuming ContactActivity exists
+            startActivity(new Intent(this, ContactActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
@@ -98,11 +98,10 @@ public class DetailActivity extends AppCompatActivity {
         MenuItem productoItem = menu.findItem(R.id.productos);
         MenuItem contactoItem = menu.findItem(R.id.contacto);
 
-        // Hago visible todas las opciones
         loginItem.setVisible(true);
         productoItem.setVisible(true);
         contactoItem.setVisible(true);
-        // hago bno visible la opcion donde me encuentro parado
+
         if (this.getClass().equals(LoginActivity.class)) {
             loginItem.setVisible(false);
         }
