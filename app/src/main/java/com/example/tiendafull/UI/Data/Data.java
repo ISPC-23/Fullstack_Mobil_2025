@@ -6,18 +6,16 @@ import java.util.ArrayList;
 
 public class Data {
 
-    // Lista de productos
     public static ArrayList<Products> products = new ArrayList<>();
 
-    // Método para inicializar productos
     public static void initializeProducts() {
         products.add(new Products(
-                "Mountain Bike X1",
-                500.99,
-                10,
+                "Frida",
+                349999,
+                24,
                 R.drawable.bici1,
-                "Una bicicleta de montaña de alto rendimiento",
-                "Marca X",
+                "Frida viene a revolucionar el mercado del entry level, con su cómodo cuadro podrás...",
+                "Venzo",
                 29,
                 "Mountain",
                 "Aluminio",
@@ -25,41 +23,41 @@ public class Data {
         ));
 
         products.add(new Products(
-                "Road Bike R2",
-                750.49,
-                5,
+                "Wave",
+                300000,
+                105,
                 R.drawable.bici2,
-                "Bicicleta de carretera ligera",
-                "Marca Y",
-                28,
-                "Road",
+                "Bicicleta de montaña ligera ideal para quien comienza en la aventura",
+                "Oxea",
+                26,
+                "Mountain",
                 "Carbono",
                 "Negro"
         ));
 
         products.add(new Products(
-                "BMX Freestyle",
-                300.00,
+                "Raptor",
+                790000,
                 15,
                 R.drawable.bici3,
-                "Ideal para trucos y saltos",
-                "Marca Z",
-                20,
-                "BMX",
+                "La bicicleta está equipada con un cuadro Venzo Raptor EXO de aluminio 6061, que proporciona una excelente combinación de ligereza y resistencia.",
+                "Venzo",
+                29,
+                "Mountain",
                 "Acero",
                 "Azul"
         ));
 
         products.add(new Products(
-                "Bicicleta Urbana",
-                450.00,
+                "Tarmac SL7",
+                4300000,
                 8,
                 R.drawable.bici4,
-                "Perfecta para desplazarse por la ciudad",
-                "Marca W",
-                26,
-                "Urbana",
-                "Aluminio",
+                " Bicicletas de carretera de rendimiento probado en campeonatos para profesionales, principiantes y todos los demás",
+                "Specialized",
+                29,
+                "Carretera",
+                "Carbono",
                 "Verde"
         ));
     }
