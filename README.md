@@ -22,7 +22,7 @@ El backend de la aplicación está desplegado utilizando Django y se conecta a u
 
 Este proyecto es la evolución del desarrollo previo realizado en Angular y Django, manteniendo la API y backend ya implementados.
 
-![image](https://github.com/ISPC-23/FullStack2023/assets/132081100/29c5e580-8044-4560-8a41-f70178a0cc54)
+![image](https://github.com/user-attachments/assets/6c710e2c-8cf1-481d-96c1-5695814ae9f7)
 
 ## 🛠 Instalación y ejecución
 
