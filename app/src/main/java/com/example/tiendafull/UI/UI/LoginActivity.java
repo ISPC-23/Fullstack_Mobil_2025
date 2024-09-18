@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
             return true;
         } else if (nro == R.id.productos) {
-            startActivity(new Intent(this, MainActivity.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, MainActivity.class));
             return true;
         } else if (nro == R.id.contacto) {
-            startActivity(new Intent(this, ContactActivity.class)); // Assuming ContactActivity exists
+            startActivity(new Intent(this, ContactActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -57,11 +57,11 @@ public class LoginActivity extends AppCompatActivity {
         MenuItem productoItem = menu.findItem(R.id.productos);
         MenuItem contactoItem = menu.findItem(R.id.contacto);
 
-        // Hago visible todas las opciones
+
         loginItem.setVisible(true);
         productoItem.setVisible(true);
         contactoItem.setVisible(true);
-        // hago bno visible la opcion donde me encuentro parado
+
         if (this.getClass().equals(LoginActivity.class)) {
             loginItem.setVisible(false);
         }

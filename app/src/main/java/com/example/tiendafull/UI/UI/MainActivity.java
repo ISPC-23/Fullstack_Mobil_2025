@@ -78,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
         MenuItem productoItem = menu.findItem(R.id.productos);
         MenuItem contactoItem = menu.findItem(R.id.contacto);
 
-        // Hago visible todas las opciones
+
         loginItem.setVisible(true);
         productoItem.setVisible(true);
         contactoItem.setVisible(true);
-        // hago bno visible la opcion donde me encuentro parado
+
         if (this.getClass().equals(LoginActivity.class)) {
             loginItem.setVisible(false);
         }
@@ -93,10 +93,5 @@ public class MainActivity extends AppCompatActivity {
             contactoItem.setVisible(false);
         }
         return true;
-    }
-
-    public void irAlDetalle(View v) {
-        Intent intento = new Intent(this, DetailActivity.class);
-        startActivity(intento);
     }
 }
