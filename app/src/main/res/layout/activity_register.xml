@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
             android:backgroundTint="@color/blue_dark"
-            android:text="@string/registrarse" />
+            android:text="@string/registrate" />
 
         <LinearLayout
             android:layout_width="wrap_content"
