@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="
-http://schemas.android.com/apk/res/android
-"
-    xmlns:app="
-http://schemas.android.com/apk/res-auto
-"
-    xmlns:tools="
-http://schemas.android.com/tools
-"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,7 +14,7 @@ http://schemas.android.com/tools
         android:layout_height="wrap_content"
         android:contentDescription="@string/logo_description"
         app:layout_constraintTop_toTopOf="parent"
-        app😒rcCompat="@drawable/logo_tienda_login" />
+        app:srcCompat="@drawable/logo_tienda_login" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -40,10 +34,10 @@ http://schemas.android.com/tools
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Nombre"
-        android😛adding="12dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -52,10 +46,10 @@ http://schemas.android.com/tools
         android:layout_marginTop="16dp"
         android:hint="Correo Electrónico"
         android:inputType="textEmailAddress"
-        android😛adding="12dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/editTextName" />
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextName" />
 
     <EditText
         android:id="@+id/editTextTextMultiLine"
@@ -79,23 +73,23 @@ http://schemas.android.com/tools
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="32dp"
-        android😛adding="12dp"
-    android:text="Enviar"
-    app:layout_constraintBottom_toTopOf="@+id/imageButton"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        android:padding="12dp"
+        android:text="Enviar"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="488dp"
         android:layout_height="534dp"
         android:layout_marginTop="32dp"
-        android😒rc="@drawable/img"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.506"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/buttonSend" />
+        android:src="@drawable/img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonSend" />
 
     <WebView
         android:id="@+id/webView"
