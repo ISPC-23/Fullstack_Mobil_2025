@@ -38,10 +38,6 @@ obj/
 # Keystore files (important for release signing)
 *.keystore
 
-# Gradle files
-/gradle-wrapper.jar
-/gradle/wrapper/
-
 # Miscellaneous
 *.log
 *.swp
