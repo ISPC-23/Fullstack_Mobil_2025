@@ -81,7 +81,6 @@ public class ContactActivity extends AppCompatActivity {
         });
     }
 
-    // Renombra tu interfaz personalizada para evitar conflicto con Callback de OkHttp
     interface GeocodingCallback {
         void onCoordinatesReceived(double lat, double lng);
     }
@@ -96,10 +95,10 @@ public class ContactActivity extends AppCompatActivity {
                                                  item) {
         int nro = item.getItemId();
         if (nro == R.id.entrar) {
-            startActivity(new Intent(this, LoginActivity.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, LoginActivity.class));
             return true;
         } else if (nro == R.id.productos) {
-            startActivity(new Intent(this, MainActivity.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, MainActivity.class));
             return true;
         } else if (nro == R.id.contacto) {
             return true;

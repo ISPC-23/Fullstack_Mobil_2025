@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -27,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menudeopciones, menu);
@@ -50,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
@@ -74,4 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    public void irARegistrarse(View v){
+        Intent intento = new Intent(this, RegisterActivity.class);
+        startActivity(intento);
+    }
 }

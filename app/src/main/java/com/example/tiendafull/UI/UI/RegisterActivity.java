@@ -35,7 +35,6 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Inicializar vistas
         etName = findViewById(R.id.et_name);
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
@@ -43,11 +42,10 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btn_register);
         tvLogin = findViewById(R.id.tv_login);
 
-        // Acción del botón de registro
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Validar entradas
+
                 String name = etName.getText().toString().trim();
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
@@ -58,9 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (!password.equals(confirmPassword)) {
                     Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Aquí podrías agregar la lógica de registro (API o Base de datos)
                     Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                    // Redirigir a la actividad de inicio de sesión después del registro exitoso
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -68,11 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // Acción del enlace para iniciar sesión
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Redirigir a la actividad de inicio de sesión
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -91,13 +85,12 @@ public class RegisterActivity extends AppCompatActivity {
                                                  item) {
         int nro = item.getItemId();
         if (nro == R.id.entrar) {
-            startActivity(new Intent(this, LoginActivity.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, LoginActivity.class));
             return true;
         } else if (nro == R.id.productos) {
-            // Already in MainActivity, no need for intent
             return true;
         } else if (nro == R.id.contacto) {
-            startActivity(new Intent(this, ContactActivity.class)); // Assuming ContactActivity exists
+            startActivity(new Intent(this, ContactActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -127,4 +120,8 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
+    public void irALoguearse(View v){
+        Intent intento = new Intent(this, LoginActivity.class);
+        startActivity(intento);
+    }
 }

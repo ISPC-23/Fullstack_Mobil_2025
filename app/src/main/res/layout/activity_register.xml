@@ -85,12 +85,13 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="8dp"
-                android:padding="6dp"
                 android:layout_weight="1"
-                android:text="@string/iniciar_sesion"
-                android:textColor="@android:color/holo_blue_light"
                 android:clickable="true"
-                android:focusable="true" />
+                android:focusable="true"
+                android:onClick="irALoguearse"
+                android:padding="6dp"
+                android:text="@string/iniciar_sesion"
+                android:textColor="@android:color/holo_blue_light" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
