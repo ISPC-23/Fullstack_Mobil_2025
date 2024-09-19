@@ -1,15 +1,50 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Built application files
+*.apk
+*.ap_
+*.aab
+
+# Files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
 local.properties
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
+
+# Android Studio
+*.iml
+.idea/
+.gradle/
+build/
+.navigation
+captures/
+output.json
+
+# NDK
+obj/
+.externalNativeBuild
+
+# Keystore files (important for release signing)
+*.keystore
+
+# Gradle files
+/gradle-wrapper.jar
+/gradle/wrapper/
+
+# Miscellaneous
+*.log
+*.swp
+*.tmp
+
+gradle/caches/

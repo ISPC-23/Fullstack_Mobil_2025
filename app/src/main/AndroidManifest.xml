@@ -13,7 +13,23 @@
         android:theme="@style/Theme.TiendaFull"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".MainActivity"
+=======
+            android:name=".UI.UI.ContactActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UI.UI.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.UI.LoginActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".UI.UI.RegisterActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".UI.UI.MainActivity"
+>>>>>>> dev
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

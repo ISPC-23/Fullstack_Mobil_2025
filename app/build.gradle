@@ -26,12 +26,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '34.0.0'
 }
 
 dependencies {
 
     implementation libs.appcompat
     implementation libs.material
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation libs.activity
     implementation libs.constraintlayout
     testImplementation libs.junit
