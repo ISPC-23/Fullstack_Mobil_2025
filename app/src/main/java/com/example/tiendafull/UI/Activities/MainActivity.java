@@ -1,11 +1,9 @@
-package com.example.tiendafull.UI.UI;
+package com.example.tiendafull.UI.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -19,10 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.AdaptadorProducto;
-import com.example.tiendafull.UI.Data.Data;
-import com.example.tiendafull.UI.UI.ContactActivity;
-import com.example.tiendafull.UI.UI.DetailActivity;
-import com.example.tiendafull.UI.UI.login;
+import com.example.tiendafull.UI.Models.Data;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.tiendafull.UI.Data;
+package com.example.tiendafull.UI.Models;
 
 import com.example.tiendafull.R;
 

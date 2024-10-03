@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tiendafull.R;
-import com.example.tiendafull.UI.Data.Data;
+import com.example.tiendafull.UI.Models.Data;
 
 public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.AdaptadorProductHolder> {
     @NonNull
