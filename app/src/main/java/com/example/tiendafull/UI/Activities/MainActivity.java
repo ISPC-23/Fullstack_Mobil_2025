@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                                                  item) {
         int nro = item.getItemId();
         if (nro == R.id.entrar) {
-            startActivity(new Intent(this, login.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, LoginActivity.class)); // Assuming LoginActivity exists
             return true;
         } else if (nro == R.id.productos) {
             // Already in MainActivity, no need for intent

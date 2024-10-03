@@ -1,11 +1,9 @@
 package com.example.tiendafull.UI.Activities;
-
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.Menu;
@@ -20,53 +18,59 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tiendafull.R;
 
-public class DetailActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
+    private EditText etName, etEmail, etPassword, etConfirmPassword;
+    private Button btnRegister;
+    private TextView tvLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_register);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        String nombre = getIntent().getStringExtra("nombre");
-        double precio = getIntent().getDoubleExtra("precio", 0.0);
-        String material = getIntent().getStringExtra("material");
-        String marca = getIntent().getStringExtra("marca");
-        String estilo = getIntent().getStringExtra("estilo");
-        String color = getIntent().getStringExtra("color");
-        int rodado = getIntent().getIntExtra("rodado", 0);
-        String descripcion = getIntent().getStringExtra("descripcion");
-        int imagen = getIntent().getIntExtra("imagen", R.drawable.bici4);
+        etName = findViewById(R.id.et_name);
+        etEmail = findViewById(R.id.et_email);
+        etPassword = findViewById(R.id.et_password);
+        etConfirmPassword = findViewById(R.id.et_confirm_password);
+        btnRegister = findViewById(R.id.btn_register);
+        tvLogin = findViewById(R.id.tv_login);
 
-        ImageView imgView = findViewById(R.id.img);
-        TextView titleTextView = findViewById(R.id.title);
-        TextView priceTextView = findViewById(R.id.price);
-        TextView materialTextView = findViewById(R.id.tv1);
-        TextView marcaTextView = findViewById(R.id.tv2);
-        TextView estiloTextView = findViewById(R.id.tv3);
-        TextView colorTextView = findViewById(R.id.tv4);
-        TextView rodadoTextView = findViewById(R.id.tv5);
-        TextView detailTextView = findViewById(R.id.detail);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                String name = etName.getText().toString().trim();
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+                String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        imgView.setImageResource(imagen);
-        titleTextView.setText(nombre);
-        priceTextView.setText("$" + String.valueOf(precio));
-        materialTextView.setText(material);
-        marcaTextView.setText(marca);
-        estiloTextView.setText(estilo);
-        colorTextView.setText(color);
-        rodadoTextView.setText(String.valueOf(rodado));
-        detailTextView.setText(descripcion);
-    }
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Por favor complete todos los campos", Toast.LENGTH_SHORT).show();
+                } else if (!password.equals(confirmPassword)) {
+                    Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
 
-    public void retornar(View v){
-        finish();
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -76,7 +80,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem
+                                                 item) {
         int nro = item.getItemId();
         if (nro == R.id.entrar) {
             startActivity(new Intent(this, LoginActivity.class));
@@ -90,13 +95,13 @@ public class DetailActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem loginItem = menu.findItem(R.id.entrar);
         MenuItem productoItem = menu.findItem(R.id.productos);
         MenuItem contactoItem = menu.findItem(R.id.contacto);
+
 
         loginItem.setVisible(true);
         productoItem.setVisible(true);
@@ -105,12 +110,17 @@ public class DetailActivity extends AppCompatActivity {
         if (this.getClass().equals(LoginActivity.class)) {
             loginItem.setVisible(false);
         }
-        if (this.getClass().equals(MainActivity.class) || this.getClass().equals(DetailActivity.class)) {
+        if (this.getClass().equals(MainActivity.class)) {
             productoItem.setVisible(false);
         }
         if (this.getClass().equals(ContactActivity.class)) {
             contactoItem.setVisible(false);
         }
         return true;
+    }
+
+    public void irALoguearse(View v){
+        Intent intento = new Intent(this, LoginActivity.class);
+        startActivity(intento);
     }
 }
