@@ -59,13 +59,12 @@ public class MainActivity extends AppCompatActivity {
                                                  item) {
         int nro = item.getItemId();
         if (nro == R.id.entrar) {
-            startActivity(new Intent(this, LoginActivity.class)); // Assuming LoginActivity exists
+            startActivity(new Intent(this, LoginActivity.class));
             return true;
         } else if (nro == R.id.productos) {
-            // Already in MainActivity, no need for intent
             return true;
         } else if (nro == R.id.contacto) {
-            startActivity(new Intent(this, ContactActivity.class)); // Assuming ContactActivity exists
+            startActivity(new Intent(this, ContactActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);

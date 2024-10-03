@@ -9,5 +9,7 @@
     <string name="registrate">regístrate</string>
     <string name="recuperar_contraseña">Recuperar contraseña</string>
     <string name="productos">Nuestros Productos</string>
-
+    <string name="nombre_completo">Nombre Completo</string>
+    <string name="confirmar_contrasenia">Confirmar Contraseña</string>
+    <string name="ya_tienes_cuenta">Si ya tienes una cuenta</string>
 </resources>

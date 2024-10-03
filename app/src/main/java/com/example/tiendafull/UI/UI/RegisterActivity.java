@@ -1,7 +1,12 @@
 package com.example.tiendafull.UI.UI;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,76 +19,61 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tiendafull.R;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-public class ContactActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
+    private EditText etName, etEmail, etPassword, etConfirmPassword;
+    private Button btnRegister;
+    private TextView tvLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_contact);
+        setContentView(R.layout.activity_register);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
 
-    private String getGeocodingUrl(String address) {
-        String apiKey = "TU_API_KEY_DE_GOOGLE";
-        return "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-                address.replace(" ", "+") + "&key=" + apiKey;
-    }
+        etName = findViewById(R.id.et_name);
+        etEmail = findViewById(R.id.et_email);
+        etPassword = findViewById(R.id.et_password);
+        etConfirmPassword = findViewById(R.id.et_confirm_password);
+        btnRegister = findViewById(R.id.btn_register);
+        tvLogin = findViewById(R.id.tv_login);
 
-    private void getCoordinates(String address, GeocodingCallback callback) {
-        OkHttpClient client = new OkHttpClient();
-        String url = getGeocodingUrl(address);
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
+            public void onClick(View v) {
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    try {
-                        JSONObject json = new JSONObject(responseData);
-                        JSONArray results = json.getJSONArray("results");
-                        if (results.length() > 0) {
-                            JSONObject location = results.getJSONObject(0)
-                                    .getJSONObject("geometry")
-                                    .getJSONObject("location");
-                            double lat = location.getDouble("lat");
-                            double lng = location.getDouble("lng");
-                            callback.onCoordinatesReceived(lat, lng);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                String name = etName.getText().toString().trim();
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+                String confirmPassword = etConfirmPassword.getText().toString().trim();
+
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Por favor complete todos los campos", Toast.LENGTH_SHORT).show();
+                } else if (!password.equals(confirmPassword)) {
+                    Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
+            }
+        });
+
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
 
-    interface GeocodingCallback {
-        void onCoordinatesReceived(double lat, double lng);
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menudeopciones, menu);
@@ -98,9 +88,9 @@ public class ContactActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
             return true;
         } else if (nro == R.id.productos) {
-            startActivity(new Intent(this, MainActivity.class));
             return true;
         } else if (nro == R.id.contacto) {
+            startActivity(new Intent(this, ContactActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -113,9 +103,11 @@ public class ContactActivity extends AppCompatActivity {
         MenuItem productoItem = menu.findItem(R.id.productos);
         MenuItem contactoItem = menu.findItem(R.id.contacto);
 
+
         loginItem.setVisible(true);
         productoItem.setVisible(true);
         contactoItem.setVisible(true);
+
         if (this.getClass().equals(LoginActivity.class)) {
             loginItem.setVisible(false);
         }
@@ -126,5 +118,10 @@ public class ContactActivity extends AppCompatActivity {
             contactoItem.setVisible(false);
         }
         return true;
+    }
+
+    public void irALoguearse(View v){
+        Intent intento = new Intent(this, LoginActivity.class);
+        startActivity(intento);
     }
 }
