@@ -1,4 +1,4 @@
-package com.example.tiendafull.UI.UI;
+package com.example.tiendafull.UI.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
