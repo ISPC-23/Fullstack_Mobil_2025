@@ -45,11 +45,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            WindowInsetsCompat insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets);
-            Insets systemBarsInsets = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars());
+            Insets systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBarsInsets.left, systemBarsInsets.top, systemBarsInsets.right, systemBarsInsets.bottom);
-            return insetsCompat;
+            return insets;
         });
+
 
 
         // Inicialización de vistas
