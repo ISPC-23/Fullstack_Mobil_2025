@@ -1,4 +1,4 @@
-package com.example.tiendafull.UI.Data;
+package com.example.tiendafull.UI.Models;
 
 public class Products {
     private String modelo;

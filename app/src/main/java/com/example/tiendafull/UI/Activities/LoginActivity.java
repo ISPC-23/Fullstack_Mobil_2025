@@ -1,4 +1,5 @@
-package com.example.tiendafull.UI.UI;
+package com.example.tiendafull.UI.Activities;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void authenticate(String email, String password) {
-       // String url = "http://10.0.2.2:8000/api/login/";
+        // String url = "http://10.0.2.2:8000/api/login/";
         String url = "https://deploy-django-sjie.onrender.com/api/login/";
         // Crear el cuerpo de la solicitud de autenticación
         RequestBody formBody = new FormBody.Builder()
