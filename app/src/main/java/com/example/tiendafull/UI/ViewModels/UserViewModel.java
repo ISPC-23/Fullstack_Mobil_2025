@@ -45,13 +45,13 @@ public class UserViewModel extends ViewModel {
         return logoutLiveData;
     }
 
-    public void login(String email, String password) {
-        userRepository.login(email, password).enqueue(new Callback<LoginResponse>() {
+    public void login(String username,  String password) {
+        userRepository.login(username , password).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     sessionManager.saveAuthToken(response.body().getToken());
-                    sessionManager.setIsAdmin(response.body().getUser().getIsAdmin());
+                    sessionManager.setIsAdmin(response.body().is_staff());
                     sessionManager.setUsername(response.body().getUser().getUsername());
 
 
@@ -71,38 +71,36 @@ public class UserViewModel extends ViewModel {
     public void logout() {
         String token = sessionManager.getAuthToken();
         if (token != null) {
-        userRepository.logout().enqueue(new Callback<LogoutResponse>() {
-            @Override
-            public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
-                if (response.isSuccessful()){
-                    // Aquí puedes realizar cualquier limpieza necesaria
-                    // Por ejemplo, eliminar el token o limpiar la información del usuario
+            userRepository.logout().enqueue(new Callback<LogoutResponse>() {
+                @Override
+                public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
+                    if (response.isSuccessful()){
+                        // Aquí puedes realizar cualquier limpieza necesaria
+                        // Por ejemplo, eliminar el token o limpiar la información del usuario
 
-                    sessionManager.clearSession();
-                    loginResponseLiveData.postValue(null); // Limpiar la información del usuario
+                        sessionManager.clearSession();
+                        loginResponseLiveData.postValue(null); // Limpiar la información del usuario
 
-                    // Notificar que el usuario ha cerrado sesión
-                    logoutLiveData.postValue(true); // Notificar logout
+                        // Notificar que el usuario ha cerrado sesión
+                        logoutLiveData.postValue(true); // Notificar logout
 
+                    }
+                    else {
+                        errorLiveData.postValue("Token no disponible para logout");
+                    }
                 }
-                else {
-                    errorLiveData.postValue("Token no disponible para logout");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<LogoutResponse> call, Throwable t) {
-                errorLiveData.postValue("Error de red: " + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<LogoutResponse> call, Throwable t) {
+                    errorLiveData.postValue("Error de red: " + t.getMessage());
+                }
+            });
 
         }
 
     }
-    public void register(String username, String email, String password, String address) {
-        // Aquí deberías llamar a tu repositorio para realizar la solicitud de registro
-        // Suponiendo que tienes un método en el UserRepository para registrar usuarios
-        userRepository.register(username, email, password, address).enqueue(new Callback<User>() {
+    public void register(String email, String password, String firstName, String lastName, long nroDocumento, String telefono) {
+        userRepository.register(email, password,nroDocumento,  lastName,firstName,  telefono).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
@@ -117,7 +115,5 @@ public class UserViewModel extends ViewModel {
                 errorLiveData.postValue(t.getMessage());
             }
         });
-}}
-
-
-
+    }
+}

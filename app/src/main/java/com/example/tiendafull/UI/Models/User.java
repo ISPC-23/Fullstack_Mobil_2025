@@ -1,19 +1,26 @@
 package com.example.tiendafull.UI.Models;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
 
 public class User {
+    @SerializedName("id")
+    private String id;
 
-    @SerializedName("username")
-    private String username;
-
-    @SerializedName("email")
+    @SerializedName("email") // Usar email en lugar de username
     private String email;
 
-    @SerializedName("identification_number")
-    private long identificationNumber;
+    @SerializedName("username") // Usar email en lugar de username
+    private String username;
+
+    @SerializedName("first_name")
+    private String firstName; // Cambiar a camelCase
+
+    @SerializedName("last_name")
+    private String lastName; // Cambiar a camelCase
+
+    @SerializedName("nro_documento")
+    private long nroDocumento; // Cambiar a camelCase
 
     @SerializedName("password")
     private String password;
@@ -21,36 +28,49 @@ public class User {
     @SerializedName("is_admin")
     private Boolean isAdmin;
 
-    @SerializedName("phone")
+    @SerializedName("telefono") // Cambiar a "telefono" para que coincida con el backend
     private String phone;
-
-    @SerializedName("adress")
-    private String address;
 
     @SerializedName("last_connection")
     private Date lastConnection;
 
 
-    public User() {}
-
-    public User(String username, String email, String password, String address) {
-        this.username = username;
+    // Constructor con parámetros, sin username
+    public User(String email, String password, long nroDocumento, String phone, String firstName, String lastName) {
         this.email = email;
+        this.username = email;
         this.password = password;
-        this.isAdmin = false;
-        this.identificationNumber = 1115143242;
-        this.phone = "111111";
-        this.address = address;
-        this.lastConnection = new Date();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nroDocumento = nroDocumento;
+        this.phone = phone;
+        this.isAdmin = false; // Puedes ajustarlo según sea necesario
+        this.lastConnection = new Date(); // Inicializar con la fecha actual
     }
 
-    // Getters y setters
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    // Getters y setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -61,12 +81,28 @@ public class User {
         this.email = email;
     }
 
-    public long getIdentificationNumber() {
-        return identificationNumber;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setIdentificationNumber(Integer identificationNumber) {
-        this.identificationNumber = identificationNumber;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public long getNroDocumento() {
+        return nroDocumento;
+    }
+
+    public void setNroDocumento(long nroDocumento) { // Cambiar el tipo a long
+        this.nroDocumento = nroDocumento;
     }
 
     public String getPassword() {
@@ -91,14 +127,6 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public Date getLastConnection() {

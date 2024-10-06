@@ -13,12 +13,12 @@ import retrofit2.http.POST;
 public interface AuthService {
 
 
-    @POST("users/register")
+    @POST("register/")
     Call<User> registerUser(@Body User user);
 
-    @POST("users/login")
+    @POST("login/")
     Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
 
-    @POST("users/logout")
+    @POST("logout/")
     Call<LogoutResponse> logoutUser();
 }

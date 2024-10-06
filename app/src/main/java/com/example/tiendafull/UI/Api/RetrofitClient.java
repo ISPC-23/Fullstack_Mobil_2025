@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "https://deploy-django-sjie.onrender.com/";
+    private static final String BASE_URL = "https://deploy-django-sjie.onrender.com/api/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofit(SessionManager sessionManager) {

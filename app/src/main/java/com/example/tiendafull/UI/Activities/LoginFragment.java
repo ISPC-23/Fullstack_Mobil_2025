@@ -1,5 +1,6 @@
 package com.example.tiendafull.UI.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Models.LoginResponse;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.UserViewModel;
+
 
 public class LoginFragment extends Fragment {
     private EditText etEmail;
@@ -49,7 +51,7 @@ public class LoginFragment extends Fragment {
         etEmail = view.findViewById(R.id.et_email);
         etPassword = view.findViewById(R.id.et_password);
         btnLogin = view.findViewById(R.id.btn_login);
-      //  ok=view.findViewById(R.id.ok);
+        ok=view.findViewById(R.id.ok);
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
@@ -64,10 +66,13 @@ public class LoginFragment extends Fragment {
                     String userInfo = "Usuario: " + loginResponse.getUser().getUsername() +
                             "\nEmail: " + loginResponse.getUser().getEmail() +
                             "\nToken: " + loginResponse.getToken() +
-                            "\nIsAdmin: " + loginResponse.getUser().getIsAdmin() +
-                            "\nExpira en: " + loginResponse.getExpiresIn();
+                            "\nIsAdmin: " + loginResponse.getUser().getIsAdmin();
+
                     Toast.makeText(getActivity(), "Login exitoso"+userInfo, Toast.LENGTH_SHORT).show();
                     ok.setText(""+userInfo); // Aquí puedes redirigir al usuario a otra actividad
+                    Intent x=new Intent(getContext(), MainActivity.class);
+                    startActivity(x);
+
                 }
             }
         });
@@ -94,11 +99,11 @@ public class LoginFragment extends Fragment {
 
 
         // Obtener los valores de los campos
-        String email = etEmail.getText().toString().trim();
+        String username  = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
         // Validar los campos
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(username )) {
             etEmail.setError("Por favor ingrese su correo");
             etEmail.requestFocus();
             return;
@@ -110,6 +115,6 @@ public class LoginFragment extends Fragment {
         }
 
         // Llamar a la función de login en el ViewModel
-        userViewModel.login(email, password);
+        userViewModel.login(username , password);
     }
 }

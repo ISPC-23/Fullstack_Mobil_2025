@@ -30,10 +30,5 @@ public class AuthActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, new LogoutFragment()).commit();
             }
         });
-    //    blogout.setOnClickListener(new View.OnClickListener() {
-    //      @Override
-    //        public void onClick(View view) {
-    //            getSupportFragmentManager().beginTransaction().replace(R.id.frame, new RegisterFragment()).commit();
-    //        }
-    //    });
+
     }}
