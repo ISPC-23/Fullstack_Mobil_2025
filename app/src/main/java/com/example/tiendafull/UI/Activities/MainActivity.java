@@ -12,17 +12,26 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.AdaptadorProducto;
-import com.example.tiendafull.UI.Models.Data;
+import com.example.tiendafull.UI.Models.Products;
+import com.example.tiendafull.UI.Models.SessionManager;
+import com.example.tiendafull.UI.ViewModels.ProductViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private AdaptadorProducto adaptadorProducto;
+    private ArrayList<Products> listaproducts=new ArrayList<>();
+    private ProductViewModel productViewModel;
 
 
     @Override
@@ -42,11 +51,29 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv1);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        SessionManager sessionManager = SessionManager.getInstance(this);
+        productViewModel.setSessionManager(sessionManager);
 
-        adaptadorProducto = new AdaptadorProducto();
+        adaptadorProducto = new AdaptadorProducto(this.listaproducts, this);
         recyclerView.setAdapter(adaptadorProducto);
-        Data.initializeProducts();
+        productViewModel.fetchAllProducts();
+
+        productViewModel.getProductListLiveData().observe(this, new Observer<List<Products>>() {
+            @Override
+            public void onChanged(List<Products> products) {
+
+                if (products != null) {
+
+                    adaptadorProducto.updateProductList(products);
+
+                }
+            }
+
+        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

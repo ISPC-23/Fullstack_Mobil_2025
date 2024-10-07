@@ -71,30 +71,30 @@ public class UserViewModel extends ViewModel {
     public void logout() {
         String token = sessionManager.getAuthToken();
         if (token != null) {
-        userRepository.logout().enqueue(new Callback<LogoutResponse>() {
-            @Override
-            public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
-                if (response.isSuccessful()){
-                    // Aquí puedes realizar cualquier limpieza necesaria
-                    // Por ejemplo, eliminar el token o limpiar la información del usuario
+            userRepository.logout().enqueue(new Callback<LogoutResponse>() {
+                @Override
+                public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
+                    if (response.isSuccessful()){
+                        // Aquí puedes realizar cualquier limpieza necesaria
+                        // Por ejemplo, eliminar el token o limpiar la información del usuario
 
-                    sessionManager.clearSession();
-                    loginResponseLiveData.postValue(null); // Limpiar la información del usuario
+                        sessionManager.clearSession();
+                        loginResponseLiveData.postValue(null); // Limpiar la información del usuario
 
-                    // Notificar que el usuario ha cerrado sesión
-                    logoutLiveData.postValue(true); // Notificar logout
+                        // Notificar que el usuario ha cerrado sesión
+                        logoutLiveData.postValue(true); // Notificar logout
 
+                    }
+                    else {
+                        errorLiveData.postValue("Token no disponible para logout");
+                    }
                 }
-                else {
-                    errorLiveData.postValue("Token no disponible para logout");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<LogoutResponse> call, Throwable t) {
-                errorLiveData.postValue("Error de red: " + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<LogoutResponse> call, Throwable t) {
+                    errorLiveData.postValue("Error de red: " + t.getMessage());
+                }
+            });
 
         }
 

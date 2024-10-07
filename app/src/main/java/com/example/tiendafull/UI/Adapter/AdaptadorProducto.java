@@ -1,5 +1,6 @@
 package com.example.tiendafull.UI.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tiendafull.R;
-import com.example.tiendafull.UI.Models.Data;
+import com.example.tiendafull.UI.Models.Products;
+
+import java.util.List;
 
 public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.AdaptadorProductHolder> {
+    private List<Products> productList;
+    private Context context;
+
+        public AdaptadorProducto(List<Products> productList, Context context) {
+        this.productList = productList;
+        this.context= context;
+
+    }
     @NonNull
     @Override
     public AdaptadorProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,7 +39,13 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
 
     @Override
     public int getItemCount() {
-        return Data.products.size();
+        return productList.size();
+    }
+
+    public void updateProductList(List<Products> newProducts) {
+        productList.clear(); // Limpiamos la lista actual
+        productList.addAll(newProducts); // Agregamos los nuevos productos
+        notifyDataSetChanged(); // Notificamos al adaptador que los datos han cambiado
     }
 
     public class AdaptadorProductHolder extends RecyclerView.ViewHolder{
@@ -42,10 +60,14 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
         }
 
         public void imprimir(int position) {
-            tv1.setText("Nombre: "+Data.products.get(position).getModelo());
-            tv2.setText("Descripcion: "+Data.products.get(position).getDetalle());
-            tv3.setText("Precio: "+Data.products.get(position).getPrecio());
-            iv1.setImageResource(Data.products.get(position).getImagen());
+            tv1.setText("Nombre: "+productList.get(position).getModelo());
+            tv2.setText("Descripcion: "+productList.get(position).getDetalle());
+            tv3.setText("Precio: "+productList.get(position).getPrecio());
+            Glide.with(itemView.getContext())
+                    .load(productList.get(position).getImagen())
+                    .placeholder(R.drawable.ic_launcher_foreground) // Imagen mostrada mientras carga
+                    .error(R.drawable.ic_launcher_foreground) // Imagen mostrada si ocurre un error
+                    .into(iv1);
         }
     }
 }
