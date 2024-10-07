@@ -60,14 +60,15 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
         }
 
         public void imprimir(int position) {
-            tv1.setText("Nombre: "+productList.get(position).getModelo());
-            tv2.setText("Descripcion: "+productList.get(position).getDetalle());
-            tv3.setText("Precio: "+productList.get(position).getPrecio());
+            Products product = productList.get(position);
+            tv1.setText("Nombre: "+product.getModelo());
+            tv2.setText("Descripcion: "+product.getDetalle());
+            tv3.setText("Precio: "+product.getPrecio());
+
             Glide.with(itemView.getContext())
-                    .load(productList.get(position).getImagen())
+                    .load(product.getImagen())
                     .placeholder(R.drawable.ic_launcher_foreground) // Imagen mostrada mientras carga
                     .error(R.drawable.ic_launcher_foreground) // Imagen mostrada si ocurre un error
                     .into(iv1);
-        }
     }
-}
+}}
