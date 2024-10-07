@@ -9,25 +9,36 @@ public class LoginResponse {
     @SerializedName("token")
     private String token;
 
-    @SerializedName("expires_in")
-    private long expiresIn;
+    @SerializedName("is_staff")
+    private boolean is_staff;
 
-    public LoginResponse(User user, String token, long expiresIn) {
+    public LoginResponse(User user, String token, boolean is_staff) {
         this.user = user;
         this.token = token;
-        this.expiresIn = expiresIn;
+        this.is_staff = is_staff;
     }
-
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getToken() {
         return token;
     }
 
-    public long getExpiresIn() {
-        return expiresIn;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean is_staff() {
+        return is_staff;
+    }
+
+    public void setIs_staff(boolean is_staff) {
+        this.is_staff = is_staff;
     }
 }

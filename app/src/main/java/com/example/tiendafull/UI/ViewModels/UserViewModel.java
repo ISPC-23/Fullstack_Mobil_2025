@@ -45,13 +45,13 @@ public class UserViewModel extends ViewModel {
         return logoutLiveData;
     }
 
-    public void login(String email, String password) {
-        userRepository.login(email, password).enqueue(new Callback<LoginResponse>() {
+    public void login(String username,  String password) {
+        userRepository.login(username , password).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     sessionManager.saveAuthToken(response.body().getToken());
-                    sessionManager.setIsAdmin(response.body().getUser().getIsAdmin());
+                    sessionManager.setIsAdmin(response.body().is_staff());
                     sessionManager.setUsername(response.body().getUser().getUsername());
 
 
@@ -99,10 +99,8 @@ public class UserViewModel extends ViewModel {
         }
 
     }
-    public void register(String username, String email, String password, String address) {
-        // Aquí deberías llamar a tu repositorio para realizar la solicitud de registro
-        // Suponiendo que tienes un método en el UserRepository para registrar usuarios
-        userRepository.register(username, email, password, address).enqueue(new Callback<User>() {
+    public void register(String email, String password, String firstName, String lastName, long nroDocumento, String telefono) {
+        userRepository.register(email, password,nroDocumento,  lastName,firstName,  telefono).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
@@ -117,7 +115,5 @@ public class UserViewModel extends ViewModel {
                 errorLiveData.postValue(t.getMessage());
             }
         });
-}}
-
-
-
+    }
+}
