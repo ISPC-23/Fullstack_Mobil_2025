@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Modelo de la bicicleta -->
         <TextView
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
@@ -24,7 +23,6 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- Imagen de la bicicleta -->
         <ImageView
             android:id="@+id/iv1"
             android:layout_width="match_parent"
@@ -33,7 +31,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/bici1" />
 
-        <!-- Descripción de la bicicleta -->
         <TextView
             android:id="@+id/tv2"
             android:layout_width="wrap_content"
@@ -44,7 +41,6 @@
             android:textColor="#666666"
             android:textSize="14sp" />
 
-        <!-- Precio de la bicicleta -->
         <TextView
             android:id="@+id/tv3"
             android:layout_width="wrap_content"
@@ -52,17 +48,15 @@
             android:paddingBottom="16dp"
             android:text="Precio: $00.00"
             android:textColor="#FF5722"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
-
-        <!-- Botón para agregar al carrito -->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/detailBtn"
+                android:id="@+id/goToDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FF5722"

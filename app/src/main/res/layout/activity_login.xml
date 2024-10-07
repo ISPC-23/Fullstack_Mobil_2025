@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="15dp"
-        android:padding="10dp"
+        android:padding="5dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:maxLines="1"
@@ -31,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="15dp"
+        android:padding="5dp"
         android:inputType="textPassword"
         android:maxLines="1"
         android:hint="@string/contrasenia" />
@@ -47,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
+        android:backgroundTint="@color/blue_dark"
         android:text="@string/iniciar_sesion" />
 
     <LinearLayout
@@ -65,12 +67,13 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginBottom="8dp"
-            android:padding="6dp"
             android:layout_weight="1"
-            android:text="@string/registrate"
-            android:textColor="@android:color/holo_blue_light"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:onClick="irARegistrarse"
+            android:padding="6dp"
+            android:text="@string/registrate"
+            android:textColor="@android:color/holo_blue_light" />
     </LinearLayout>
 
     <TextView
