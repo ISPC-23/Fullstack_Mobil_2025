@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,25 +15,22 @@
         android:theme="@style/Theme.TiendaFull"
         tools:targetApi="31">
         <activity
-            android:name=".UI.UI.ContactActivity"
-            android:exported="true" />
-        <activity
-            android:name=".UI.UI.DetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UI.UI.LoginActivity"
-            android:exported="true"/>
-        <activity
-            android:name=".UI.UI.RegisterActivity"
-            android:exported="true"/>
-        <activity
-            android:name=".UI.UI.MainActivity"
+            android:name=".UI.Activities.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".UI.Activities.DetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".UI.Activities.MainActivity"
+            android:exported="false">
+
         </activity>
     </application>
 
