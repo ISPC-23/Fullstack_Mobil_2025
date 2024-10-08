@@ -83,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem
                                                  item) {
         int nro = item.getItemId();
-        if (nro == R.id.entrar) {
+        if (nro == R.id.salir) {
             startActivity(new Intent(this, LoginActivity.class));
             return true;
         } else if (nro == R.id.productos) {
@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        MenuItem loginItem = menu.findItem(R.id.entrar);
+        MenuItem loginItem = menu.findItem(R.id.salir);
         MenuItem productoItem = menu.findItem(R.id.productos);
         MenuItem contactoItem = menu.findItem(R.id.contacto);
 

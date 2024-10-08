@@ -78,8 +78,11 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int nro = item.getItemId();
-        if (nro == R.id.entrar) {
-            startActivity(new Intent(this, LoginActivity.class));
+        if (nro == R.id.salir) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame, new LogoutFragment())
+                    .addToBackStack(null) // Opcional: para poder volver al fragmento anterior
+                    .commit();
             return true;
         } else if (nro == R.id.productos) {
             return true;
@@ -94,22 +97,22 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        MenuItem loginItem = menu.findItem(R.id.entrar);
+        MenuItem salirItem = menu.findItem(R.id.salir);
         MenuItem productoItem = menu.findItem(R.id.productos);
         MenuItem contactoItem = menu.findItem(R.id.contacto);
 
-        loginItem.setVisible(true);
+        salirItem.setVisible(true);
         productoItem.setVisible(true);
         contactoItem.setVisible(true);
 
-        if (this.getClass().equals(LoginActivity.class)) {
-            loginItem.setVisible(false);
+        if (this.getClass().equals(AuthActivity.class)) {
+            salirItem.setVisible(true);
         }
         if (this.getClass().equals(MainActivity.class) || this.getClass().equals(DetailActivity.class)) {
-            productoItem.setVisible(false);
+            productoItem.setVisible(true);
         }
         if (this.getClass().equals(ContactActivity.class)) {
-            contactoItem.setVisible(false);
+            contactoItem.setVisible(true);
         }
         return true;
     }

@@ -3,9 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/entrar"
-        android:title="Ingresar" />
-    <item
         android:id="@+id/productos"
         android:title="Productos" />
     <item
