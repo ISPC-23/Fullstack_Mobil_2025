@@ -21,7 +21,7 @@ public class Products {
     public String getModelo() { return modelo; }
     public void setModelo(String modelo) { this.modelo = modelo; }
 
-    public double getPrecio() { return precio; }
+    public int getPrecio() { return precio; }
     public void setPrecio(double precio) { this.precio = precio; }
 
     public int getStock() { return stock; }
