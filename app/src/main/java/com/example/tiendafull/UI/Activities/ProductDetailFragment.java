@@ -61,7 +61,7 @@ public class ProductDetailFragment extends Fragment {
                     productName.setText(product.getModelo());
                     productDescription.setText(product.getDetalle());
                     productPrice.setText('$' + product.getPrecio());
-                    productPrice.setText(
+
                     Glide.with(requireContext())
                             .load(product.getImagen())
                             .into(productImage);
