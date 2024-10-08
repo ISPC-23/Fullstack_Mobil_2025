@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,12 +18,15 @@ import com.example.tiendafull.UI.Models.Products;
 import java.util.List;
 
 public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.AdaptadorProductHolder> {
+
     private List<Products> productList;
     private Context context;
+    private OnProductClickListener listener;
 
-        public AdaptadorProducto(List<Products> productList, Context context) {
+        public AdaptadorProducto(List<Products> productList, Context context, OnProductClickListener listener) {
         this.productList = productList;
         this.context= context;
+        this.listener= listener;
 
     }
     @NonNull
@@ -51,12 +55,14 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
     public class AdaptadorProductHolder extends RecyclerView.ViewHolder{
         TextView tv1,tv2,tv3;
         ImageView iv1;
+        Button button;
         public AdaptadorProductHolder(@NonNull View itemView) {
             super(itemView);
             tv1= itemView.findViewById(R.id.tv1);
             tv2= itemView.findViewById(R.id.tv2);
             tv3= itemView.findViewById(R.id.tv3);
             iv1=itemView.findViewById(R.id.iv1);
+            button=itemView.findViewById(R.id.goToDetail);
         }
 
         public void imprimir(int position) {
@@ -70,5 +76,22 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
                     .placeholder(R.drawable.ic_launcher_foreground) // Imagen mostrada mientras carga
                     .error(R.drawable.ic_launcher_foreground) // Imagen mostrada si ocurre un error
                     .into(iv1);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onProductClick(product.getId());
+
+
+                }
+            });
+
+
+        }
+
     }
-}}
+    public interface OnProductClickListener {
+        void onProductClick(String productId);
+    }
+
+
+}

@@ -60,7 +60,7 @@ public class ProductDetailFragment extends Fragment {
                 if (product != null) {
                     productName.setText(product.getModelo());
                     productDescription.setText(product.getDetalle());
-                    productPrice.setText('$' + product.getPrecio());
+                    productPrice.setText("$" + product.getPrecio());
 
                     Glide.with(requireContext())
                             .load(product.getImagen())
