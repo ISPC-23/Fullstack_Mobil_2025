@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.UserViewModel;
 
@@ -25,6 +27,7 @@ public class RegisterFragment extends Fragment {
     private EditText etNroDocumento; // Campo para el número de documento
     private EditText etTelefono; // Campo para el teléfono
     private Button btnRegister;
+    private TextView tvLogin;
 
     private UserViewModel userViewModel;
 
@@ -50,6 +53,16 @@ public class RegisterFragment extends Fragment {
         etNroDocumento = view.findViewById(R.id.et_nro_documento);
         etTelefono = view.findViewById(R.id.et_telefono);
         btnRegister = view.findViewById(R.id.btn_register);
+        tvLogin=view.findViewById(R.id.tv_login);
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame, new LoginFragment())
+                        .addToBackStack(null) // Para permitir volver atrás
+                        .commit();
+            }
+        });
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
@@ -113,5 +126,8 @@ public class RegisterFragment extends Fragment {
 
         // Llamar a la función de registro en el ViewModel
         userViewModel.register(email, password, firstName, lastName, nroDocumento, telefono);
+
+
+
     }
 }
