@@ -1,58 +1,35 @@
-package com.example.tiendafull;
+package com.example.tiendafull.UI.Activities;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.tiendafull.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import android.text.TextUtils;
+import android.widget.Button;
+import android.widget.EditText;
+import com.example.tiendafull.UI.Models.SessionManager;
+import com.example.tiendafull.UI.ViewModels.UserViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegisterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RegisterFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private EditText etEmail;
+    private EditText etPassword;
+    private EditText etFirstName; // Campo para el nombre
+    private EditText etLastName;  // Campo para el apellido
+    private EditText etNroDocumento; // Campo para el número de documento
+    private EditText etTelefono; // Campo para el teléfono
+    private Button btnRegister;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private UserViewModel userViewModel;
 
     public RegisterFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RegisterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RegisterFragment newInstance(String param1, String param2) {
-        RegisterFragment fragment = new RegisterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -60,5 +37,81 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        etEmail = view.findViewById(R.id.et_email);
+        etPassword = view.findViewById(R.id.et_password);
+        etFirstName = view.findViewById(R.id.et_first_name);
+        etLastName = view.findViewById(R.id.et_last_name);
+        etNroDocumento = view.findViewById(R.id.et_nro_documento);
+        etTelefono = view.findViewById(R.id.et_telefono);
+        btnRegister = view.findViewById(R.id.btn_register);
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        SessionManager sessionManager = SessionManager.getInstance(getContext());
+        userViewModel.setSessionManager(sessionManager);
+
+        userViewModel.getRegistrationSuccessLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean registered) {
+                if (registered) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frame, new LoginFragment())
+                            .commit();
+                }
+            }
+        });
+
+        btnRegister.setOnClickListener(v -> attemptRegister());
+    }
+
+    private void attemptRegister() {
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+        String firstName = etFirstName.getText().toString().trim();
+        String lastName = etLastName.getText().toString().trim();
+        String nroDocumentoStr = etNroDocumento.getText().toString().trim();
+        String telefono = etTelefono.getText().toString().trim();
+
+        // Validar los campos
+        if (TextUtils.isEmpty(email)) {
+            etEmail.setError("Por favor ingrese su correo");
+            etEmail.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            etPassword.setError("Por favor ingrese su contraseña");
+            etPassword.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(firstName)) {
+            etFirstName.setError("Por favor ingrese su nombre");
+            etFirstName.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(lastName)) {
+            etLastName.setError("Por favor ingrese su apellido");
+            etLastName.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(nroDocumentoStr)) {
+            etNroDocumento.setError("Por favor ingrese su número de documento");
+            etNroDocumento.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(telefono)) {
+            etTelefono.setError("Por favor ingrese su teléfono");
+            etTelefono.requestFocus();
+            return;
+        }
+
+        long nroDocumento = Long.parseLong(nroDocumentoStr);
+
+        // Llamar a la función de registro en el ViewModel
+        userViewModel.register(email, password, firstName, lastName, nroDocumento, telefono);
     }
 }
