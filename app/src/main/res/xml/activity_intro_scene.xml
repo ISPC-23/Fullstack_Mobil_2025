@@ -1,0 +1,51 @@
+<<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+<Transition
+    motion:constraintSetEnd="@+id/end"
+    motion:constraintSetStart="@id/start"
+    motion:duration="4635"
+    motion:autoTransition="animateToEnd">
+    <KeyFrameSet>
+    </KeyFrameSet>
+    <OnClick />
+</Transition>
+
+<ConstraintSet android:id="@+id/start">
+    <Constraint
+        android:id="@+id/imageView"
+        motion:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="181dp"
+        android:layout_height="221dp"
+        motion:layout_constraintBottom_toBottomOf="parent"
+        motion:layout_constraintTop_toTopOf="parent"
+        motion:layout_constraintStart_toStartOf="parent"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:src="@drawable/logo_tienda" motion:layout_constraintVertical_bias="0.152"/>
+</ConstraintSet>
+
+<ConstraintSet android:id="@+id/end">
+    <Constraint
+        android:id="@+id/imageView"
+        motion:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="181dp"
+        android:layout_height="221dp"
+        motion:layout_constraintBottom_toBottomOf="parent"
+        motion:layout_constraintTop_toTopOf="parent"
+        motion:layout_constraintStart_toStartOf="parent"
+        android:scaleX="1" motion:layout_constraintVertical_bias="0.227"/>
+    <Constraint
+        android:id="@+id/imageView"
+        android:scaleX="1"
+        motion:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="181dp"
+        android:layout_height="221dp"
+        motion:layout_constraintBottom_toBottomOf="parent"
+        motion:layout_constraintTop_toTopOf="parent"
+        motion:layout_constraintStart_toStartOf="parent"
+        android:scaleY="1" motion:layout_constraintVertical_bias="0.227"/>
+</ConstraintSet>
+</MotionScene>
