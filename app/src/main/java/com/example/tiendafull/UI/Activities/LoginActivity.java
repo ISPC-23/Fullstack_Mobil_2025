@@ -200,8 +200,4 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    public void irARegistrarse(View v) {
-        Intent intento = new Intent(this, RegisterActivity.class);
-        startActivity(intento);
-    }
 }

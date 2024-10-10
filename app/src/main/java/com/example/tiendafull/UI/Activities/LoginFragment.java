@@ -28,7 +28,8 @@ public class LoginFragment extends Fragment {
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
-    private TextView ok;
+    private TextView ok, irReg;
+
 
     private UserViewModel userViewModel;
 
@@ -52,6 +53,20 @@ public class LoginFragment extends Fragment {
         etPassword = view.findViewById(R.id.et_password);
         btnLogin = view.findViewById(R.id.btn_login);
         ok=view.findViewById(R.id.ok);
+        irReg=view.findViewById(R.id.tv_registrate);
+
+        irReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frame, new RegisterFragment())
+                            .addToBackStack(null) // Para permitir volver atrás
+                            .commit();
+                }
+            });
+
+
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
@@ -92,6 +107,7 @@ public class LoginFragment extends Fragment {
                 attemptLogin();
             }
         });
+
     }
 
 
