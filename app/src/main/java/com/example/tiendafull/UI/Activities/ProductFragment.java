@@ -1,5 +1,6 @@
 package com.example.tiendafull.UI.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.AdaptadorProducto;
@@ -29,6 +31,7 @@ public class ProductFragment extends Fragment implements AdaptadorProducto.OnPro
     private AdaptadorProducto productAdapter;
     private RecyclerView recyclerView;
     private ArrayList<Products> listaproducts = new ArrayList<>();
+
 
 
     public ProductFragment() {
@@ -50,6 +53,7 @@ public class ProductFragment extends Fragment implements AdaptadorProducto.OnPro
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView=view.findViewById(R.id.rv2);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

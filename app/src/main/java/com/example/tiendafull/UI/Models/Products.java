@@ -2,7 +2,7 @@ package com.example.tiendafull.UI.Models;
 
 
 public class Products {
-    private String id;
+    private int id;
     private String modelo;
     private double precio;
     private int stock;
@@ -15,8 +15,8 @@ public class Products {
     private String color;
 
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getModelo() { return modelo; }
     public void setModelo(String modelo) { this.modelo = modelo; }
