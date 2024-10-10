@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#48050505"
+    android:background="@color/white"
     app:layoutDescription="@xml/activity_intro_scene"
-    tools:context=".UI.Activities.Intro">
+    tools:context=".UI.Activities.IntroActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -17,8 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568"
-        app:srcCompat="@drawable/mapa_de_argentina" />
+        app:layout_constraintVertical_bias="0.4"
+        app:srcCompat="@drawable/logo_tienda_login" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
 

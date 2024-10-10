@@ -7,11 +7,13 @@ import com.example.tiendafull.UI.Models.SessionManager;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 public class OkHttpProvider {
     private static OkHttpClient client = null;
     private static SessionManager sessionManager;
+
 
     // Método para inicializar el OkHttpClient con el SessionManager
     public static OkHttpClient getClient(SessionManager sessionMgr) {
@@ -35,7 +37,13 @@ public class OkHttpProvider {
                 }
 
                 Request requestWithAuth = requestBuilder.build();
-                return chain.proceed(requestWithAuth);
+                Response response = chain.proceed(requestWithAuth);
+
+                if (response.code() == 401) {
+                    // Limpiar la sesión
+                    sessionManager.clearSession();
+                }
+                return response;
             };
 
             // Crear el cliente OkHttp con los interceptores

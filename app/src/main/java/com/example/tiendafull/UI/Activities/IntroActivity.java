@@ -1,4 +1,4 @@
-package com.example.tiendafull.UI.UI;
+package com.example.tiendafull.UI.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tiendafull.R;
 
-public class Intro extends AppCompatActivity {
+public class IntroActivity extends AppCompatActivity {
     private MotionLayout ml;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +36,11 @@ public class Intro extends AppCompatActivity {
 
             }
 
+
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int currentId) {
                 if( currentId== R.id.end){
-                    Intent x =new Intent(Intro.this, AuthActivity  .class);
+                    Intent x =new Intent(motionLayout.getContext(),  AuthActivity.class);
                     startActivity(x);
                 }}
 
