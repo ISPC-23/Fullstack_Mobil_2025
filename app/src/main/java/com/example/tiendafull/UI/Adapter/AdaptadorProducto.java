@@ -23,7 +23,7 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
     private Context context;
     private OnProductClickListener listener;
 
-        public AdaptadorProducto(List<Products> productList, Context context, OnProductClickListener listener) {
+    public AdaptadorProducto(List<Products> productList, Context context, OnProductClickListener listener) {
         this.productList = productList;
         this.context= context;
         this.listener= listener;
@@ -79,7 +79,7 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onProductClick(product.getId());
+                    listener.onProductClick(String.valueOf(product.getId()));
 
 
                 }

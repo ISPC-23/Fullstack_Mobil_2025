@@ -22,14 +22,15 @@ public class UserViewModel extends ViewModel {
     private MutableLiveData<Boolean> logoutLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> registrationSuccessLiveData = new MutableLiveData<>(); // LiveData para el registro
-
+    private CartViewModel cartViewModel;
 
     public UserViewModel() {
-
+        cartViewModel = new CartViewModel();
     }
     public void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
         this.userRepository = new UserRepository(sessionManager);
+        cartViewModel.setSessionManager(sessionManager);
     }
     public LiveData<LoginResponse> getLoginResponseLiveData() {
         return loginResponseLiveData;
@@ -53,6 +54,7 @@ public class UserViewModel extends ViewModel {
                     sessionManager.saveAuthToken(response.body().getToken());
                     sessionManager.setIsAdmin(response.body().is_staff());
                     sessionManager.setUsername(response.body().getUser().getUsername());
+                    cartViewModel.getCart();
 
 
                     loginResponseLiveData.postValue(response.body());

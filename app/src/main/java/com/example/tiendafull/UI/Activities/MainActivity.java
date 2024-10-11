@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
-
+    private Button carrito;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,13 @@ public class MainActivity extends AppCompatActivity  {
             return insets;
         });
         getSupportFragmentManager().beginTransaction().add(R.id.frame2,new ProductFragment() ).commit();
-
+        carrito=findViewById(R.id.carrito);
+        carrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent x =new Intent(getApplicationContext(), CartActivity.class);
+                startActivity(x);
+            }
+        });
     }
 }
