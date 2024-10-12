@@ -6,13 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,6 +39,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        // Llamada para mostrar el AlertDialog
+        showAlertDialog();
         b1= findViewById(R.id.checkoutButton);
         rvCartItems = findViewById(R.id.recyclerViewCart);
         tvTotalPrice = findViewById(R.id.totalPriceTextView);
@@ -83,7 +83,23 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
             }
         });
     }
+    private void showAlertDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_custom, null);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView)  // Establecer el layout personalizado
+                .setCancelable(false)  // Evitar que se cierre si se toca fuera del diálogo
+                .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Acción al hacer clic en el botón
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     private void updateTotalPrice(List<CartDetail> products) {
         double total = 0.0;
