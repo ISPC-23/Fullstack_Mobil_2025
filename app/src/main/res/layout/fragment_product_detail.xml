@@ -33,4 +33,24 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="Precio"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/agregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="agregar" />
+
+        <Button
+            android:id="@+id/quitar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="quitar" />
+    </LinearLayout>
 </LinearLayout>

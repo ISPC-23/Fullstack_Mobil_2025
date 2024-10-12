@@ -96,7 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
     public interface OnProductCartClickListener {
         void onProductClick(String productId);
-    }
+}
 
 
 }

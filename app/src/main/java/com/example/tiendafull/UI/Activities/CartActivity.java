@@ -2,13 +2,10 @@ package com.example.tiendafull.UI.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -30,18 +27,17 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     private CartViewModel cartViewModel;
     private RecyclerView rvCartItems;
     private CartAdapter cartAdapter;
-    private ArrayList<CartDetail> arrayList =new ArrayList<>();
+    private ArrayList<CartDetail> arrayList = new ArrayList<>();
     private TextView tvTotalPrice;
-    private Button b1;
-
+    private Button b1, b2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        // Llamada para mostrar el AlertDialog
-        showAlertDialog();
-        b1= findViewById(R.id.checkoutButton);
+
+        b1 = findViewById(R.id.checkoutButton);
+        b2 = findViewById(R.id.btnCancelarCompra);
         rvCartItems = findViewById(R.id.recyclerViewCart);
         tvTotalPrice = findViewById(R.id.totalPriceTextView);
 
@@ -51,7 +47,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         SessionManager sessionManager = SessionManager.getInstance(this);
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
-        cartAdapter = new CartAdapter(this.arrayList, this,this);
+        cartAdapter = new CartAdapter(this.arrayList, this, this);
         rvCartItems.setAdapter(cartAdapter);
 
         // Obtener el carrito al iniciar la actividad
@@ -62,7 +58,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
             @Override
             public void onChanged(Cart cart) {
                 if (cart != null) {
-                    Log.i("MENSAJE", "onResponse: ok"+cart);
+                    Log.i("MENSAJE", "onResponse: ok" + cart);
                     cartAdapter.setCart(cart.getItems());
                     updateTotalPrice(cart.getItems());
                 }
@@ -72,34 +68,24 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         // Observar errores
         cartViewModel.getErrorLiveData().observe(this, error -> {
             // Mostrar mensaje de error (puedes usar un Toast o un Snackbar)
-            Log.i("MENSAJE", "onResponse:Error "+error);
+            Log.i("MENSAJE", "onResponse:Error " + error);
         });
 
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(CartActivity.this, "COMPRA FINALIZADA", Toast.LENGTH_SHORT).show();
+        b1.setOnClickListener(view ->
+                Toast.makeText(CartActivity.this, "COMPRA FINALIZADA", Toast.LENGTH_SHORT).show());
 
-            }
-        });
+        b2.setOnClickListener(v -> new AlertDialog.Builder(CartActivity.this)
+                .setTitle("Cancelar Compra")
+                .setMessage("¿Estás seguro que deseas cancelar toda la compra?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    cartViewModel.clearCart();
+                    cartAdapter.notifyDataSetChanged();
+                    Toast.makeText(CartActivity.this, "Compra cancelada", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("No", null)
+                .show());
     }
-    private void showAlertDialog() {
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_custom, null);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(dialogView)  // Establecer el layout personalizado
-                .setCancelable(false)  // Evitar que se cierre si se toca fuera del diálogo
-                .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Acción al hacer clic en el botón
-                        dialog.dismiss();
-                    }
-                });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
     private void updateTotalPrice(List<CartDetail> products) {
         double total = 0.0;
@@ -111,31 +97,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
 
     @Override
     public void onProductClick(String productId) {
-
         cartViewModel.removeProductFromCart(Integer.parseInt(productId));
-        Toast.makeText(this, "Producto Eliminad", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
-
-        btnCancelarCompra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(CartActivity.this)
-                        .setTitle("Cancelar Compra")
-                        .setMessage("¿Estás seguro que deseas cancelar toda la compra?")
-                        .setPositiveButton("Sí", (dialog, which) -> {
-                            cartViewModel.clearCart();
-                            cartAdapter.notifyDataSetChanged();
-                            Toast.makeText(CartActivity.this, "Compra cancelada", Toast_LENGTH_SHORT).show();
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
-            }
-        });
-
 }

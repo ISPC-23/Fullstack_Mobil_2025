@@ -17,10 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Promo" />
+        app:srcCompat="@drawable/promopop" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonnn3"
         android:layout_width="27dp"
         android:layout_height="30dp"
         android:layout_marginTop="245dp"
