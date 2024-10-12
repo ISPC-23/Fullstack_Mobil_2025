@@ -144,4 +144,8 @@ public class CartViewModel extends ViewModel {
             }
         });
     }
+
+    public void clearCart() {
+
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.tiendafull.UI.Adapter;
 
+import static android.os.Build.VERSION_CODES.R;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

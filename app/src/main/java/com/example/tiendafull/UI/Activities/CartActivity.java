@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -99,4 +100,26 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         Toast.makeText(this, "Producto Eliminad", Toast.LENGTH_SHORT).show();
 
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cart);
+
+        btnCancelarCompra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(CartActivity.this)
+                        .setTitle("Cancelar Compra")
+                        .setMessage("¿Estás seguro que deseas cancelar toda la compra?")
+                        .setPositiveButton("Sí", (dialog, which) -> {
+                            cartViewModel.clearCart();
+                            cartAdapter.notifyDataSetChanged();
+                            Toast.makeText(CartActivity.this, "Compra cancelada", Toast_LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            }
+        });
+
 }
