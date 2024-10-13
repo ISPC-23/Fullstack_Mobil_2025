@@ -145,7 +145,22 @@ public class CartViewModel extends ViewModel {
         });
     }
 
-    public void clearCart() {
+    public void deleteCart() {
+
+        cartRepository.deleteCart().enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()){
+                    getCart();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                errorLiveData.setValue("Error de red: " + t.getMessage());
+            }
+        });
 
     }
 }
+

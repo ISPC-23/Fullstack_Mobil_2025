@@ -32,4 +32,8 @@ public class CartRepository {
     public Call<String> createCart() {
         return cartService.createCart();
     }
+
+    public Call<String> deleteCart() {
+        return cartService.delete_cart();
+    }
 }
