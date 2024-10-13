@@ -6,9 +6,6 @@
         android:id="@+id/productos"
         android:title="Productos" />
     <item
-        android:id="@+id/contacto"
-        android:title="Contacto" />
-    <item
         android:id="@+id/salir"
         android:title="Salir" />
 </menu>

@@ -47,7 +47,7 @@ public class LogoutFragment extends Fragment {
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         userViewModel.setSessionManager(sessionManager);
 
-        textView.setText(("esta seguto"));
+        textView.setText(("Estas por cerrar tu sesión"));
 
         userViewModel.getLogoutLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -55,7 +55,7 @@ public class LogoutFragment extends Fragment {
                 if( LoggedOut){
 
                     String username = sessionManager.getUsername(); // Obtener el nombre de usuario
-                    Toast.makeText(getContext(), ""+username, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Hasta la próxima "+username, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), AuthActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

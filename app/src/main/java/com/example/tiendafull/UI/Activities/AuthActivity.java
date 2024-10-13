@@ -17,7 +17,7 @@ import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Models.SessionManager;
 
 public class AuthActivity extends AppCompatActivity {
-    Button blogin;
+//    Button blogin;
 
 
     @Override
@@ -26,21 +26,9 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
 
 
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.frame, new LoginFragment())
-                    .commit();
-
-
-        blogin = findViewById(R.id.button2);
-
-        blogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame, new RegisterFragment())
-                        .commit();
-            }
-        });
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frame, new LoginFragment())
+                .commit();
     }
 
 }
