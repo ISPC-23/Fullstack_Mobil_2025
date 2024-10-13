@@ -23,16 +23,14 @@ import com.example.tiendafull.UI.Models.LoginResponse;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.UserViewModel;
 
-
 public class LoginFragment extends Fragment {
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
     private TextView ok, irReg;
 
-
     private UserViewModel userViewModel;
-
+    private int intentosFallidos = 0; // Nueva variable para contar intentos fallidos
 
     public LoginFragment() {
         // Required empty public constructor
@@ -52,74 +50,69 @@ public class LoginFragment extends Fragment {
         etEmail = view.findViewById(R.id.et_email);
         etPassword = view.findViewById(R.id.et_password);
         btnLogin = view.findViewById(R.id.btn_login);
-        ok=view.findViewById(R.id.ok);
-        irReg=view.findViewById(R.id.tv_registrate);
+        ok = view.findViewById(R.id.ok);
+        irReg = view.findViewById(R.id.tv_registrate);
 
         irReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frame, new RegisterFragment())
-                            .addToBackStack(null) // Para permitir volver atrás
-                            .commit();
-                }
-            });
-
-
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame, new RegisterFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         userViewModel.setSessionManager(sessionManager);
 
-
         userViewModel.getLoginResponseLiveData().observe(getViewLifecycleOwner(), new Observer<LoginResponse>() {
             @Override
             public void onChanged(LoginResponse loginResponse) {
                 if (loginResponse != null) {
-                    // Login exitoso
+                    // Login exitoso, reinicia el contador de intentos fallidos
+                    intentosFallidos = 0;
                     String userInfo = "Usuario: " + loginResponse.getUser().getUsername() +
                             "\nEmail: " + loginResponse.getUser().getEmail() +
                             "\nToken: " + loginResponse.getToken() +
                             "\nIsAdmin: " + loginResponse.getUser().getIsAdmin();
 
-                    Toast.makeText(getActivity(), "Login exitoso"+userInfo, Toast.LENGTH_SHORT).show();
-                    ok.setText(""+userInfo); // Aquí puedes redirigir al usuario a otra actividad
-                    Intent x=new Intent(getContext(), MainActivity.class);
+                    Toast.makeText(getActivity(), "Bienvenido " + userInfo, Toast.LENGTH_SHORT).show();
+                    Intent x = new Intent(getContext(), MainActivity.class);
                     startActivity(x);
-
                 }
             }
         });
+
         userViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), errorMessage -> {
             if (errorMessage != null) {
-                // Mostrar el error
-                Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-                ok.setText(""+errorMessage);
-
+                // Incrementa el contador de intentos fallidos
+                intentosFallidos++;
+                if (intentosFallidos >= 3) {
+                    // Mostrar mensaje de usuario bloqueado después de 3 intentos fallidos
+                    Toast.makeText(getActivity(), "Usuario Bloqueado", Toast.LENGTH_SHORT).show();
+                    btnLogin.setEnabled(false); // Opcional: deshabilita el botón de login
+                } else {
+                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                }
+                ok.setText(errorMessage);
             }
         });
 
-        // Manejar el clic del botón de login
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 attemptLogin();
             }
         });
-
     }
 
-
     private void attemptLogin() {
-
-
-        // Obtener los valores de los campos
-        String username  = etEmail.getText().toString().trim();
+        String username = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        // Validar los campos
-        if (TextUtils.isEmpty(username )) {
+        if (TextUtils.isEmpty(username)) {
             etEmail.setError("Por favor ingrese su correo");
             etEmail.requestFocus();
             return;
@@ -130,7 +123,6 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        // Llamar a la función de login en el ViewModel
-        userViewModel.login(username , password);
+        userViewModel.login(username, password);
     }
 }
