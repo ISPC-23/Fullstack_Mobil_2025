@@ -3,11 +3,15 @@ package com.example.tiendafull.UI.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,11 +35,16 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     private ArrayList<CartDetail> arrayList = new ArrayList<>();
     private TextView tvTotalPrice;
     private Button b1, b2;
+    private Toolbar toolbar1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        // Configuro Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar_cart);
+        setSupportActionBar(toolbar);
 
         b1 = findViewById(R.id.checkoutButton);
         b2 = findViewById(R.id.btnCancelarCompra);
@@ -98,7 +107,27 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
                 .show());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menudeopciones, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.productos) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.salir) {
+            // Dirige al MainActivity con el flag de Logout
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("LOGOUT", true); // Envía una bandera para indicar que queremos ir al LogoutFragment
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void updateTotalPrice(List<CartDetail> products) {
         double total = 0.0;
         for (CartDetail product : products) {

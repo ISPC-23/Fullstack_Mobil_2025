@@ -44,13 +44,23 @@ public class MainActivity extends AppCompatActivity  {
         });
         toolbar1 = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar1);
-        if (savedInstanceState == null) { // Solo cargar si es la primera creación
+
+        // Comprobar si la actividad fue lanzada con el flag "LOGOUT"
+        boolean shouldLogout = getIntent().getBooleanExtra("LOGOUT", false);
+
+        if (shouldLogout) {
+            // Navegar al LogoutFragment si el flag está activo
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame2, new LogoutFragment())
+                    .commit();
+        } else if (savedInstanceState == null) {
+            // Mostrar el ProductFragment de manera predeterminada
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frame2, new ProductFragment())
                     .commit();
         }
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menudeopciones, menu);
