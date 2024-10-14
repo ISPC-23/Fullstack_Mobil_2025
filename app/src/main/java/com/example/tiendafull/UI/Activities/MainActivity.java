@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity  {
             getSupportFragmentManager().beginTransaction().replace(R.id.frame2, new LogoutFragment()).commit();
             return true;
         }
+     else if (item.getItemId() == R.id.carrito) {
+        Intent x =new Intent(this, CartActivity.class);
+        startActivity(x);
+        return true;
+    }
         return super.onOptionsItemSelected(item);
     }
 

@@ -159,8 +159,7 @@ public class CartViewModel extends ViewModel {
             public void onFailure(Call<String> call, Throwable t) {
                 errorLiveData.setValue("Error de red: " + t.getMessage());
             }
-        });
+});
 
-    }
 }
-
+}

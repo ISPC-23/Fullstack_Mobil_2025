@@ -1,5 +1,6 @@
 package com.example.tiendafull.UI.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -62,7 +63,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
                     cartAdapter.setCart(cart.getItems());
                     updateTotalPrice(cart.getItems());
                 }
+                if (cart != null && cart.getItems().isEmpty()) {
+                    // El carrito está vacío o se eliminó
+                    cartAdapter.setCart(new ArrayList<>()); // Limpiar la lista del adapter
+                    updateTotalPrice(new ArrayList<>()); // Actualizar el precio total
+                    Toast.makeText(CartActivity.this, "Carrito vacío o eliminado", Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
 
         // Observar errores
@@ -78,8 +86,12 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
                 .setTitle("Cancelar Compra")
                 .setMessage("¿Estás seguro que deseas cancelar toda la compra?")
                 .setPositiveButton("Sí", (dialog, which) -> {
-                    cartViewModel.clearCart();
-                    cartAdapter.notifyDataSetChanged();
+
+                    cartViewModel.deleteCart();
+                    Intent x =new Intent(this, MainActivity.class);
+                    startActivity(x);
+
+
                     Toast.makeText(CartActivity.this, "Compra cancelada", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("No", null)
@@ -99,5 +111,5 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     public void onProductClick(String productId) {
         cartViewModel.removeProductFromCart(Integer.parseInt(productId));
         Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
-    }
+}
 }

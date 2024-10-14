@@ -25,6 +25,9 @@ public interface CartService {
     @HTTP(method = "DELETE", path = "cart/delete_item/", hasBody = true)
     Call<DeleteProductResponse> delete_item(@Body DeleteProductRequest deleteProductRequest);
 
+    @HTTP(method = "DELETE", path = "cart/delete_cart/")
+    Call<String> delete_cart();
+
 
 
 

@@ -81,6 +81,7 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getActivity(), "Bienvenido " + userInfo, Toast.LENGTH_SHORT).show();
                     Intent x = new Intent(getContext(), MainActivity.class);
                     startActivity(x);
+                    getActivity().finish();
                 }
             }
         });
