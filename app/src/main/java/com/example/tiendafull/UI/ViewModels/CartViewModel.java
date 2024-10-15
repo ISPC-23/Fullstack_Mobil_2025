@@ -11,6 +11,7 @@ import com.example.tiendafull.UI.Models.AddProductRequest;
 import com.example.tiendafull.UI.Models.Cart;
 import com.example.tiendafull.UI.Models.CartDetail;
 import com.example.tiendafull.UI.Models.DeleteProductResponse;
+import com.example.tiendafull.UI.Models.Item;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.Repository.CartRepository;
 
@@ -40,7 +41,7 @@ public class CartViewModel extends ViewModel {
         return errorLiveData;
     }
 
-    // Obtener carrito desde el backend
+
     public void getCart() {
 
 
@@ -62,7 +63,6 @@ public class CartViewModel extends ViewModel {
         });
     }
 
-    // Agregar producto al carrito
     public void addProductToCart(int id_producto, int cantidad) {
 
 
@@ -85,26 +85,26 @@ public class CartViewModel extends ViewModel {
         });
     }
 
-    // Quitar producto del carrito
+
     public void removeProductFromCart(int productId) {
-        // Primero, obtener el carrito del usuario
+
         cartRepository.getCart().enqueue(new Callback<Cart>() {
             @Override
             public void onResponse(Call<Cart> call, Response<Cart> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Cart cart = response.body();
 
-                    // Buscar el item correspondiente al productId
-                    boolean itemFound = false; // Para verificar si se encontró el item
+
+                    boolean itemFound = false;
 
                     for (CartDetail item : cart.getItems()) {
-                        // Compara el ID del producto con el productId
+
                         if (item.getProducto().getId() == productId) {
-                            itemFound = true; // Marcamos que se encontró el item
+                            itemFound = true;
                             int itemId = item.getId();
 
 
-                            // Hacer la solicitud para eliminar el producto
+
                             cartRepository.removeProductFromCart(itemId).enqueue(new Callback<DeleteProductResponse>() {
                                 @Override
                                 public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
@@ -112,37 +112,51 @@ public class CartViewModel extends ViewModel {
                                         Log.i("MENSAJE", "onResponse: " + response.body().toString());
                                         getCart();
                                     } else {
-                                        // Manejo del error en la eliminación
+
                                         errorLiveData.setValue("Error al quitar producto");
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
-                                    // Manejo del error
+
                                     errorLiveData.setValue("Error en la eliminación: " + t.getMessage());
                                 }
                             });
-                            break; // Salimos del bucle una vez que encontramos el producto
+                            break;
                         }
                     }
 
-                    // Si no se encontró el item
+
                     if (!itemFound) {
                         errorLiveData.setValue("Producto no encontrado en el carrito");
                     }
                 } else {
-                    // Manejo de errores si la respuesta no fue exitosa
+
                     errorLiveData.setValue("Error al obtener el carrito");
                 }
             }
 
             @Override
             public void onFailure(Call<Cart> call, Throwable t) {
-                // Manejo del error
+
                 errorLiveData.setValue("Error de red: " + t.getMessage());
             }
         });
+    }
+
+    public int getCartTotal(){
+        Cart actual = cartLiveData.getValue();
+        if (actual != null && actual.getItems()!= null) {
+        int total= 0;
+        for (CartDetail item : actual.getItems()){
+            total+= item.getProducto().getPrecio()* item.getCantidad();
+        }
+        return total;}
+        return 0;
+
+
+
     }
 
     public void deleteCart() {
@@ -160,6 +174,7 @@ public class CartViewModel extends ViewModel {
                 errorLiveData.setValue("Error de red: " + t.getMessage());
             }
 });
+
 
 }
 }

@@ -11,6 +11,7 @@ public class SessionManager {
     private  String AUTH_TOKEN = "auth_token";
     private  String USERNAME = "username";
     private  String IS_ADMIN = "is_admin"; // Nueva clave para isAdmin
+    private PurchaseConfirmResponse lastPurchase;
 
     public SessionManager(Context context) {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -21,6 +22,13 @@ public class SessionManager {
             instance = new SessionManager(context.getApplicationContext());
         }
         return instance;
+    }
+
+    public void setLastPurchase(PurchaseConfirmResponse purchase){
+        this.lastPurchase = purchase;
+    }
+    public  PurchaseConfirmResponse getLastPurchase(){
+        return lastPurchase;
     }
 
     // Guardar el token de autenticación
