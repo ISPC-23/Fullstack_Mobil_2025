@@ -14,14 +14,18 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.UserViewModel;
+
+import org.intellij.lang.annotations.RegExp;
 
 public class RegisterFragment extends Fragment {
 
     private EditText etEmail;
     private EditText etPassword;
+    private EditText etPassword2;
     private EditText etFirstName; // Campo para el nombre
     private EditText etLastName;  // Campo para el apellido
     private EditText etNroDocumento; // Campo para el número de documento
@@ -48,6 +52,7 @@ public class RegisterFragment extends Fragment {
 
         etEmail = view.findViewById(R.id.et_email);
         etPassword = view.findViewById(R.id.et_password);
+        etPassword2 = view.findViewById(R.id.et_confirm_password);
         etFirstName = view.findViewById(R.id.et_first_name);
         etLastName = view.findViewById(R.id.et_last_name);
         etNroDocumento = view.findViewById(R.id.et_nro_documento);
@@ -84,50 +89,109 @@ public class RegisterFragment extends Fragment {
 
     private void attemptRegister() {
         String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+        String password = etPassword.getText().toString();
+        String password2 = etPassword2.getText().toString();
         String firstName = etFirstName.getText().toString().trim();
         String lastName = etLastName.getText().toString().trim();
         String nroDocumentoStr = etNroDocumento.getText().toString().trim();
         String telefono = etTelefono.getText().toString().trim();
 
-        // Validar los campos
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Por favor ingrese su correo");
             etEmail.requestFocus();
             return;
+        } else if (!isValidEmail(email)) {
+            etEmail.setError("El correo no es válido");
+            etEmail.requestFocus();
+            return;
         }
+
         if (TextUtils.isEmpty(password)) {
             etPassword.setError("Por favor ingrese su contraseña");
             etPassword.requestFocus();
             return;
+        } else if (password.contains(" ")) {
+            etPassword.setError("No se permiten espacios");
+            etPassword.requestFocus();
+            return;
+        } else if (!isValidPassword(password)) {
+            etPassword.setError("Debe tener al menos 8 caracteres, minúscula, mayúscula, número y símbolo");
+            etPassword.requestFocus();
+            return;
+        } else if (!password.equals(password2)) {
+            etPassword2.setError("Las contraseñas no coinciden");
+            etPassword2.requestFocus();
+            return;
         }
+
         if (TextUtils.isEmpty(firstName)) {
             etFirstName.setError("Por favor ingrese su nombre");
             etFirstName.requestFocus();
             return;
+        } else if (!isValidName(firstName)) {
+            etFirstName.setError("Nombre no válido");
+            etFirstName.requestFocus();
+            return;
         }
+
         if (TextUtils.isEmpty(lastName)) {
             etLastName.setError("Por favor ingrese su apellido");
             etLastName.requestFocus();
             return;
+        } else if (!isValidName(lastName)) {
+            etLastName.setError("Apellido no válido");
+            etLastName.requestFocus();
+            return;
         }
+
         if (TextUtils.isEmpty(nroDocumentoStr)) {
             etNroDocumento.setError("Por favor ingrese su número de documento");
             etNroDocumento.requestFocus();
             return;
+        } else if (!isValidDocument(nroDocumentoStr)) {
+            etNroDocumento.setError("Formato no válido. Ingrese números sin puntos");
+            etNroDocumento.requestFocus();
+            return;
         }
+
         if (TextUtils.isEmpty(telefono)) {
             etTelefono.setError("Por favor ingrese su teléfono");
+            etTelefono.requestFocus();
+            return;
+        } else if (!isValidPhone(telefono)) {
+            etTelefono.setError("Sin 0 y 15, sólo números: 3515432123");
             etTelefono.requestFocus();
             return;
         }
 
         long nroDocumento = Long.parseLong(nroDocumentoStr);
-
-        // Llamar a la función de registro en el ViewModel
         userViewModel.register(email, password, firstName, lastName, nroDocumento, telefono);
+        Toast.makeText(getContext(), "Registro enviado", Toast.LENGTH_LONG).show();
 
+    }
 
+    private boolean isValidPassword(String password) {
+        String pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$";
+        return password.matches(pattern);
+    }
 
+    private boolean isValidEmail(String email) {
+        String pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return email != null && email.matches(pattern);
+    }
+
+    private boolean isValidName(String name) {
+        String pattern = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$";
+        return name != null && name.matches(pattern);
+    }
+
+    private boolean isValidDocument(String document) {
+        String pattern = "^[0-9]{7,8}$";
+        return document != null && document.matches(pattern);
+    }
+
+    private boolean isValidPhone(String phone) {
+        String pattern = "^[0-9]{10}$";
+        return phone != null && phone.matches(pattern);
     }
 }
