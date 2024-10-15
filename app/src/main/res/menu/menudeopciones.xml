@@ -7,7 +7,8 @@
         android:title="Productos" />
     <item
         android:id="@+id/carrito"
-        android:title="carrito"
+        android:icon="@drawable/cart"
+        android:title="Carrito"
         app:showAsAction="always" />
     <item
         android:id="@+id/salir"
