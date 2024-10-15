@@ -23,11 +23,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private List<CartDetail> products;
     private Context context;
     private OnProductCartClickListener listener;
+    private Boolean mostrarBoton;
 
-    public CartAdapter(List<CartDetail> products, Context context,OnProductCartClickListener listener) {
+    public CartAdapter(List<CartDetail> products, Context context,OnProductCartClickListener listener, Boolean mostrarBoton) {
         this.products = products;
         this.context = context;
-        this.listener=listener;// Guarda una referencia al CartViewModel
+        this.listener=listener;
+        this.mostrarBoton=mostrarBoton;
     }
 
     @NonNull
@@ -81,14 +83,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     .placeholder(R.drawable.ic_launcher_foreground)
                     .error(R.drawable.ic_launcher_foreground)
                     .into(iv1);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onProductClick(String.valueOf(product.getProducto().getId()));
+            if (mostrarBoton){
+                button.setVisibility(View.VISIBLE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listener.onProductClick(String.valueOf(product.getProducto().getId()));
 
 
-                }
-            });
+                    }
+                });
+
+            }
+            else {
+                button.setVisibility(View.GONE);
+            }
 
 
         }

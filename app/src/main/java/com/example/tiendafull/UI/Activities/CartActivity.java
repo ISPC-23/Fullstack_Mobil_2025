@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        // Configuro Toolbar
+
         Toolbar toolbar = findViewById(R.id.toolbar_cart);
         setSupportActionBar(toolbar);
 
@@ -53,17 +54,17 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
 
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
 
-        // Inicializar el ViewModel
+
         SessionManager sessionManager = SessionManager.getInstance(this);
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
-        cartAdapter = new CartAdapter(this.arrayList, this, this);
+        cartAdapter = new CartAdapter(this.arrayList, this, this, true);
         rvCartItems.setAdapter(cartAdapter);
 
-        // Obtener el carrito al iniciar la actividad
+
         cartViewModel.getCart();
 
-        // Observar los cambios en el carrito
+
         cartViewModel.getCartLiveData().observe(this, new Observer<Cart>() {
             @Override
             public void onChanged(Cart cart) {
@@ -82,14 +83,19 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
 
         });
 
-        // Observar errores
+
         cartViewModel.getErrorLiveData().observe(this, error -> {
             // Mostrar mensaje de error (puedes usar un Toast o un Snackbar)
             Log.i("MENSAJE", "onResponse:Error " + error);
         });
 
-        b1.setOnClickListener(view ->
-                Toast.makeText(CartActivity.this, "COMPRA FINALIZADA", Toast.LENGTH_SHORT).show());
+       b1.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent x =new Intent(CartActivity.this, PurchaseActivity.class);
+               startActivity(x);
+           }
+       });
 
         b2.setOnClickListener(v -> new AlertDialog.Builder(CartActivity.this)
                 .setTitle("Cancelar Compra")
@@ -120,7 +126,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.salir) {
-            // Dirige al MainActivity con el flag de Logout
+
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("LOGOUT", true); // Envía una bandera para indicar que queremos ir al LogoutFragment
             startActivity(intent);

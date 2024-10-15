@@ -3,7 +3,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,20 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.tiendafull.R;
-
-import com.example.tiendafull.UI.Adapter.AdaptadorProducto;
-import com.example.tiendafull.UI.Models.Products;
-import com.example.tiendafull.UI.Models.SessionManager;
-import com.example.tiendafull.UI.ViewModels.ProductViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
     private Toolbar toolbar1;
@@ -45,18 +31,18 @@ public class MainActivity extends AppCompatActivity  {
         toolbar1 = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar1);
 
-        // Comprobar si la actividad fue lanzada con el flag "LOGOUT"
+
         boolean shouldLogout = getIntent().getBooleanExtra("LOGOUT", false);
 
         if (shouldLogout) {
-            // Navegar al LogoutFragment si el flag está activo
+
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame2, new LogoutFragment())
+                    .replace(R.id.frame3, new LogoutFragment())
                     .commit();
         } else if (savedInstanceState == null) {
-            // Mostrar el ProductFragment de manera predeterminada
+
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame2, new ProductFragment())
+                    .replace(R.id.frame3, new ProductFragment())
                     .commit();
         }
     }
@@ -69,10 +55,10 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.productos) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame2, new ProductFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame3, new ProductFragment()).commit();
             return true;
         } else if (item.getItemId() == R.id.salir) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame2, new LogoutFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame3, new LogoutFragment()).commit();
             return true;
         }
      else if (item.getItemId() == R.id.carrito) {
