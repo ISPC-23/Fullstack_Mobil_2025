@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.UserViewModel;
 
-import org.intellij.lang.annotations.RegExp;
 
 public class RegisterFragment extends Fragment {
 
@@ -171,17 +170,17 @@ public class RegisterFragment extends Fragment {
     }
 
     private boolean isValidPassword(String password) {
-        String pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$";
+        String pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[¬~!¡@#$%^&*()_+-=\\[\\]{};':\"|,.<>/¿?])[A-Za-z0-9¬~!¡@#$%^&*()_+-=\\[\\]{};':\"|,.<>/¿?]{8,32}$";
         return password.matches(pattern);
     }
 
     private boolean isValidEmail(String email) {
-        String pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,64}$";
         return email != null && email.matches(pattern);
     }
 
     private boolean isValidName(String name) {
-        String pattern = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$";
+        String pattern = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,32}$";
         return name != null && name.matches(pattern);
     }
 
