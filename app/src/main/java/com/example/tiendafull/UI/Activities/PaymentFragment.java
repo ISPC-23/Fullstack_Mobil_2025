@@ -57,8 +57,9 @@ public class PaymentFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pagos.add("Tarjeta de Credito");
-        pagos.add("Tarjeta de Debito");
+        pagos.add("Tarjeta de Débito");
+        pagos.add("Tarjeta de Crédito");
+
 
         recyclerView=view.findViewById(R.id.recyclerViewPurchaseItems);
         totalTextView=view.findViewById(R.id.totalPurchaseAmount);
@@ -69,6 +70,11 @@ public class PaymentFragment extends Fragment {
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setText(pagos);
             radioGroup.addView(radioButton);
+
+            if ("Tarjeta de Débito".equals(pagos)) {
+                radioButton.setChecked(true);
+            }
+
 
         }
 
