@@ -35,7 +35,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     private CartAdapter cartAdapter;
     private ArrayList<CartDetail> arrayList = new ArrayList<>();
     private TextView tvTotalPrice;
-    private Button b1, b2;
+    private Button checkoutButton;
     private Toolbar toolbar1;
 
     @Override
@@ -43,17 +43,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-
         Toolbar toolbar = findViewById(R.id.toolbar_cart);
         setSupportActionBar(toolbar);
 
-        b1 = findViewById(R.id.checkoutButton);
-        b2 = findViewById(R.id.btnCancelarCompra);
+        checkoutButton = findViewById(R.id.checkoutButton);
         rvCartItems = findViewById(R.id.recyclerViewCart);
         tvTotalPrice = findViewById(R.id.totalPriceTextView);
 
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
-
 
         SessionManager sessionManager = SessionManager.getInstance(this);
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
@@ -61,56 +58,46 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         cartAdapter = new CartAdapter(this.arrayList, this, this, true);
         rvCartItems.setAdapter(cartAdapter);
 
-
         cartViewModel.getCart();
-
 
         cartViewModel.getCartLiveData().observe(this, new Observer<Cart>() {
             @Override
             public void onChanged(Cart cart) {
                 if (cart != null) {
-                    Log.i("MENSAJE", "onResponse: ok" + cart);
-                    cartAdapter.setCart(cart.getItems());
-                    updateTotalPrice(cart.getItems());
-                }
-                if (cart != null && cart.getItems().isEmpty()) {
-                    // El carrito está vacío o se eliminó
-                    cartAdapter.setCart(new ArrayList<>()); // Limpiar la lista del adapter
-                    updateTotalPrice(new ArrayList<>()); // Actualizar el precio total
-                    Toast.makeText(CartActivity.this, "Carrito vacío o eliminado", Toast.LENGTH_SHORT).show();
+                    if (cart.getItems().isEmpty()) {
+                        // El carrito está vacío o se eliminó
+                        cartAdapter.setCart(new ArrayList<>()); // Limpiar la lista del adapter
+                        updateTotalPrice(new ArrayList<>()); // Actualizar el precio total
+                        Toast.makeText(CartActivity.this, "Carrito vacío o eliminado", Toast.LENGTH_SHORT).show();
+
+                        // Deshabilitar el botón Checkout
+                        checkoutButton.setEnabled(false);
+                    } else {
+                        // Si el carrito tiene productos, actualiza la lista y el precio
+                        cartAdapter.setCart(cart.getItems());
+                        updateTotalPrice(cart.getItems());
+
+                        // Habilitar el botón Checkout
+                        checkoutButton.setEnabled(true);
+                    }
+                } else {
+                    // En caso de que el carrito sea nulo, también deshabilitar el botón
+                    checkoutButton.setEnabled(false);
                 }
             }
-
         });
 
-
         cartViewModel.getErrorLiveData().observe(this, error -> {
-            // Mostrar mensaje de error (puedes usar un Toast o un Snackbar)
             Log.i("MENSAJE", "onResponse:Error " + error);
         });
 
-       b1.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Intent x =new Intent(CartActivity.this, PurchaseActivity.class);
-               startActivity(x);
-           }
-       });
-
-        b2.setOnClickListener(v -> new AlertDialog.Builder(CartActivity.this)
-                .setTitle("Cancelar Compra")
-                .setMessage("¿Estás seguro que deseas cancelar toda la compra?")
-                .setPositiveButton("Sí", (dialog, which) -> {
-
-                    cartViewModel.deleteCart();
-                    Intent x =new Intent(this, MainActivity.class);
-                    startActivity(x);
-
-
-                    Toast.makeText(CartActivity.this, "Compra cancelada", Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("No", null)
-                .show());
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent x = new Intent(CartActivity.this, PurchaseActivity.class);
+                startActivity(x);
+            }
+        });
     }
 
     @Override
@@ -125,8 +112,13 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             return true;
+        } else if (item.getItemId() == R.id.compras) {
+            // Abre MainActivity y pasa un extra indicando que queremos ver UserPurchasesFragment
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("SHOW_PURCHASES_FRAGMENT", true);
+            startActivity(intent);
+            return true;
         } else if (item.getItemId() == R.id.salir) {
-
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("LOGOUT", true); // Envía una bandera para indicar que queremos ir al LogoutFragment
             startActivity(intent);
@@ -134,6 +126,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void updateTotalPrice(List<CartDetail> products) {
         double total = 0.0;
         for (CartDetail product : products) {
@@ -146,5 +139,5 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     public void onProductClick(String productId) {
         cartViewModel.removeProductFromCart(Integer.parseInt(productId));
         Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
-}
+    }
 }

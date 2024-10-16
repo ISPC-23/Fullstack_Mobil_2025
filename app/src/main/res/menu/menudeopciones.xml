@@ -11,6 +11,9 @@
         android:title="Carrito"
         app:showAsAction="always" />
     <item
+        android:id="@+id/compras"
+        android:title="Mis Compras" />
+    <item
         android:id="@+id/salir"
         android:title="Salir" />
 </menu>

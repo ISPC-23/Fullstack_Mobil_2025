@@ -48,6 +48,9 @@ public class PurchaseActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.salir) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frame3, new LogoutFragment()).commit();
             return true;
+        }  else if (item.getItemId() == R.id.compras) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame3, new UserPurchasesFragment()).commit();
+            return true;
         }
         else if (item.getItemId() == R.id.carrito) {
             Intent x =new Intent(this, CartActivity.class);

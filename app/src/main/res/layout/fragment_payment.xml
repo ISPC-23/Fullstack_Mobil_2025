@@ -38,5 +38,10 @@
         android:layout_height="wrap_content"
         android:text="Confirm Purchase"
         android:textAllCaps="false" />
+    <Button
+        android:id="@+id/btnCancelarCompra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Botón de Arrepentimiento" />
 
 </LinearLayout>
