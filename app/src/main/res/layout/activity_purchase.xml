@@ -6,6 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.Activities.PurchaseActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarPurchase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="?attr/actionBarTheme"
+        tools:layout_editor_absoluteX="1dp" />
 
     <FrameLayout
         android:id="@+id/frame3"
@@ -18,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbarPurchase">
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
