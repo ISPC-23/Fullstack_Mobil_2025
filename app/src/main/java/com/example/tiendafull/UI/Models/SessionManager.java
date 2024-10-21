@@ -12,7 +12,7 @@ public class SessionManager {
     private  String USERNAME = "username";
     private  String IS_ADMIN = "is_admin"; // Nueva clave para isAdmin
     private  String TOKEN_EXPIRATION_TIME = "token_expiration_time";
-    private  long TOKEN_LIFETIME =  60*1000;
+    private long TOKEN_LIFETIME = 60 * 60 * 1000;
     private PurchaseConfirmResponse lastPurchase;
 
     public SessionManager(Context context) {
