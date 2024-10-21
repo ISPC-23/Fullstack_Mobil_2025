@@ -1,5 +1,7 @@
 package com.example.tiendafull.UI.ViewModels;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -7,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.tiendafull.UI.Activities.AuthActivity;
 import com.example.tiendafull.UI.Models.AddProductRequest;
 import com.example.tiendafull.UI.Models.Cart;
 import com.example.tiendafull.UI.Models.CartDetail;
@@ -22,6 +25,7 @@ import retrofit2.Response;
 public class CartViewModel extends ViewModel {
     private MutableLiveData<Cart> cartLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> sessionExpiredLiveData = new MutableLiveData<>();
     private CartRepository cartRepository;
     private SessionManager sessionManager;
 
@@ -41,8 +45,18 @@ public class CartViewModel extends ViewModel {
         return errorLiveData;
     }
 
+    public LiveData<Boolean> getSessionExpiredLiveData() {
+        return sessionExpiredLiveData;
+    }
+
+
 
     public void getCart() {
+        if (sessionManager.isTokenExpired()) {
+            errorLiveData.setValue("Sesión expirada");
+            sessionExpiredLiveData.setValue(true);
+            return;
+        }
 
 
         cartRepository.getCart().enqueue(new Callback<Cart>() {
@@ -64,7 +78,11 @@ public class CartViewModel extends ViewModel {
     }
 
     public void addProductToCart(int id_producto, int cantidad) {
-
+        if (sessionManager.isTokenExpired()) {
+            errorLiveData.setValue("Sesión expirada");
+            sessionExpiredLiveData.setValue(true);
+            return;
+        }
 
         cartRepository.addProductToCart(id_producto, cantidad).enqueue(new Callback<String>() {
             @Override
@@ -87,6 +105,12 @@ public class CartViewModel extends ViewModel {
 
 
     public void removeProductFromCart(int productId) {
+        if (sessionManager.isTokenExpired()) {
+            errorLiveData.setValue("Sesión expirada");
+            sessionExpiredLiveData.setValue(true);
+
+            return;
+        }
 
         cartRepository.getCart().enqueue(new Callback<Cart>() {
             @Override
@@ -160,6 +184,11 @@ public class CartViewModel extends ViewModel {
     }
 
     public void deleteCart() {
+        if (sessionManager.isTokenExpired()) {
+            errorLiveData.setValue("Sesión expirada");
+            sessionExpiredLiveData.setValue(true);
+            return;
+        }
 
         cartRepository.deleteCart().enqueue(new Callback<String>() {
             @Override

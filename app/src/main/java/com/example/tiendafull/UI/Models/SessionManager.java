@@ -11,6 +11,8 @@ public class SessionManager {
     private  String AUTH_TOKEN = "auth_token";
     private  String USERNAME = "username";
     private  String IS_ADMIN = "is_admin"; // Nueva clave para isAdmin
+    private  String TOKEN_EXPIRATION_TIME = "token_expiration_time";
+    private  long TOKEN_LIFETIME =  60*1000;
     private PurchaseConfirmResponse lastPurchase;
 
     public SessionManager(Context context) {
@@ -33,19 +35,33 @@ public class SessionManager {
 
     // Guardar el token de autenticación
     public void saveAuthToken(String token) {
+        long expirationTime = System.currentTimeMillis() + TOKEN_LIFETIME;
+        editor.putLong(TOKEN_EXPIRATION_TIME, expirationTime); // Guardar el tiempo de expiración
         editor.putString(AUTH_TOKEN, token);
         editor.apply();
     }
 
     // Obtener el token de autenticación
     public String getAuthToken() {
+        long expirationTime = sharedPreferences.getLong(TOKEN_EXPIRATION_TIME, 0);
+        if (System.currentTimeMillis() > expirationTime) {
+            clearSession(); // Eliminar el token si ha expirado
+            return null;
+        }
         return sharedPreferences.getString(AUTH_TOKEN, null);
+    }
+
+    public boolean isTokenExpired() {
+        long expirationTime = sharedPreferences.getLong(TOKEN_EXPIRATION_TIME, 0);
+        long currentTime = System.currentTimeMillis();
+        return (currentTime - expirationTime) >= TOKEN_LIFETIME;
     }
 
     // Limpiar el token de autenticación
     public void clearSession() {
         editor.remove(AUTH_TOKEN);
         editor.remove(IS_ADMIN);
+        editor.remove(TOKEN_EXPIRATION_TIME);
         editor.apply();
     }
 

@@ -22,6 +22,7 @@ public class PurchaseViewModel extends ViewModel {
     private MutableLiveData<PurchaseConfirmResponse> purchaseConfirmResponseMutableLiveData= new MutableLiveData<>();
     private MutableLiveData<String> purchaseErrorLiveData= new MutableLiveData<>();
     private MutableLiveData<List<Purchase>> purchaseListLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> sessionExpiredLiveData = new MutableLiveData<>();
 
     public PurchaseViewModel() {
     }
@@ -40,8 +41,16 @@ public class PurchaseViewModel extends ViewModel {
     public LiveData<List<Purchase>> getPurchaseListLiveData() {
         return purchaseListLiveData;
     }
+    public LiveData<Boolean> getSessionExpiredLiveData() {
+        return sessionExpiredLiveData;
+    }
 
     public void confirmPurchase(){
+        if (sessionManager.isTokenExpired()) {
+            purchaseErrorLiveData.setValue("Sesión expirada");
+            sessionExpiredLiveData.setValue(true);
+            return;
+        }
         purchaseRepository.confirmPurchase().enqueue(new Callback<PurchaseConfirmResponse>() {
             @Override
             public void onResponse(Call<PurchaseConfirmResponse> call, Response<PurchaseConfirmResponse> response) {
@@ -62,6 +71,11 @@ public class PurchaseViewModel extends ViewModel {
         });
     }
     public void fetchUserPurchases() {
+        if (sessionManager.isTokenExpired()) {
+            purchaseErrorLiveData.setValue("Sesión expirada");
+            sessionExpiredLiveData.setValue(true);
+            return;
+        }
         purchaseRepository.getUserPurchases().enqueue(new Callback<List<Purchase>>() {
             @Override
             public void onResponse(Call<List<Purchase>> call, Response<List<Purchase>> response) {

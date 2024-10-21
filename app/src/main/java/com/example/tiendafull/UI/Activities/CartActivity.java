@@ -1,5 +1,6 @@
 package com.example.tiendafull.UI.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,28 +61,51 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
 
         cartViewModel.getCart();
 
+        cartViewModel.getSessionExpiredLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSessionExpired) {
+                if (isSessionExpired != null && isSessionExpired) {
+                    // Mostrar la alerta de sesión expirada
+                    new AlertDialog.Builder(CartActivity.this)
+                            .setTitle("Sesión expirada")
+                            .setMessage("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.")
+                            .setCancelable(false) // Evita que el diálogo sea cancelable
+                            .setPositiveButton("Iniciar sesión", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Redirigir a AuthActivity
+                                    Intent intent = new Intent(CartActivity.this, AuthActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpiar la pila de actividades
+                                    startActivity(intent);
+                                }
+                            })
+                            .show();
+                }
+            }
+        });
+
         cartViewModel.getCartLiveData().observe(this, new Observer<Cart>() {
             @Override
             public void onChanged(Cart cart) {
                 if (cart != null) {
                     if (cart.getItems().isEmpty()) {
-                        // El carrito está vacío o se eliminó
-                        cartAdapter.setCart(new ArrayList<>()); // Limpiar la lista del adapter
-                        updateTotalPrice(new ArrayList<>()); // Actualizar el precio total
+
+                        cartAdapter.setCart(new ArrayList<>());
+                        updateTotalPrice(new ArrayList<>());
                         Toast.makeText(CartActivity.this, "Carrito vacío o eliminado", Toast.LENGTH_SHORT).show();
 
-                        // Deshabilitar el botón Checkout
+
                         checkoutButton.setEnabled(false);
                     } else {
-                        // Si el carrito tiene productos, actualiza la lista y el precio
+
                         cartAdapter.setCart(cart.getItems());
                         updateTotalPrice(cart.getItems());
 
-                        // Habilitar el botón Checkout
+
                         checkoutButton.setEnabled(true);
                     }
                 } else {
-                    // En caso de que el carrito sea nulo, también deshabilitar el botón
+
                     checkoutButton.setEnabled(false);
                 }
             }
@@ -113,14 +137,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.compras) {
-            // Abre MainActivity y pasa un extra indicando que queremos ver UserPurchasesFragment
+
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("SHOW_PURCHASES_FRAGMENT", true);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.salir) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("LOGOUT", true); // Envía una bandera para indicar que queremos ir al LogoutFragment
+            intent.putExtra("LOGOUT", true);
             startActivity(intent);
             return true;
         }

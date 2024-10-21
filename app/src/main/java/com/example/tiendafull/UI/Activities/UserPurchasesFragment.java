@@ -1,5 +1,7 @@
 package com.example.tiendafull.UI.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -63,9 +65,34 @@ public class UserPurchasesFragment extends Fragment {
                 }
             }
         });
+       purchaseViewModel.getSessionExpiredLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSessionExpired) {
+                if (isSessionExpired != null && isSessionExpired) {
+
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Sesión expirada")
+                            .setMessage("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.")
+                            .setCancelable(false) // Evita que el diálogo sea cancelable
+                            .setPositiveButton("Iniciar sesión", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Intent intent = new Intent(getContext(), AuthActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpiar la pila de actividades
+                                    startActivity(intent);
+                                }
+                            })
+                            .show();
+                }
+            }
+        });
+
         purchaseViewModel.fetchUserPurchases();
         handleBackPress();
     }
+
+
     private void handleBackPress() {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
