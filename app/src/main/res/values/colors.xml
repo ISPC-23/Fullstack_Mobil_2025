@@ -5,4 +5,5 @@
     <color name="blue_primary">#2196F3</color> <!-- Azul principal -->
     <color name="blue_dark">#1976D2</color> <!-- Azul oscuro (variante) -->
     <color name="blue_accent">#BBDEFB</color> <!-- Azul claro (acento) -->
+    <color name="blue_menu">#042035</color> <!-- Azul claro (acento) -->
 </resources>
