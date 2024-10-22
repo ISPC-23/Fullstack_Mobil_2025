@@ -17,13 +17,13 @@ import com.example.tiendafull.UI.Models.Products;
 
 import java.util.List;
 
-public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.AdaptadorProductHolder> {
+public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.AdaptadorProductHolder> {
 
     private List<Products> productList;
     private Context context;
     private OnProductClickListener listener;
 
-    public AdaptadorProducto(List<Products> productList, Context context, OnProductClickListener listener) {
+    public AdapterProduct(List<Products> productList, Context context, OnProductClickListener listener) {
         this.productList = productList;
         this.context= context;
         this.listener= listener;
@@ -32,7 +32,7 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Ad
     @NonNull
     @Override
     public AdaptadorProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.producto, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product, parent, false);
         return new AdaptadorProductHolder(view);
     }
 

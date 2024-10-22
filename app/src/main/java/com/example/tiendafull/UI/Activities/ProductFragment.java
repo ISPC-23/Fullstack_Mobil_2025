@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tiendafull.R;
-import com.example.tiendafull.UI.Adapter.AdaptadorProducto;
+import com.example.tiendafull.UI.Adapter.AdapterProduct;
 import com.example.tiendafull.UI.Models.Products;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.ProductViewModel;
@@ -24,9 +24,9 @@ import com.example.tiendafull.UI.ViewModels.ProductViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductFragment extends Fragment implements AdaptadorProducto.OnProductClickListener {
+public class ProductFragment extends Fragment implements AdapterProduct.OnProductClickListener {
     private ProductViewModel productViewModel;
-    private AdaptadorProducto productAdapter;
+    private AdapterProduct productAdapter;
     private RecyclerView recyclerView;
     private ArrayList<Products> listaproducts = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class ProductFragment extends Fragment implements AdaptadorProducto.OnPro
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         productViewModel.setSessionManager(sessionManager);
 
-        productAdapter = new AdaptadorProducto(this.listaproducts, getContext(), this);
+        productAdapter = new AdapterProduct(this.listaproducts, getContext(), this);
         recyclerView.setAdapter(productAdapter);
 
         productViewModel.fetchAllProducts();
