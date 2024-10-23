@@ -1,10 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.TiendaFull" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Base.Theme.TiendaFull" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/blue_primary</item> <!-- Color de fondo del Toolbar -->
         <item name="android:logo">@drawable/logo_tienda_login</item> <!-- Agrega el logo -->
     </style>
 
-    <style name="Theme.TiendaFull" parent="Base.Theme.TiendaFull" />
+    <style name="Theme.TiendaFull" parent="Base.Theme.TiendaFull">
+        <!-- Cambiar el color del texto del Toolbar a blanco -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Color blanco para el texto sobre el colorPrimario -->
+    </style>
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- RecyclerView para los productos del carrito -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPurchaseItems"
+        android:layout_width="377dp"
+        android:layout_height="384dp"
+        android:layout_marginBottom="16dp"
+        android:scrollbars="vertical" />
+
+    <!-- Total de la compra -->
+    <TextView
+        android:id="@+id/totalPurchaseAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total: $0.00"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <!-- RadioGroup para los métodos de pago -->
+    <RadioGroup
+        android:id="@+id/radioGroupPaymentMethods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Botón para confirmar la compra -->
+    <Button
+        android:id="@+id/confirmPurchaseButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm Purchase"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/btnCancelarCompra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Botón de Arrepentimiento" />
+
+</LinearLayout>

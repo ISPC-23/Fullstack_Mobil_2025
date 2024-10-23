@@ -9,7 +9,12 @@
     <string name="registrate">regístrate</string>
     <string name="recuperar_contraseña">Recuperar contraseña</string>
     <string name="productos">Nuestros Productos</string>
-    <string name="nombre_completo">Nombre Completo</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="nro_documento">Nro de Documento</string>
+    <string name="telefono">Teléfono</string>
     <string name="confirmar_contrasenia">Confirmar Contraseña</string>
     <string name="ya_tienes_cuenta">Si ya tienes una cuenta</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

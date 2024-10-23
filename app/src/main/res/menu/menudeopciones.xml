@@ -3,11 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/entrar"
-        android:title="Ingresar" />
-    <item
         android:id="@+id/productos"
         android:title="Productos" />
+    <item
+        android:id="@+id/carrito"
+        android:icon="@drawable/cart"
+        android:title="Carrito"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/compras"
+        android:title="Mis Compras" />
     <item
         android:id="@+id/contacto"
         android:title="Contacto" />
