@@ -14,6 +14,9 @@
         android:id="@+id/compras"
         android:title="Mis Compras" />
     <item
+        android:id="@+id/contacto"
+        android:title="Contacto" />
+    <item
         android:id="@+id/salir"
         android:title="Salir" />
 </menu>
