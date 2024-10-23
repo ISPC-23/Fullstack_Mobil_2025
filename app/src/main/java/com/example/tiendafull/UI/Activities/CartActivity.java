@@ -147,6 +147,11 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
             intent.putExtra("LOGOUT", true);
             startActivity(intent);
             return true;
+        } else if (item.getItemId() == R.id.contacto) {
+            Intent intent = new Intent(this, ContactActivity.class);
+            intent.putExtra("CONTACTO", true);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

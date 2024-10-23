@@ -56,7 +56,12 @@ public class PurchaseActivity extends AppCompatActivity {
             Intent x =new Intent(this, CartActivity.class);
             startActivity(x);
             return true;
-        }
+        } else if (item.getItemId() == R.id.contacto) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        intent.putExtra("CONTACTO", true);
+        startActivity(intent);
+        return true;
+    }
         return super.onOptionsItemSelected(item);
     }
 
