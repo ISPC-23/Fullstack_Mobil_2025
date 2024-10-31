@@ -47,7 +47,6 @@ public class ProductDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
 
         productName = view.findViewById(R.id.tvProductName);
@@ -66,17 +65,15 @@ public class ProductDetailFragment extends Fragment {
             @Override
             public void onChanged(Boolean isSessionExpired) {
                 if (isSessionExpired != null && isSessionExpired) {
-
                     new AlertDialog.Builder(getContext())
                             .setTitle("Sesión expirada")
                             .setMessage("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.")
-                            .setCancelable(false) // Evita que el diálogo sea cancelable
+                            .setCancelable(false)
                             .setPositiveButton("Iniciar sesión", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     Intent intent = new Intent(getContext(), AuthActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpiar la pila de actividades
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 }
                             })
@@ -88,17 +85,21 @@ public class ProductDetailFragment extends Fragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cartViewModel.addProductToCart(Integer.parseInt(productId),1);
+                cartViewModel.addProductToCart(Integer.parseInt(productId), 1);
+                sessionManager.incrementCartProductCount(); // Incrementar el conteo en SessionManager
                 Toast.makeText(getActivity(), "Agregado", Toast.LENGTH_SHORT).show();
-
+                updateCartIconColor();
             }
         });
+
         quitar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cartViewModel.removeProductFromCart(Integer.parseInt(productId));
+                sessionManager.decrementCartProductCount(); // Decrementar el conteo en SessionManager
                 Toast.makeText(getActivity(), "Eliminado", Toast.LENGTH_SHORT).show();
-                Log.i("VER","p"+productId );
+                Log.i("VER", "p" + productId);
+                updateCartIconColor();
             }
         });
 
@@ -113,14 +114,19 @@ public class ProductDetailFragment extends Fragment {
                     productName.setText(product.getModelo());
                     productDescription.setText(product.getDetalle());
                     productPrice.setText("$" + product.getPrecio());
-
-                    Glide.with(requireContext())
-                            .load(product.getImagen())
-                            .into(productImage);
+                    Glide.with(requireContext()).load(product.getImagen()).into(productImage);
                 }
             }
         });
 
         return view;
+    }
+
+    // Método para actualizar el color del ícono del carrito en MainActivity
+    private void updateCartIconColor() {
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null) {
+            activity.updateCartIconColor();
+        }
     }
 }

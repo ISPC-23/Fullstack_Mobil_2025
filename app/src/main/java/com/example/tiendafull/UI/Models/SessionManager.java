@@ -7,11 +7,12 @@ public class SessionManager {
     private static SessionManager instance;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private  String PREF_NAME = "session_pref";
-    private  String AUTH_TOKEN = "auth_token";
-    private  String USERNAME = "username";
-    private  String IS_ADMIN = "is_admin"; // Nueva clave para isAdmin
-    private  String TOKEN_EXPIRATION_TIME = "token_expiration_time";
+    private static final String PREF_NAME = "session_pref";
+    private static final String AUTH_TOKEN = "auth_token";
+    private static final String USERNAME = "username";
+    private static final String IS_ADMIN = "is_admin";
+    private static final String TOKEN_EXPIRATION_TIME = "token_expiration_time";
+    private static final String CART_PRODUCT_COUNT = "cart_product_count"; // Clave para el conteo del carrito
     private long TOKEN_LIFETIME = 60 * 60 * 1000;
     private PurchaseConfirmResponse lastPurchase;
 
@@ -19,6 +20,7 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
+
     public static synchronized SessionManager getInstance(Context context) {
         if (instance == null) {
             instance = new SessionManager(context.getApplicationContext());
@@ -26,17 +28,18 @@ public class SessionManager {
         return instance;
     }
 
-    public void setLastPurchase(PurchaseConfirmResponse purchase){
+    public void setLastPurchase(PurchaseConfirmResponse purchase) {
         this.lastPurchase = purchase;
     }
-    public  PurchaseConfirmResponse getLastPurchase(){
+
+    public PurchaseConfirmResponse getLastPurchase() {
         return lastPurchase;
     }
 
     // Guardar el token de autenticación
     public void saveAuthToken(String token) {
         long expirationTime = System.currentTimeMillis() + TOKEN_LIFETIME;
-        editor.putLong(TOKEN_EXPIRATION_TIME, expirationTime); // Guardar el tiempo de expiración
+        editor.putLong(TOKEN_EXPIRATION_TIME, expirationTime);
         editor.putString(AUTH_TOKEN, token);
         editor.apply();
     }
@@ -45,7 +48,7 @@ public class SessionManager {
     public String getAuthToken() {
         long expirationTime = sharedPreferences.getLong(TOKEN_EXPIRATION_TIME, 0);
         if (System.currentTimeMillis() > expirationTime) {
-            clearSession(); // Eliminar el token si ha expirado
+            clearSession();
             return null;
         }
         return sharedPreferences.getString(AUTH_TOKEN, null);
@@ -59,9 +62,7 @@ public class SessionManager {
 
     // Limpiar el token de autenticación
     public void clearSession() {
-        editor.remove(AUTH_TOKEN);
-        editor.remove(IS_ADMIN);
-        editor.remove(TOKEN_EXPIRATION_TIME);
+        editor.clear(); // Limpiar todas las preferencias
         editor.apply();
     }
 
@@ -71,16 +72,49 @@ public class SessionManager {
         editor.apply();
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         editor.putString(USERNAME, username);
         editor.apply();
     }
+
     public String getUsername() {
-        return sharedPreferences.getString(USERNAME, null); // Ajusta según cómo almacenes el nombre
+        return sharedPreferences.getString(USERNAME, null);
     }
 
     // Obtener el estado de isAdmin
     public boolean isAdmin() {
         return sharedPreferences.getBoolean(IS_ADMIN, false);
+    }
+
+    // Verificar si el carrito tiene productos
+    public boolean isCartNotEmpty() {
+        return getCartProductCount() > 0;
+    }
+
+    // Obtener el conteo de productos en el carrito
+    public int getCartProductCount() {
+        return sharedPreferences.getInt(CART_PRODUCT_COUNT, 0);
+    }
+
+    // Establecer el conteo de productos en el carrito
+    public void setCartProductCount(int count) {
+        editor.putInt(CART_PRODUCT_COUNT, count);
+        editor.apply();
+    }
+
+    // Incrementar el conteo de productos en el carrito
+    public void incrementCartProductCount() {
+        int count = getCartProductCount();
+        editor.putInt(CART_PRODUCT_COUNT, count + 1);
+        editor.apply();
+    }
+
+    // Decrementar el conteo de productos en el carrito
+    public void decrementCartProductCount() {
+        int count = getCartProductCount();
+        if (count > 0) {
+            editor.putInt(CART_PRODUCT_COUNT, count - 2); // Corrigiendo para disminuir en 1
+            editor.apply();
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.example.tiendafull.UI.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -38,6 +40,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     private TextView tvTotalPrice;
     private Button checkoutButton;
     private Toolbar toolbar1;
+    private MenuItem carritoItem; // Referencia al ítem del carrito en el menú
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +64,20 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
 
         cartViewModel.getCart();
 
+        // Observador para manejar la expiración de sesión
         cartViewModel.getSessionExpiredLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSessionExpired) {
                 if (isSessionExpired != null && isSessionExpired) {
-                    // Mostrar la alerta de sesión expirada
                     new AlertDialog.Builder(CartActivity.this)
                             .setTitle("Sesión expirada")
                             .setMessage("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.")
-                            .setCancelable(false) // Evita que el diálogo sea cancelable
+                            .setCancelable(false)
                             .setPositiveButton("Iniciar sesión", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // Redirigir a AuthActivity
                                     Intent intent = new Intent(CartActivity.this, AuthActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpiar la pila de actividades
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 }
                             })
@@ -84,28 +86,23 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
             }
         });
 
+        // Observador para obtener el carrito
         cartViewModel.getCartLiveData().observe(this, new Observer<Cart>() {
             @Override
             public void onChanged(Cart cart) {
                 if (cart != null) {
                     if (cart.getItems().isEmpty()) {
-
                         cartAdapter.setCart(new ArrayList<>());
                         updateTotalPrice(new ArrayList<>());
                         Toast.makeText(CartActivity.this, "Carrito vacío o eliminado", Toast.LENGTH_SHORT).show();
-
-
                         checkoutButton.setEnabled(false);
                     } else {
-
                         cartAdapter.setCart(cart.getItems());
                         updateTotalPrice(cart.getItems());
-
-
                         checkoutButton.setEnabled(true);
                     }
+                    updateCartIconColor(); // Actualizar el color del ícono al cambiar el carrito
                 } else {
-
                     checkoutButton.setEnabled(false);
                 }
             }
@@ -127,17 +124,19 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menudeopciones, menu);
+        carritoItem = menu.findItem(R.id.carrito); // Obtener referencia al ítem del carrito
+        updateCartIconColor(); // Llamada para actualizar el color del ícono al iniciar
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Lógica para los ítems del menú
         if (item.getItemId() == R.id.productos) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.compras) {
-
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("SHOW_PURCHASES_FRAGMENT", true);
             startActivity(intent);
@@ -156,6 +155,21 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         return super.onOptionsItemSelected(item);
     }
 
+    private void updateCartIconColor() {
+        if (carritoItem != null) {
+            Drawable icon = carritoItem.getIcon();
+            if (icon != null) {
+                if (arrayList.size() > 0) {
+                    // Si hay productos en el carrito, el ícono se muestra en rojo
+                    icon.setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
+                } else {
+                    // Si el carrito está vacío, el ícono se muestra en negro
+                    icon.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
+                }
+            }
+        }
+    }
+
     private void updateTotalPrice(List<CartDetail> products) {
         double total = 0.0;
         for (CartDetail product : products) {
@@ -168,5 +182,12 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
     public void onProductClick(String productId) {
         cartViewModel.removeProductFromCart(Integer.parseInt(productId));
         Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Actualizar el ícono del carrito cada vez que CartActivity vuelva a primer plano
+        updateCartIconColor();
     }
 }

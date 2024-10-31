@@ -193,8 +193,12 @@ public class CartViewModel extends ViewModel {
         cartRepository.deleteCart().enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()){
-                    getCart();
+                if (response.isSuccessful()) {
+                    // Actualizar la cantidad de productos en el carrito a cero
+                    sessionManager.setCartProductCount(0);
+
+                    // Notificar al observador para actualizar la interfaz de usuario
+                    getCart(); // Esto actualizará cartLiveData, lo que podría estar observándose en la UI
                 }
             }
 
@@ -202,8 +206,7 @@ public class CartViewModel extends ViewModel {
             public void onFailure(Call<String> call, Throwable t) {
                 errorLiveData.setValue("Error de red: " + t.getMessage());
             }
-});
+        });
+    }
 
-
-}
 }
