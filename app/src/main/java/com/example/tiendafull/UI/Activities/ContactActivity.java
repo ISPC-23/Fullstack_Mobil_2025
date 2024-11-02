@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,68 +20,78 @@ import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Models.SessionManager;
 
 public class ContactActivity extends AppCompatActivity {
-    private MenuItem carritoItem; // Referencia al ítem del carrito en el menú
+    private MenuItem carritoItem;
     private SessionManager sessionManager;
+    private EditText etName;
+    private EditText etEmail;
+    private Button btnSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
-        sessionManager = SessionManager.getInstance(this); // Inicializar SessionManager
+        sessionManager = SessionManager.getInstance(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar_contact);
         setSupportActionBar(toolbar);
+
+        etName = findViewById(R.id.editTextName);
+        etEmail = findViewById(R.id.editTextEmail);
+        btnSend = findViewById(R.id.buttonSend);
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attemptSendContactForm();
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menudeopciones, menu);
-        carritoItem = menu.findItem(R.id.carrito); // Obtener referencia al ítem del carrito
-        updateCartIconColor(); // Llamada para actualizar el color del ícono al iniciar
+        carritoItem = menu.findItem(R.id.carrito);
+        updateCartIconColor();
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.productos) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (item.getItemId() == R.id.salir) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("LOGOUT", true);
-            startActivity(intent);
-            return true;
-        } else if (item.getItemId() == R.id.compras) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("SHOW_PURCHASES_FRAGMENT", true);
-            startActivity(intent);
-            return true;
-        } else if (item.getItemId() == R.id.carrito) {
-            Intent x = new Intent(this, CartActivity.class);
-            startActivity(x);
-            return true;
-        } else if (item.getItemId() == R.id.contacto) {
-            Intent intent = new Intent(this, ContactActivity.class);
-            intent.putExtra("CONTACTO", true);
-            startActivity(intent);
-            return true;
+        switch (item.getItemId()) {
+            case R.id.productos:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.salir:
+                Intent intentSalir = new Intent(this, MainActivity.class);
+                intentSalir.putExtra("LOGOUT", true);
+                startActivity(intentSalir);
+                return true;
+            case R.id.compras:
+                Intent intentCompras = new Intent(this, MainActivity.class);
+                intentCompras.putExtra("SHOW_PURCHASES_FRAGMENT", true);
+                startActivity(intentCompras);
+                return true;
+            case R.id.carrito:
+                startActivity(new Intent(this, CartActivity.class));
+                return true;
+            case R.id.contacto:
+                Intent intentContacto = new Intent(this, ContactActivity.class);
+                intentContacto.putExtra("CONTACTO", true);
+                startActivity(intentContacto);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    // Método para actualizar el color del ícono del carrito
     private void updateCartIconColor() {
         if (carritoItem != null) {
             Drawable icon = carritoItem.getIcon();
             if (icon != null) {
-                // Verificar la cantidad de productos en el carrito
                 if (sessionManager.getCartProductCount() > 0) {
-                    // Si hay productos en el carrito, el ícono se muestra en rojo
                     icon.setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
                 } else {
-                    // Si el carrito está vacío, el ícono se muestra en negro
                     icon.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
                 }
             }
@@ -87,7 +101,30 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Actualizar el ícono del carrito cada vez que ContactActivity vuelva a primer plano
         updateCartIconColor();
+    }
+
+    private void attemptSendContactForm() {
+        String name = etName.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+
+        if (TextUtils.isEmpty(name)) {
+            etName.setError("Por favor ingrese su nombre");
+            etName.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(email)) {
+            etEmail.setError("Por favor ingrese su correo electrónico");
+            etEmail.requestFocus();
+            return;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Por favor ingrese un correo válido");
+            etEmail.requestFocus();
+            return;
+        }
+
+        Toast.makeText(this, "Formulario enviado correctamente", Toast.LENGTH_SHORT).show();
     }
 }

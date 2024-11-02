@@ -61,7 +61,7 @@
             android:padding="12dp" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/et_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -82,8 +82,9 @@
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/img" />
+            android:layout_height="279dp"
+            android:src="@drawable/mapas"
+            />
     </LinearLayout>
 
     <TextView
