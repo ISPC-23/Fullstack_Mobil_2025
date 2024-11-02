@@ -13,6 +13,7 @@
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/logo_description"
         android:src="@drawable/logo_tienda_login" />
 
     <TextView
@@ -21,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="LOGOUT"
+        android:text="@string/cerrar_sesion"
         android:textSize="30dp" />
 
     <Button
@@ -30,5 +31,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:backgroundTint="@color/blue_dark"
-        android:text="confirmar" />
+        android:text="@string/confirmar" />
 </LinearLayout>
