@@ -32,23 +32,21 @@ import com.example.tiendafull.UI.ViewModels.CartViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartActivity extends AppCompatActivity implements CartAdapter.OnProductCartClickListener {
-    private CartViewModel cartViewModel;
+public class CartActivity extends BaseActivity implements CartAdapter.OnProductCartClickListener {
+
     private RecyclerView rvCartItems;
     private CartAdapter cartAdapter;
     private ArrayList<CartDetail> arrayList = new ArrayList<>();
     private TextView tvTotalPrice;
     private Button checkoutButton;
-    private Toolbar toolbar1;
-    private MenuItem carritoItem; // Referencia al ítem del carrito en el menú
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setActivityContent(R.layout.activity_cart);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_cart);
-        setSupportActionBar(toolbar);
 
         checkoutButton = findViewById(R.id.checkoutButton);
         rvCartItems = findViewById(R.id.recyclerViewCart);
@@ -56,12 +54,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
 
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
 
-        SessionManager sessionManager = SessionManager.getInstance(this);
-        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
-        cartViewModel.setSessionManager(sessionManager);
         cartAdapter = new CartAdapter(this.arrayList, this, this, true);
         rvCartItems.setAdapter(cartAdapter);
-
         cartViewModel.getCart();
 
         // Observador para manejar la expiración de sesión
@@ -101,7 +95,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
                         updateTotalPrice(cart.getItems());
                         checkoutButton.setEnabled(true);
                     }
-                    updateCartIconColor(); // Actualizar el color del ícono al cambiar el carrito
+
                 } else {
                     checkoutButton.setEnabled(false);
                 }
@@ -121,54 +115,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menudeopciones, menu);
-        carritoItem = menu.findItem(R.id.carrito); // Obtener referencia al ítem del carrito
-        updateCartIconColor(); // Llamada para actualizar el color del ícono al iniciar
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Lógica para los ítems del menú
-        if (item.getItemId() == R.id.productos) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (item.getItemId() == R.id.compras) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("SHOW_PURCHASES_FRAGMENT", true);
-            startActivity(intent);
-            return true;
-        } else if (item.getItemId() == R.id.salir) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("LOGOUT", true);
-            startActivity(intent);
-            return true;
-        } else if (item.getItemId() == R.id.contacto) {
-            Intent intent = new Intent(this, ContactActivity.class);
-            intent.putExtra("CONTACTO", true);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
-    private void updateCartIconColor() {
-        if (carritoItem != null) {
-            Drawable icon = carritoItem.getIcon();
-            if (icon != null) {
-                if (arrayList.size() > 0) {
-                    // Si hay productos en el carrito, el ícono se muestra en rojo
-                    icon.setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
-                } else {
-                    // Si el carrito está vacío, el ícono se muestra en negro
-                    icon.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
-                }
-            }
-        }
-    }
+
 
     private void updateTotalPrice(List<CartDetail> products) {
         double total = 0.0;
@@ -184,10 +133,4 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnPro
         Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Actualizar el ícono del carrito cada vez que CartActivity vuelva a primer plano
-        updateCartIconColor();
-    }
 }

@@ -77,7 +77,7 @@ public class PaymentFragment extends Fragment {
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         purchaseViewModel = new ViewModelProvider(this).get(PurchaseViewModel.class);
         purchaseViewModel.setSessionManager(sessionManager);
-        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
 
         cartViewModel.getCartLiveData().observe(getViewLifecycleOwner(), new Observer<Cart>() {
@@ -97,6 +97,7 @@ public class PaymentFragment extends Fragment {
             public void onClick(View view) {
                 confirmButton.setEnabled(false);
                 purchaseViewModel.confirmPurchase();
+                cartViewModel.getCart();
             }
         });
 
@@ -120,8 +121,8 @@ public class PaymentFragment extends Fragment {
                 confirmButton.setEnabled(true);
                 if (purchaseConfirmResponse != null) {
                     // Limpia el carrito en SessionManager y actualiza el color del ícono
-                    sessionManager.setCartProductCount(0);
-                    ((MainActivity) requireActivity()).updateCartIconColor();
+
+
 
                     requireActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.frame3, new ResumeFragment())

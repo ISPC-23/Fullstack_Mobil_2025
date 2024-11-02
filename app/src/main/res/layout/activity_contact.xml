@@ -9,19 +9,6 @@
     tools:context="UI.Activities.ContactActivity">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_contact"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
-        android:background="?attr/colorPrimary"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/titleTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/ivlogo"
         android:layout_width="142dp"
@@ -94,9 +81,6 @@
         android:text="Contacto"
         android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ivlogo"
-        app:layout_constraintEnd_toEndOf="@+id/ivlogo"
-        app:layout_constraintStart_toStartOf="@+id/ivlogo"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_contact" />
+       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

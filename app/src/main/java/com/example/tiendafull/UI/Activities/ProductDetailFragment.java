@@ -57,7 +57,7 @@ public class ProductDetailFragment extends Fragment {
         quitar = view.findViewById(R.id.quitar);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
-        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
         productViewModel.setSessionManager(sessionManager);
 
@@ -88,7 +88,7 @@ public class ProductDetailFragment extends Fragment {
                 cartViewModel.addProductToCart(Integer.parseInt(productId), 1);
                 sessionManager.incrementCartProductCount(); // Incrementar el conteo en SessionManager
                 Toast.makeText(getActivity(), "Agregado", Toast.LENGTH_SHORT).show();
-                updateCartIconColor();
+                cartViewModel.getCart();
             }
         });
 
@@ -96,10 +96,9 @@ public class ProductDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 cartViewModel.removeProductFromCart(Integer.parseInt(productId));
-                sessionManager.decrementCartProductCount(); // Decrementar el conteo en SessionManager
                 Toast.makeText(getActivity(), "Eliminado", Toast.LENGTH_SHORT).show();
                 Log.i("VER", "p" + productId);
-                updateCartIconColor();
+                cartViewModel.getCart();
             }
         });
 
@@ -122,11 +121,4 @@ public class ProductDetailFragment extends Fragment {
         return view;
     }
 
-    // Método para actualizar el color del ícono del carrito en MainActivity
-    private void updateCartIconColor() {
-        MainActivity activity = (MainActivity) getActivity();
-        if (activity != null) {
-            activity.updateCartIconColor();
-        }
-    }
 }
