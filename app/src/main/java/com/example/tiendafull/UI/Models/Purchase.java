@@ -10,9 +10,14 @@ public class Purchase {
     private int total;
     private String fecha;
     private List<Item> detalle;
+    private boolean es_cancelada;
 
     public int getId() {
         return id;
+    }
+
+    public boolean isEs_cancelada() {
+        return es_cancelada;
     }
 
     public void setId(int id) {
@@ -67,7 +72,7 @@ public class Purchase {
         this.detalle = detalle;
     }
 
-    public Purchase(int id, String nro_factura, String email, String modo_pago, int total, String fecha, List<Item> detalle) {
+    public Purchase(int id, String nro_factura, String email, String modo_pago, int total, String fecha, List<Item> detalle, boolean es_cancelada) {
         this.id = id;
         this.nro_factura = nro_factura;
         this.email = email;
@@ -75,6 +80,7 @@ public class Purchase {
         this.total = total;
         this.fecha = fecha;
         this.detalle = detalle;
+        this.es_cancelada = false;
 
 
 

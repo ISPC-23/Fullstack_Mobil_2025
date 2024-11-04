@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.PurchaseAdapter;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserPurchasesFragment extends Fragment {
+public class UserPurchasesFragment extends Fragment implements PurchaseAdapter.OnCancelClickListener {
     private PurchaseViewModel purchaseViewModel;
     private RecyclerView purchaseRecyclerView;
     private PurchaseAdapter purchaseAdapter;
@@ -54,7 +55,7 @@ public class UserPurchasesFragment extends Fragment {
         purchaseViewModel = new ViewModelProvider(this).get(PurchaseViewModel.class);
         SessionManager sessionManager =SessionManager.getInstance(getContext());
         purchaseViewModel.setSessionManager(sessionManager);
-        purchaseAdapter = new PurchaseAdapter(this.listacompras, getContext());
+        purchaseAdapter = new PurchaseAdapter(this.listacompras, getContext(), this);
         purchaseRecyclerView.setAdapter(purchaseAdapter);
 
         purchaseViewModel.getPurchaseListLiveData().observe(getViewLifecycleOwner(), new Observer<List<Purchase>>() {
@@ -109,4 +110,18 @@ public class UserPurchasesFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
+    @Override
+    public void onCancelClick(String Id) {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Cancelar Compra")
+                .setMessage("¿Estás seguro que deseas cancelar toda la compra?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    purchaseViewModel.cancelPurchase(Id);
+                    Toast.makeText(getContext(), "Compra Cancelada", Toast.LENGTH_SHORT).show();
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+                }
 }
+
