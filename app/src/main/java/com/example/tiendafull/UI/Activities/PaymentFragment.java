@@ -35,7 +35,6 @@ public class PaymentFragment extends Fragment {
     private CartAdapter cartAdapter;
     private TextView totalTextView;
     private Button confirmButton;
-    private Button cancelButton;
     private RadioGroup radioGroup;
     private ArrayList<String> pagos = new ArrayList<>();
 
@@ -58,7 +57,6 @@ public class PaymentFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewPurchaseItems);
         totalTextView = view.findViewById(R.id.totalPurchaseAmount);
         confirmButton = view.findViewById(R.id.confirmPurchaseButton);
-        cancelButton = view.findViewById(R.id.btnCancelarCompra);
         radioGroup = view.findViewById(R.id.radioGroupPaymentMethods);
 
         for (String pagos : pagos) {
@@ -101,19 +99,7 @@ public class PaymentFragment extends Fragment {
             }
         });
 
-        cancelButton.setOnClickListener(v -> new AlertDialog.Builder(requireContext())
-                .setTitle("Cancelar Compra")
-                .setMessage("¿Estás seguro que deseas cancelar toda la compra?")
-                .setPositiveButton("Sí", (dialog, which) -> {
-                    cartViewModel.deleteCart();  // Borra el carrito
-                    Toast.makeText(getContext(), "Compra cancelada", Toast.LENGTH_SHORT).show();
 
-                    Intent x = new Intent(requireActivity(), MainActivity.class);
-                    startActivity(x);
-                })
-                .setNegativeButton("No", null)
-                .show()
-        );
 
         purchaseViewModel.getPurchaseLiveData().observe(getViewLifecycleOwner(), new Observer<PurchaseConfirmResponse>() {
             @Override

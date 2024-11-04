@@ -58,7 +58,7 @@ public class ResumeFragment extends Fragment {
         PurchaseConfirmResponse lastPurchase = sessionManager.getLastPurchase();
 
         if (lastPurchase != null) {
-            purchaseIdTextView.setText("Purchase ID: " + lastPurchase.getPurchase().getId());
+            purchaseIdTextView.setText("Cancelada: " + lastPurchase.getPurchase().isEs_cancelada());
             purchaseDateTextView.setText("Numero de Factura: " + lastPurchase.getPurchase().getNro_factura());
             totalAmountTextView.setText("Total: $" + lastPurchase.getPurchase().getTotal());
             purchasedItemsTextView.setText("Fecha: " + lastPurchase.getPurchase().getFecha());
