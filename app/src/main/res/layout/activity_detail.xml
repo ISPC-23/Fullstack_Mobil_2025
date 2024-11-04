@@ -201,7 +201,7 @@
             android:layout_marginBottom="8dp"
             android:backgroundTint="#FF5722"
             android:onClick="retornar"
-            android:text="Volver"
+            android:text="@string/volver"
             android:textColorLink="#FF5722" />
 
     </LinearLayout>

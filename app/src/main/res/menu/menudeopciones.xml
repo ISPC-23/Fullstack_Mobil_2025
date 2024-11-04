@@ -9,6 +9,7 @@
         android:id="@+id/carrito"
         android:icon="@drawable/cart"
         android:title="Carrito"
+        android:contentDescription="@string/carrito"
         app:showAsAction="always" />
     <item
         android:id="@+id/compras"

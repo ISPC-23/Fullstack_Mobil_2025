@@ -43,6 +43,6 @@
         android:id="@+id/cancelarCompra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cancelar Compra" />
+        android:text="@string/cancelar_compra" />
 
 </LinearLayout>

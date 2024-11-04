@@ -9,7 +9,7 @@
         android:id="@+id/tvProductName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre del Producto"
+        android:text="@string/nombre_producto"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
@@ -25,14 +25,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Descripción"/>
+        android:text="@string/descripcion"/>
 
     <TextView
         android:id="@+id/tvProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Precio"/>
+        android:text="@string/precio"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,13 +44,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="agregar" />
+            android:text="@string/agregar" />
 
         <Button
             android:id="@+id/quitar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="quitar" />
+            android:text="@string/quitar" />
     </LinearLayout>
 </LinearLayout>

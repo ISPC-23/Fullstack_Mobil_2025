@@ -36,7 +36,7 @@
         android:id="@+id/confirmPurchaseButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm Purchase"
+        android:text="@string/confirmar_compra"
         android:textAllCaps="false" />
 
 </LinearLayout>
