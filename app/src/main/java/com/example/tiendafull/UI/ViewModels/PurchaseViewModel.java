@@ -1,17 +1,13 @@
 package com.example.tiendafull.UI.ViewModels;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
+import com.example.tiendafull.UI.Models.CancelPurchaseResponse;
 import com.example.tiendafull.UI.Models.Purchase;
 import com.example.tiendafull.UI.Models.PurchaseConfirmResponse;
 import com.example.tiendafull.UI.Models.SessionManager;
-import com.example.tiendafull.UI.Repository.ProductRepository;
 import com.example.tiendafull.UI.Repository.PurchaseRepository;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +19,7 @@ public class PurchaseViewModel extends ViewModel {
     private MutableLiveData<String> purchaseErrorLiveData= new MutableLiveData<>();
     private MutableLiveData<List<Purchase>> purchaseListLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> sessionExpiredLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> canceladaLiveData = new MutableLiveData<>();
 
     public PurchaseViewModel() {
     }
@@ -44,6 +41,10 @@ public class PurchaseViewModel extends ViewModel {
     public LiveData<Boolean> getSessionExpiredLiveData() {
         return sessionExpiredLiveData;
     }
+    public LiveData<Boolean> getCancelada() {
+        return canceladaLiveData;
+    }
+
 
     public void confirmPurchase(){
         if (sessionManager.isTokenExpired()) {
@@ -88,6 +89,30 @@ public class PurchaseViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<List<Purchase>> call, Throwable t) {
+                purchaseErrorLiveData.setValue(t.getMessage());
+            }
+        });
+    }
+    public void cancelPurchase(String id) {
+        if (sessionManager.isTokenExpired()) {
+            purchaseErrorLiveData.setValue("Sesión expirada");
+            sessionExpiredLiveData.setValue(true);
+            return;
+        }
+        purchaseRepository.cancelPurchase(id).enqueue(new Callback<CancelPurchaseResponse>() {
+            @Override
+            public void onResponse(Call<CancelPurchaseResponse> call, Response<CancelPurchaseResponse> response) {
+                if (response.isSuccessful()) {
+                    canceladaLiveData.setValue(true);
+                    fetchUserPurchases();
+
+                } else {
+                    purchaseErrorLiveData.setValue("Error al cancelar la compra: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CancelPurchaseResponse> call, Throwable t) {
                 purchaseErrorLiveData.setValue(t.getMessage());
             }
         });

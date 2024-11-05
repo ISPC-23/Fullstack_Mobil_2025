@@ -80,7 +80,7 @@
         android:id="@+id/compras"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ver Mis Compras"
+        android:text="@string/ver_mis_compras"
         android:textStyle="bold"
 
         android:textColor="@android:color/white"

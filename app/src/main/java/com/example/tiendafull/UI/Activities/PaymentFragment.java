@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +18,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
-
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.CartAdapter;
 import com.example.tiendafull.UI.Models.Cart;
-import com.example.tiendafull.UI.Models.CartDetail;
 import com.example.tiendafull.UI.Models.PurchaseConfirmResponse;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.CartViewModel;
 import com.example.tiendafull.UI.ViewModels.PurchaseViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PaymentFragment extends Fragment {
     private PurchaseViewModel purchaseViewModel;
@@ -39,7 +35,6 @@ public class PaymentFragment extends Fragment {
     private CartAdapter cartAdapter;
     private TextView totalTextView;
     private Button confirmButton;
-    private Button cancelButton;
     private RadioGroup radioGroup;
     private ArrayList<String> pagos = new ArrayList<>();
 
@@ -48,8 +43,7 @@ public class PaymentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_payment, container, false);
     }
@@ -63,10 +57,9 @@ public class PaymentFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewPurchaseItems);
         totalTextView = view.findViewById(R.id.totalPurchaseAmount);
         confirmButton = view.findViewById(R.id.confirmPurchaseButton);
-        cancelButton = view.findViewById(R.id.btnCancelarCompra); // Añadir el botón de cancelación
         radioGroup = view.findViewById(R.id.radioGroupPaymentMethods);
 
-        for (String pagos: pagos) {
+        for (String pagos : pagos) {
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setText(pagos);
             radioGroup.addView(radioButton);
@@ -82,13 +75,13 @@ public class PaymentFragment extends Fragment {
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         purchaseViewModel = new ViewModelProvider(this).get(PurchaseViewModel.class);
         purchaseViewModel.setSessionManager(sessionManager);
-        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
 
         cartViewModel.getCartLiveData().observe(getViewLifecycleOwner(), new Observer<Cart>() {
             @Override
             public void onChanged(Cart cart) {
-                if (cart != null){
+                if (cart != null) {
                     int total = cartViewModel.getCartTotal();
                     totalTextView.setText("Total: " + total);
                     cartAdapter.setCart(cart.getItems());
@@ -102,22 +95,10 @@ public class PaymentFragment extends Fragment {
             public void onClick(View view) {
                 confirmButton.setEnabled(false);
                 purchaseViewModel.confirmPurchase();
+                cartViewModel.getCart();
             }
         });
 
-        cancelButton.setOnClickListener(v -> new AlertDialog.Builder(requireContext())
-                .setTitle("Cancelar Compra")
-                .setMessage("¿Estás seguro que deseas cancelar toda la compra?")
-                .setPositiveButton("Sí", (dialog, which) -> {
-                    cartViewModel.deleteCart();  // Borra el carrito
-                    Toast.makeText(getContext(), "Compra cancelada", Toast.LENGTH_SHORT).show();
-
-                    Intent x = new Intent(requireActivity(), MainActivity.class); // Usa requireActivity() para obtener el contexto de la actividad
-                    startActivity(x);
-                })
-                .setNegativeButton("No", null)
-                .show()
-        );
 
 
         purchaseViewModel.getPurchaseLiveData().observe(getViewLifecycleOwner(), new Observer<PurchaseConfirmResponse>() {
@@ -125,6 +106,10 @@ public class PaymentFragment extends Fragment {
             public void onChanged(PurchaseConfirmResponse purchaseConfirmResponse) {
                 confirmButton.setEnabled(true);
                 if (purchaseConfirmResponse != null) {
+                    // Limpia el carrito en SessionManager y actualiza el color del ícono
+
+
+
                     requireActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.frame3, new ResumeFragment())
                             .commit();

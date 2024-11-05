@@ -55,7 +55,7 @@ public class LogoutFragment extends Fragment {
                 if( LoggedOut){
 
                     String username = sessionManager.getUsername(); // Obtener el nombre de usuario
-                    Toast.makeText(getContext(), "Hasta la próxima "+username, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Hasta la próxima ", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), AuthActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

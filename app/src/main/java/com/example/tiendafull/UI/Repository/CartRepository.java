@@ -12,8 +12,10 @@ import retrofit2.Call;
 
 public class CartRepository {
     private CartService cartService;
+    private SessionManager sessionManager;
 
     public CartRepository(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
         cartService = RetrofitClient.getRetrofit(sessionManager).create(CartService.class);
     }
 
@@ -22,11 +24,19 @@ public class CartRepository {
     }
 
     public Call<String> addProductToCart(int id_producto, int cantidad) {
-        return cartService.agregar_producto(new AddProductRequest(id_producto, cantidad));
+        // Llamada al servicio de API para agregar producto
+        Call<String> addProductCall = cartService.agregar_producto(new AddProductRequest(id_producto, cantidad));
+        // Actualizar el contador de productos en SessionManager
+        sessionManager.incrementCartProductCount();
+        return addProductCall;
     }
 
     public Call<DeleteProductResponse> removeProductFromCart(int item_id) {
-        return cartService.delete_item(new DeleteProductRequest(item_id));
+        // Llamada al servicio de API para eliminar producto
+        Call<DeleteProductResponse> removeProductCall = cartService.delete_item(new DeleteProductRequest(item_id));
+        // Actualizar el contador de productos en SessionManager
+        sessionManager.decrementCartProductCount();
+        return removeProductCall;
     }
 
     public Call<String> createCart() {
