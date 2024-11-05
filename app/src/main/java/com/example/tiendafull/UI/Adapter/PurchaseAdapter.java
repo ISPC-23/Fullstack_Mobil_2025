@@ -41,11 +41,10 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
         holder.canceladaTextView.setText("Cancelada: " + purchase.isEs_cancelada());
         if (purchase.isEs_cancelada()) {
             holder.cancelarCompra.setEnabled(false);
-            holder.cancelarCompra.setText("Cancelado");
+
             holder.cancelarCompra.setAlpha(0.5f);
         } else {
             holder.cancelarCompra.setEnabled(true);
-            holder.cancelarCompra.setText("Cancelar compra");
             holder.cancelarCompra.setAlpha(1f);
             holder.cancelarCompra.setOnClickListener(new View.OnClickListener() {
                 @Override
