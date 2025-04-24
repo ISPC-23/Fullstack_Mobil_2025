@@ -1,0 +1,245 @@
+[33mcommit 57d9d1d9aed18731da66064c14dcde1ac1f1013b[m[33m ([m[1;36mHEAD -> [m[1;32mfbarletta[m[33m, [m[1;31morigin/vcabrera[m[33m, [m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m
+Merge: e0b675c 4d282dd
+Author: verosol <informaticavc.30@gmail.com>
+Date:   Sun Oct 13 14:06:26 2024 -0300
+
+    Merge remote-tracking branch 'origin/dev' into dev
+
+[33mcommit e0b675c8d77436d402147c681ac1c277acf990da[m
+Author: verosol <informaticavc.30@gmail.com>
+Date:   Sun Oct 13 13:54:26 2024 -0300
+
+    Actualizo código
+
+[33mcommit 4d282dddec937080671975f716704d11343885d6[m[33m ([m[1;31morigin/fbarletta[m[33m)[m
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Sun Oct 13 13:12:13 2024 -0300
+
+    Se agrega en LoginFragment validación de 3 intentos de login. Se agrega fragment_login (land). Se mejora fragment_logout y se reemplaza ActionBar por toolbar para el menú de navegación
+
+[33mcommit 315f29623962822026e6c405fa1fc38e9916a27f[m
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Sun Oct 13 11:26:25 2024 -0300
+
+    Se actializa version agp=8.7.0
+
+[33mcommit 2bebf4cb1318066f4b5426668d81fb4b3ee5a3f6[m
+Author: Emig <emigillini@hotmail.com>
+Date:   Sat Oct 12 12:55:02 2024 -0300
+
+    Solucionado bug adpaters
+
+[33mcommit 39255b3c3d43f119a0179fe709673dabaf5b0d2d[m[33m ([m[1;31morigin/gliendo[m[33m)[m
+Author: g3rm6n <g3rm6n@yahoo.com.ar>
+Date:   Sat Oct 12 11:05:28 2024 -0300
+
+    Se mejora funcionalidad del Carrito
+
+[33mcommit 923ba78b242134d0464069a5a1d28a6d96be63e2[m
+Author: verosol <informaticavc.30@gmail.com>
+Date:   Sat Oct 12 01:25:13 2024 -0300
+
+    creación botón de arrepentimiento de compras
+
+[33mcommit c0de9d2db18d81fe31e92d4187e94fd3f1d894c8[m
+Author: g3rm6n <g3rm6n@yahoo.com.ar>
+Date:   Fri Oct 11 18:28:07 2024 -0300
+
+    Se optimiza el Carrito
+
+[33mcommit 07ae7127c1ae488c467c99901fc9b1ff62eb2026[m[33m ([m[1;31morigin/MateoB[m[33m)[m
+Author: Mateo88XD <mateobeltramone2000@gmail.com>
+Date:   Thu Oct 10 19:22:51 2024 -0300
+
+    Se modifican Activitis y creacion del Crud
+
+[33mcommit 4b3646aac56ecafb1fd068278892ea54f3b1fc3c[m[33m ([m[1;31morigin/egillini[m[33m)[m
+Author: Emig <emigillini@hotmail.com>
+Date:   Thu Oct 10 10:07:49 2024 -0300
+
+    Solucionado bugs de redireccion
+
+[33mcommit 8d8e94a3fa21ed701f8f5e0dfb80326c9062cc0a[m
+Merge: 6385658 d6b977c
+Author: verosol <informaticavc.30@gmail.com>
+Date:   Wed Oct 9 23:31:42 2024 -0300
+
+    cambios
+
+[33mcommit 63856581c3018e5edf1fec551fb7e2d6a05285f6[m
+Merge: a0864f6 861a410
+Author: verosol <informaticavc.30@gmail.com>
+Date:   Wed Oct 9 23:25:45 2024 -0300
+
+    resuelvo conflictos
+
+[33mcommit 861a4109239a9432f681e3fa77ed88e1da757123[m
+Author: verosol <informaticavc.30@gmail.com>
+Date:   Wed Oct 9 23:11:53 2024 -0300
+
+    agrego icono de animación
+
+[33mcommit d6b977c1df5e2cdfe6eb5f46ce33afdfc351b3cc[m
+Author: Emig <emigillini@hotmail.com>
+Date:   Wed Oct 9 19:47:59 2024 -0300
+
+    Corregido, redireccion entre fragmentos Login/registro
+
+[33mcommit a0864f6b7c787299a95016015c5536d1d5b7e703[m[33m ([m[1;31morigin/ablasiche[m[33m)[m
+Author: Andres B <andresblasiche@gmail.com>
+Date:   Wed Oct 9 01:23:05 2024 -0300
+
+    Paso Register a Fragment
+
+[33mcommit ebc7966a83da0e9223f6bee00885619fb462b687[m
+Author: Andres B <andresblasiche@gmail.com>
+Date:   Wed Oct 9 01:20:06 2024 -0300
+
+    Agrego nuevos strings
+
+[33mcommit 2616b4c368d992806194e029093e8a429326f32e[m
+Author: Emig <emigillini@hotmail.com>
+Date:   Tue Oct 8 08:55:41 2024 -0300
+
+    implementado n product adapter listener para capturar id para fragmento product detaill
+
+[33mcommit 75c14f257778b6327cbb216e19bc7c35c7720844[m
+Merge: 5bb4b62 eb75a5a
+Author: Fede Krenn <fedekrenn@gmail.com>
+Date:   Mon Oct 7 23:44:42 2024 -0300
+
+    Merge branch 'dev' of https://github.com/ISPC-23/Fullstack_Mobil_2024 into dev
+
+[33mcommit 5bb4b62e718b63252a776c3f5e34bcccf179d5d4[m
+Author: Fede Krenn <fedekrenn@gmail.com>
+Date:   Mon Oct 7 23:44:07 2024 -0300
+
+    Se fixea bug en la compilación
+
+[33mcommit 93918d5dd985d5b49d3fb5ebffc4ec5866d6cc8c[m
+Author: Fede Krenn <fedekrenn@gmail.com>
+Date:   Mon Oct 7 23:38:01 2024 -0300
+
+    Se corrigen los imports
+
+[33mcommit eb75a5afea37a1060879c8a368ce7c0e5260355f[m
+Merge: 9d3773a 570ffbe
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Mon Oct 7 23:29:44 2024 -0300
+
+    Se actualiza localmente lo traido del repo
+
+[33mcommit 9d3773adc9219d372f7b80c2367d9239277246ad[m
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Mon Oct 7 23:26:15 2024 -0300
+
+    Se continua trabajando en el rediseño y funcionalidad de lo reliacionado al Login
+
+[33mcommit 570ffbe7213906cd6bb69441adf5d05fb77e8b3c[m
+Author: Fernanda Castillo <132081100+FernandaACastillo@users.noreply.github.com>
+Date:   Tue Oct 8 02:14:10 2024 +0000
+
+    Se trabaja en la clase del fragment de detalle
+
+[33mcommit 2d1323879d4a28cb5147b06584947d683dda7ec6[m
+Author: Fernanda Castillo <132081100+FernandaACastillo@users.noreply.github.com>
+Date:   Tue Oct 8 01:53:31 2024 +0000
+
+    Modificación del layout del fragment de detalle producto
+
+[33mcommit 8084560bd6f2da736e6dfd69c8c492ae4013af6d[m[33m ([m[1;31morigin/fkrenn[m[33m)[m
+Author: Fede Krenn <fedekrenn@gmail.com>
+Date:   Mon Oct 7 21:09:28 2024 -0300
+
+    Se trabaja sobre el ProductFragment
+
+[33mcommit 495e279274fd753be0becae1c13bb5ddc317872e[m
+Author: Fede Krenn <fedekrenn@gmail.com>
+Date:   Mon Oct 7 21:01:22 2024 -0300
+
+    Se crean fragments y se edita el Main Activity
+
+[33mcommit 2b0426f0bbbdd879748e76312108cfde4d8ced3d[m
+Merge: 8a88b3e 8ee28b0
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Mon Oct 7 20:50:27 2024 -0300
+
+    se actualiza la estructura de todo el proyecto en la rama fbarletta
+
+[33mcommit bdc4c7a0600a8ba51ea761e52f247f86b4a17365[m
+Merge: fbd6cee 8ee28b0
+Author: Fede Krenn <fedekrenn@gmail.com>
+Date:   Mon Oct 7 20:06:00 2024 -0300
+
+    Se actualiza rama
+
+[33mcommit 8ee28b0a379bb243d157c2bc94f1d7c21dae05b6[m
+Author: Emig <emigillini@hotmail.com>
+Date:   Mon Oct 7 09:40:30 2024 -0300
+
+    Actualizado, modelo productos, los productos se obtienen del backend, agregado Product Repository, ProductViewModel
+
+[33mcommit 13607de1bf625ac90d08023c26b6e09082c0d859[m
+Merge: 8ed545b bb18769
+Author: Emig <emigillini@hotmail.com>
+Date:   Mon Oct 7 09:23:11 2024 -0300
+
+    Merge branch 'dev' of https://github.com/ISPC-23/Fullstack_Mobil_2024 into dev
+
+[33mcommit 8ed545bf79d86d34a2173d47d787bb87ecb78640[m
+Author: Emig <emigillini@hotmail.com>
+Date:   Mon Oct 7 08:24:10 2024 -0300
+
+    actualizadoRepo
+
+[33mcommit 4cc2f3518bd2ea86294573de0ac08a6d78378123[m
+Author: Emig <emigillini@hotmail.com>
+Date:   Mon Oct 7 08:22:42 2024 -0300
+
+    actualizadoRepo
+
+[33mcommit bb187698c2ff1833a22565c870491306a4c76fb2[m
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Sun Oct 6 18:52:43 2024 -0300
+
+    Se actualiza todo lo relacionado a la funcionalidad del proceso de login y logout
+
+[33mcommit 8a88b3e75439312da27f26bc054e7061743b23d8[m
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Sun Oct 6 12:33:26 2024 -0300
+
+    Se corrige código en login activity
+
+[33mcommit 075e4665c2a9cb82b94370211787b7b81eb85f56[m
+Merge: e1cf0f3 14210fd
+Author: Germán Liendo <95943960+g3rm6n@users.noreply.github.com>
+Date:   Sat Oct 5 12:22:18 2024 -0300
+
+    Merge pull request #53 from ISPC-23/gliendo
+    
+    Se modifica CartActivity
+
+[33mcommit 14210fd4492bf52f0b6a9f318a0c11ddb1d1a624[m
+Author: g3rm6n <g3rm6n@yahoo.com.ar>
+Date:   Sat Oct 5 12:14:17 2024 -0300
+
+    Se modifica CartActivity
+
+[33mcommit e1cf0f366a6a5db5def66aab00161b6fd265ee82[m
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Fri Oct 4 19:14:14 2024 -0300
+
+    Se trabaja en una nueva logica para el login basada en fragment
+
+[33mcommit 4914ed8e096e73e09e629efad9e3ca9b911ab6fa[m
+Merge: 19840a7 e952bd0
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Fri Oct 4 13:11:24 2024 -0300
+
+    Guarda todas las actualizaciones
+
+[33mcommit 19840a7731b5d803d3c878fc81296dcc96e21b60[m
+Author: Fernando Barletta <ferbarletta@gmail.com>
+Date:   Fri Oct 4 13:09:19 2024 -0300
+
+    Guarda los cambios locales en b

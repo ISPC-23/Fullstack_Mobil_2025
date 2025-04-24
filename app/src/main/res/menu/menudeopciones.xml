@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/productos"
+        android:title="Productos" />
+    <item
+        android:id="@+id/carrito"
+        android:icon="@drawable/cart"
+        android:title="Carrito"
+        android:contentDescription="@string/carrito"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/compras"
+        android:title="Mis Compras" />
+    <item
+        android:id="@+id/contacto"
+        android:title="Contacto" />
+    <item
+        android:id="@+id/salir"
+        android:title="Cerrar Sesión" />
+</menu>

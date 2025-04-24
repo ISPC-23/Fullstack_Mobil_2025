@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <!-- Título de Resumen de Compra -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Resumen de Compra"
+        android:textSize="24sp"
+        android:textStyle="bold"
+       />
+
+    <!-- Contenedor para los detalles de la compra -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:elevation="6dp"
+        android:padding="16dp"
+       >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ID de compra -->
+            <TextView
+                android:id="@+id/purchaseIdTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Purchase ID: "
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+
+            <!-- Fecha de la compra -->
+            <TextView
+                android:id="@+id/purchaseDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: "
+                android:textSize="16sp"
+
+                android:layout_marginTop="8dp" />
+
+            <!-- Monto total -->
+            <TextView
+                android:id="@+id/totalAmountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Amount: "
+                android:textSize="16sp"
+
+                android:layout_marginTop="8dp" />
+
+            <!-- Artículos comprados -->
+            <TextView
+                android:id="@+id/purchasedItemsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Items Purchased: "
+                android:textSize="16sp"
+
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Botón Ver Mis Compras -->
+    <Button
+        android:id="@+id/compras"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ver_mis_compras"
+        android:textStyle="bold"
+
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="4dp"
+       />
+
+</LinearLayout>

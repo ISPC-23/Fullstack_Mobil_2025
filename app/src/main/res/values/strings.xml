@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Tienda Full</string>
+    <string name="logo_description">Logo Tienda Full</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="recuerdame">Recuérdame</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="sin_cuenta">Si no tienes cuenta,</string>
+    <string name="registrate">regístrate</string>
+    <string name="recuperar_contraseña">Recuperar contraseña</string>
+    <string name="productos">Nuestros Productos</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="nro_documento">Nro de Documento</string>
+    <string name="telefono">Teléfono</string>
+    <string name="confirmar_contrasenia">Confirmar Contraseña</string>
+    <string name="ya_tienes_cuenta">Si ya tienes una cuenta</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="confirmar">CONFIRMAR</string>
+    <string name="tu_mensaje">Tu mensaje</string>
+    <string name="enviar">ENVIAR</string>
+    <string name="contacto">Contacto</string>
+    <string name="mapas">Mapas</string>
+    <string name="carrito">Carrito</string>
+    <string name="comprar">Comprar</string>
+    <string name="confirmar_compra">CONFIRMAR COMPRA</string>
+    <string name="volver">VOLVER</string>
+    <string name="agregar">AGREGAR</string>
+    <string name="quitar">QUITAR</string>
+    <string name="precio">Precio</string>
+    <string name="descripcion">Descipción</string>
+    <string name="nombre_producto">Nombre del Producto</string>
+    <string name="nuestros_producto">Nuestros Productos</string>
+    <string name="ver_mis_compras">VER MIS COMPRAS</string>
+    <string name="mis_compras">Mis Compras</string>
+    <string name="eliminar">ELIMINAR</string>
+    <string name="cancelar_compra">BOTON DE ARREPENTIMIENTO</string>
+    <string name="ver_detalle">VER DETALLE</string>
+    <string name="descripcion_breve_bicicleta">Descripción breve de la bicicleta</string>
+    <string name="modelo_bicicleta">Modelo de la Bicicleta</string>
+    <string name="precio_00.00">Precio: $00.00</string>
+
+
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
