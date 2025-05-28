@@ -1,6 +1,7 @@
 package com.example.tiendafull.UI.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +22,17 @@ import android.app.AlertDialog;
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.CartAdapter;
 import com.example.tiendafull.UI.Models.Cart;
+import com.example.tiendafull.UI.Models.CartDetail;
+import com.example.tiendafull.UI.Models.Item;
+import com.example.tiendafull.UI.Models.PreferenceItem;
+import com.example.tiendafull.UI.Models.Products;
 import com.example.tiendafull.UI.Models.PurchaseConfirmResponse;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.CartViewModel;
 import com.example.tiendafull.UI.ViewModels.PurchaseViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentFragment extends Fragment {
     private PurchaseViewModel purchaseViewModel;
@@ -37,16 +43,19 @@ public class PaymentFragment extends Fragment {
     private Button confirmButton;
     private RadioGroup radioGroup;
     private ArrayList<String> pagos = new ArrayList<>();
+    private Cart currentCart;
 
     public PaymentFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_payment, container, false);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -81,6 +90,7 @@ public class PaymentFragment extends Fragment {
         cartViewModel.getCartLiveData().observe(getViewLifecycleOwner(), new Observer<Cart>() {
             @Override
             public void onChanged(Cart cart) {
+                currentCart = cart;
                 if (cart != null) {
                     int total = cartViewModel.getCartTotal();
                     totalTextView.setText("Total: " + total);
@@ -90,12 +100,24 @@ public class PaymentFragment extends Fragment {
         });
         cartViewModel.getCart();
 
+
+
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 confirmButton.setEnabled(false);
-                purchaseViewModel.confirmPurchase();
-                cartViewModel.getCart();
+                List<PreferenceItem> items = transformCartToPreferenceItems(currentCart);
+                purchaseViewModel.createPreference(items);
+
+            }
+        });
+
+        purchaseViewModel.getInitPointLiveData().observe(getViewLifecycleOwner(), initPoint -> {
+            confirmButton.setEnabled(true);
+            if (initPoint != null) {
+                // Abre el navegador para MercadoPago
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(initPoint));
+                startActivity(browserIntent);
             }
         });
 
@@ -126,5 +148,26 @@ public class PaymentFragment extends Fragment {
                 Toast.makeText(getContext(), "Error: " + s, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
-}
+    private List<PreferenceItem> transformCartToPreferenceItems(Cart cart) {
+        List<PreferenceItem> items = new ArrayList<>();
+
+        if (cart == null || cart.getItems() == null) {
+            return items;
+        }
+
+        for (CartDetail cartDetail : cart.getItems()) {
+            Products producto = cartDetail.getProducto();
+            int cantidad = cartDetail.getCantidad();
+            double precioUnitario = producto.getPrecio(); // Asegurate de que sea double
+
+            String titulo = producto.getMarca() + " " + producto.getModelo();
+
+            PreferenceItem item = new PreferenceItem(titulo, cantidad, precioUnitario);
+            items.add(item);
+        }
+
+        return items;
+    }}
+
