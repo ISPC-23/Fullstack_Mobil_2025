@@ -3,14 +3,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.tiendafull.UI.Models.CancelPurchaseResponse;
-import com.example.tiendafull.UI.Models.Item;
-import com.example.tiendafull.UI.Models.MercadoPagoPreferenceResponse;
-import com.example.tiendafull.UI.Models.PreferenceItem;
-import com.example.tiendafull.UI.Models.PreferenceRequest;
 import com.example.tiendafull.UI.Models.Purchase;
 import com.example.tiendafull.UI.Models.PurchaseConfirmResponse;
 import com.example.tiendafull.UI.Models.SessionManager;
-import com.example.tiendafull.UI.Repository.MercadoPagoRepository;
 import com.example.tiendafull.UI.Repository.PurchaseRepository;
 import java.util.List;
 import retrofit2.Call;
@@ -25,7 +20,6 @@ public class PurchaseViewModel extends ViewModel {
     private MutableLiveData<List<Purchase>> purchaseListLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> sessionExpiredLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> canceladaLiveData = new MutableLiveData<>();
-    private MercadoPagoRepository mercadoPagoRepository;
     private MutableLiveData<String> initPointLiveData = new MutableLiveData<>();
 
     public PurchaseViewModel() {
@@ -34,7 +28,6 @@ public class PurchaseViewModel extends ViewModel {
     public void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
         this.purchaseRepository= new PurchaseRepository(sessionManager);
-        this.mercadoPagoRepository = new MercadoPagoRepository(sessionManager);
     }
 
     public LiveData<String> getInitPointLiveData() {
@@ -57,30 +50,7 @@ public class PurchaseViewModel extends ViewModel {
     }
 
 
-    public void createPreference(List<PreferenceItem> items) {
-        if (sessionManager.isTokenExpired()) {
-            purchaseErrorLiveData.setValue("Sesión expirada");
-            sessionExpiredLiveData.setValue(true);
-            return;
-        }
-        PreferenceRequest preferenceRequest = new PreferenceRequest(items);
 
-        mercadoPagoRepository.createPreference(preferenceRequest).enqueue(new Callback<MercadoPagoPreferenceResponse>() {
-            @Override
-            public void onResponse(Call<MercadoPagoPreferenceResponse> call, Response<MercadoPagoPreferenceResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    initPointLiveData.setValue(response.body().getInit_point());
-                } else {
-                    purchaseErrorLiveData.setValue("Error al crear preferencia de pago.");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MercadoPagoPreferenceResponse> call, Throwable t) {
-                purchaseErrorLiveData.setValue("Error: " + t.getMessage());
-            }
-        });
-    }
     public void confirmPurchase(){
         if (sessionManager.isTokenExpired()) {
             purchaseErrorLiveData.setValue("Sesión expirada");

@@ -1,5 +1,4 @@
 package com.example.tiendafull.UI.Activities;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,21 +17,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.AlertDialog;
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.CartAdapter;
 import com.example.tiendafull.UI.Models.Cart;
-import com.example.tiendafull.UI.Models.CartDetail;
-import com.example.tiendafull.UI.Models.Item;
-import com.example.tiendafull.UI.Models.PreferenceItem;
-import com.example.tiendafull.UI.Models.Products;
 import com.example.tiendafull.UI.Models.PurchaseConfirmResponse;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.ViewModels.CartViewModel;
 import com.example.tiendafull.UI.ViewModels.PurchaseViewModel;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class PaymentFragment extends Fragment {
     private PurchaseViewModel purchaseViewModel;
@@ -41,9 +34,10 @@ public class PaymentFragment extends Fragment {
     private CartAdapter cartAdapter;
     private TextView totalTextView;
     private Button confirmButton;
-    private RadioGroup radioGroup;
     private ArrayList<String> pagos = new ArrayList<>();
     private Cart currentCart;
+    private RadioGroup radioGroup;
+
 
     public PaymentFragment() {
         // Required empty public constructor
@@ -60,20 +54,19 @@ public class PaymentFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pagos.add("Tarjeta de Débito");
-        pagos.add("Tarjeta de Crédito");
+        pagos.add("Pagar en Web / Sera redirigido a la pagina web, debera reingresar sus credenciales");
+        pagos.add("Pagar desde App, solo efectivo termina proceso");
 
         recyclerView = view.findViewById(R.id.recyclerViewPurchaseItems);
         totalTextView = view.findViewById(R.id.totalPurchaseAmount);
         confirmButton = view.findViewById(R.id.confirmPurchaseButton);
         radioGroup = view.findViewById(R.id.radioGroupPaymentMethods);
-
         for (String pagos : pagos) {
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setText(pagos);
             radioGroup.addView(radioButton);
 
-            if ("Tarjeta de Débito".equals(pagos)) {
+            if ("Pagar en Web / Sera redirigido a la pagina web, debera reingresar sus credenciales".equals(pagos)) {
                 radioButton.setChecked(true);
             }
         }
@@ -102,35 +95,34 @@ public class PaymentFragment extends Fragment {
 
 
 
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmButton.setEnabled(false);
-                List<PreferenceItem> items = transformCartToPreferenceItems(currentCart);
-                purchaseViewModel.createPreference(items);
+        confirmButton.setOnClickListener(view1 -> {
+            confirmButton.setEnabled(false);
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            RadioButton selectedRadioButton = view.findViewById(selectedId);
+            if (selectedRadioButton != null) {
+                String selectedMethod = selectedRadioButton.getText().toString();
 
+                if ("Pagar en Web / Sera redirigido a la pagina web, debera reingresar sus credenciales".equals(selectedMethod)) {
+                    String checkoutUrl = "https://tiendafullbike.netlify.app/inicio-sesion";
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(checkoutUrl));
+                    startActivity(browserIntent);
+                    confirmButton.setEnabled(true);
+
+                } else if ("Pagar desde App, solo efectivo termina proceso".equals(selectedMethod)) {
+                    confirmButton.setEnabled(false);
+                    purchaseViewModel.confirmPurchase();
+                    cartViewModel.getCart();// Ejemplo
+                }
+            } else {
+                Toast.makeText(getContext(), "Seleccione un método de pago", Toast.LENGTH_SHORT).show();
+                confirmButton.setEnabled(true);
             }
         });
-
-        purchaseViewModel.getInitPointLiveData().observe(getViewLifecycleOwner(), initPoint -> {
-            confirmButton.setEnabled(true);
-            if (initPoint != null) {
-                // Abre el navegador para MercadoPago
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(initPoint));
-                startActivity(browserIntent);
-            }
-        });
-
-
-
         purchaseViewModel.getPurchaseLiveData().observe(getViewLifecycleOwner(), new Observer<PurchaseConfirmResponse>() {
             @Override
             public void onChanged(PurchaseConfirmResponse purchaseConfirmResponse) {
                 confirmButton.setEnabled(true);
                 if (purchaseConfirmResponse != null) {
-                    // Limpia el carrito en SessionManager y actualiza el color del ícono
-
-
 
                     requireActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.frame3, new ResumeFragment())
@@ -141,6 +133,8 @@ public class PaymentFragment extends Fragment {
             }
         });
 
+
+
         purchaseViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -150,24 +144,7 @@ public class PaymentFragment extends Fragment {
         });
 
     }
-    private List<PreferenceItem> transformCartToPreferenceItems(Cart cart) {
-        List<PreferenceItem> items = new ArrayList<>();
 
-        if (cart == null || cart.getItems() == null) {
-            return items;
-        }
 
-        for (CartDetail cartDetail : cart.getItems()) {
-            Products producto = cartDetail.getProducto();
-            int cantidad = cartDetail.getCantidad();
-            double precioUnitario = producto.getPrecio(); // Asegurate de que sea double
-
-            String titulo = producto.getMarca() + " " + producto.getModelo();
-
-            PreferenceItem item = new PreferenceItem(titulo, cantidad, precioUnitario);
-            items.add(item);
-        }
-
-        return items;
-    }}
+}
 
