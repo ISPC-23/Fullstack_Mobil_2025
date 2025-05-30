@@ -106,7 +106,7 @@ public class PaymentFragment extends Fragment {
                     String token = SessionManager.getInstance(getContext()).getAuthToken();
                     String email = SessionManager.getInstance(getContext()).getEmail();
                     Boolean isAdmin = SessionManager.getInstance(getContext()).isAdmin();
-                    String checkoutUrl = "http://192.168.1.20:4200/token-login?token="+ token + "&email=" + email+ "&isadmin=" + isAdmin;
+                    String checkoutUrl = "https://tiendafullbike.netlify.app/token-login?token="+ token + "&email=" + email+ "&isadmin=" + isAdmin;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(checkoutUrl));
                     Log.d("CheckoutURL", checkoutUrl);
                     shouldGoToHome = true;
