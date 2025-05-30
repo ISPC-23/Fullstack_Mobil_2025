@@ -88,7 +88,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="86dp"
         android:background="@drawable/btn_whatsapp_background"
         android:contentDescription="Contactar por WhatsApp"
         android:scaleType="centerInside"
@@ -97,4 +97,38 @@
         app:tint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Dirección con ícono de ubicación -->
+    <LinearLayout
+        android:id="@+id/locationContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ExtraText">
+
+
+        <ImageView
+            android:id="@+id/ivMap"
+            android:layout_width="34dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_location"
+            android:contentDescription="Javier Lascano Colodrero 2908, X5008 Córdoba"
+            app:tint="@color/bordo" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Javier Lascano Colodrero 2908, Córdoba, Argentina"
+            android:textSize="14sp"
+            android:paddingEnd="8dp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

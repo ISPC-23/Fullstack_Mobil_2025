@@ -7,4 +7,5 @@
     <color name="blue_accent">#BBDEFB</color> <!-- Azul claro (acento) -->
     <color name="blue_menu">#042035</color> <!-- Azul claro (acento) -->
     <color name="red">#E2071D</color>
+    <color name="bordo">#81131F</color>
 </resources>

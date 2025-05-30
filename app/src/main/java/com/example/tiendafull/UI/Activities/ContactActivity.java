@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.tiendafull.R;
@@ -18,6 +19,7 @@ public class ContactActivity extends BaseActivity {
     private EditText etName, etEmail, etMessage;
     private Button btnSend;
     private ImageButton imageButtonWhatsApp;
+    private ImageView ivMap;  // Agregado para el ícono de ubicación
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +31,13 @@ public class ContactActivity extends BaseActivity {
         etMessage = findViewById(R.id.et_message);
         btnSend = findViewById(R.id.buttonSend);
         imageButtonWhatsApp = findViewById(R.id.imageButtonWhatsApp);
+        ivMap = findViewById(R.id.ivMap); // Referencia al ImageView del ícono de mapa
 
         btnSend.setOnClickListener(v -> sendEmail());
         imageButtonWhatsApp.setOnClickListener(v -> openWhatsApp());
+        ivMap.setOnClickListener(v -> openMapLocation()); // Listener para abrir Maps
 
-        cartViewModel.getCart(); // Asumo que este método ya está implementado en tu BaseActivity
+        cartViewModel.getCart(); // Método ya implementado en BaseActivity
     }
 
     private void sendEmail() {
@@ -66,17 +70,30 @@ public class ContactActivity extends BaseActivity {
     }
 
     private void openWhatsApp() {
-        String phoneNumber = "+5493512121878"; // Número con código de país sin espacios
+        String phoneNumber = "+5493512121878";
         String message = "Hola, quiero hacer una consulta a Tienda Full Bike.";
 
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             String url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + Uri.encode(message);
             intent.setData(Uri.parse(url));
-            intent.setPackage("com.whatsapp"); // Para asegurar que se abra WhatsApp
+            intent.setPackage("com.whatsapp");
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "WhatsApp no está instalado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openMapLocation() {
+        String address = "Javier Lascano Colodrero 2908, X5008 Córdoba";
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        try {
+            startActivity(mapIntent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No se pudo abrir Google Maps", Toast.LENGTH_SHORT).show();
         }
     }
 }
