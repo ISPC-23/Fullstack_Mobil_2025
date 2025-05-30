@@ -57,6 +57,7 @@
             android:inputType="textMultiLine"
             android:padding="12dp" />
 
+
         <Button
             android:id="@+id/buttonSend"
             android:layout_width="match_parent"
@@ -66,6 +67,22 @@
             android:padding="12dp"
             android:text="@string/enviar"
             android:contentDescription="@string/enviar" />
+
+        <Button
+            android:id="@+id/buttonWhatsApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:background="@drawable/btn_whatsapp_background"
+            android:drawableLeft="@drawable/ic_whatsapp"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:padding="15dp"
+            android:text="Contáctanas por WhatsApp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:backgroundTint="@null"
+            android:contentDescription="Botón para contactar por WhatsApp" />
 
 
         <ImageButton
