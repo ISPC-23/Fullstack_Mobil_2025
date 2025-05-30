@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class PaymentFragment extends Fragment {
     private ArrayList<String> pagos = new ArrayList<>();
     private Cart currentCart;
     private RadioGroup radioGroup;
+    private boolean shouldGoToHome = false;
 
 
     public PaymentFragment() {
@@ -54,9 +56,8 @@ public class PaymentFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pagos.add("Pagar en Web / Sera redirigido a la pagina web, debera reingresar sus credenciales");
+        pagos.add("Pagar en Web / Sera redirigido a la pagina web para completar pago");
         pagos.add("Pagar desde App, solo efectivo termina proceso");
-
         recyclerView = view.findViewById(R.id.recyclerViewPurchaseItems);
         totalTextView = view.findViewById(R.id.totalPurchaseAmount);
         confirmButton = view.findViewById(R.id.confirmPurchaseButton);
@@ -66,7 +67,7 @@ public class PaymentFragment extends Fragment {
             radioButton.setText(pagos);
             radioGroup.addView(radioButton);
 
-            if ("Pagar en Web / Sera redirigido a la pagina web, debera reingresar sus credenciales".equals(pagos)) {
+            if ("Pagar en Web / Sera redirigido a la pagina web para completar pago".equals(pagos)) {
                 radioButton.setChecked(true);
             }
         }
@@ -94,7 +95,6 @@ public class PaymentFragment extends Fragment {
         cartViewModel.getCart();
 
 
-
         confirmButton.setOnClickListener(view1 -> {
             confirmButton.setEnabled(false);
             int selectedId = radioGroup.getCheckedRadioButtonId();
@@ -102,22 +102,28 @@ public class PaymentFragment extends Fragment {
             if (selectedRadioButton != null) {
                 String selectedMethod = selectedRadioButton.getText().toString();
 
-                if ("Pagar en Web / Sera redirigido a la pagina web, debera reingresar sus credenciales".equals(selectedMethod)) {
-                    String checkoutUrl = "https://tiendafullbike.netlify.app/inicio-sesion";
+                if ("Pagar en Web / Sera redirigido a la pagina web para completar pago".equals(selectedMethod)) {
+                    String token = SessionManager.getInstance(getContext()).getAuthToken();
+                    String email = SessionManager.getInstance(getContext()).getEmail();
+                    Boolean isAdmin = SessionManager.getInstance(getContext()).isAdmin();
+                    String checkoutUrl = "http://192.168.1.20:4200/token-login?token="+ token + "&email=" + email+ "&isadmin=" + isAdmin;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(checkoutUrl));
+                    Log.d("CheckoutURL", checkoutUrl);
+                    shouldGoToHome = true;
                     startActivity(browserIntent);
                     confirmButton.setEnabled(true);
 
                 } else if ("Pagar desde App, solo efectivo termina proceso".equals(selectedMethod)) {
                     confirmButton.setEnabled(false);
                     purchaseViewModel.confirmPurchase();
-                    cartViewModel.getCart();// Ejemplo
+                    cartViewModel.getCart();
                 }
             } else {
                 Toast.makeText(getContext(), "Seleccione un método de pago", Toast.LENGTH_SHORT).show();
                 confirmButton.setEnabled(true);
             }
         });
+
         purchaseViewModel.getPurchaseLiveData().observe(getViewLifecycleOwner(), new Observer<PurchaseConfirmResponse>() {
             @Override
             public void onChanged(PurchaseConfirmResponse purchaseConfirmResponse) {
@@ -133,8 +139,6 @@ public class PaymentFragment extends Fragment {
             }
         });
 
-
-
         purchaseViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -144,7 +148,19 @@ public class PaymentFragment extends Fragment {
         });
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (shouldGoToHome) {
+            shouldGoToHome = false;
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            requireActivity().finish();
+        }
+        }
+    }
 
 
-}
+
 
