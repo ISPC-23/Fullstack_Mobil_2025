@@ -8,6 +8,16 @@
     android:minHeight="20dp"
     tools:context="UI.Activities.ContactActivity">
 
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contacto"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivlogo"
@@ -50,13 +60,16 @@
         <EditText
             android:id="@+id/et_message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/tu_mensaje"
             android:inputType="textMultiLine"
-            android:padding="12dp" />
-
+            android:padding="12dp"
+            android:minLines="5"
+            android:maxLines="10"
+            android:scrollbars="vertical"
+            android:overScrollMode="always" />
 
         <Button
             android:id="@+id/buttonSend"
@@ -67,42 +80,21 @@
             android:padding="12dp"
             android:text="@string/enviar"
             android:contentDescription="@string/enviar" />
-
-        <Button
-            android:id="@+id/buttonWhatsApp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:background="@drawable/btn_whatsapp_background"
-            android:drawableLeft="@drawable/ic_whatsapp"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="Contáctanas por WhatsApp"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:backgroundTint="@null"
-            android:contentDescription="Botón para contactar por WhatsApp" />
-
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="match_parent"
-            android:layout_height="279dp"
-            android:src="@drawable/mapas"
-            android:contentDescription="@string/mapas"
-            />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/contacto"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <!-- Botón de WhatsApp flotante -->
+    <ImageButton
+        android:id="@+id/imageButtonWhatsApp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_whatsapp_background"
+        android:contentDescription="Contactar por WhatsApp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_whatsapp"
+        android:elevation="8dp"
+        app:tint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

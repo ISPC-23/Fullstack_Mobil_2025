@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,8 +16,8 @@ import com.example.tiendafull.R;
 public class ContactActivity extends BaseActivity {
 
     private EditText etName, etEmail, etMessage;
-    private Button btnSend, btnWhatsApp;
-    private ImageButton imageButtonMap;
+    private Button btnSend;
+    private ImageButton imageButtonWhatsApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +28,12 @@ public class ContactActivity extends BaseActivity {
         etEmail = findViewById(R.id.editTextEmail);
         etMessage = findViewById(R.id.et_message);
         btnSend = findViewById(R.id.buttonSend);
-        btnWhatsApp = findViewById(R.id.buttonWhatsApp);
-        imageButtonMap = findViewById(R.id.imageButton);
+        imageButtonWhatsApp = findViewById(R.id.imageButtonWhatsApp);
 
         btnSend.setOnClickListener(v -> sendEmail());
-        btnWhatsApp.setOnClickListener(v -> openWhatsApp());
-        imageButtonMap.setOnClickListener(v -> openMap());
+        imageButtonWhatsApp.setOnClickListener(v -> openWhatsApp());
 
-        cartViewModel.getCart();
+        cartViewModel.getCart(); // Asumo que este método ya está implementado en tu BaseActivity
     }
 
     private void sendEmail() {
@@ -44,6 +43,12 @@ public class ContactActivity extends BaseActivity {
 
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(message)) {
             Toast.makeText(this, "Por favor completá todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Correo electrónico inválido");
+            etEmail.requestFocus();
             return;
         }
 
@@ -61,28 +66,17 @@ public class ContactActivity extends BaseActivity {
     }
 
     private void openWhatsApp() {
-        String phoneNumber = "+5493512121878"; // ← Número con código de país (sin guiones ni espacios)
+        String phoneNumber = "+5493512121878"; // Número con código de país sin espacios
         String message = "Hola, quiero hacer una consulta a Tienda Full Bike.";
 
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             String url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + Uri.encode(message);
             intent.setData(Uri.parse(url));
-            intent.setPackage("com.whatsapp"); // Asegura que se abra WhatsApp
+            intent.setPackage("com.whatsapp"); // Para asegurar que se abra WhatsApp
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "WhatsApp no está instalado.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void openMap() {
-        Uri mapUri = Uri.parse("geo:-31.4167,-64.1833?q=bicicleteria");
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        } else {
-            Toast.makeText(this, "No se encontró la app de mapas", Toast.LENGTH_SHORT).show();
         }
     }
 }
