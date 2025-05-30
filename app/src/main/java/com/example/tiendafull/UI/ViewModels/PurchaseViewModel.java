@@ -20,6 +20,7 @@ public class PurchaseViewModel extends ViewModel {
     private MutableLiveData<List<Purchase>> purchaseListLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> sessionExpiredLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> canceladaLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> initPointLiveData = new MutableLiveData<>();
 
     public PurchaseViewModel() {
     }
@@ -29,6 +30,9 @@ public class PurchaseViewModel extends ViewModel {
         this.purchaseRepository= new PurchaseRepository(sessionManager);
     }
 
+    public LiveData<String> getInitPointLiveData() {
+        return initPointLiveData;
+    }
     public LiveData <PurchaseConfirmResponse> getPurchaseLiveData(){
         return purchaseConfirmResponseMutableLiveData;
     }
@@ -44,6 +48,7 @@ public class PurchaseViewModel extends ViewModel {
     public LiveData<Boolean> getCancelada() {
         return canceladaLiveData;
     }
+
 
 
     public void confirmPurchase(){
