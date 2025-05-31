@@ -14,7 +14,7 @@ Proyecto grupal para el módulo "Programador de Aplicaciones Móviles" de la tec
 
 ## 💻 Descripción del proyecto
 
-Este proyecto es una aplicación móvil Android para la tienda ecommerce de bicicletas "Tienda Full". El frontend está desarrollado en Java para Android y consume una API REST implementada previamente en Django. El proyecto busca ofrecer una experiencia completa de compra de bicicletas, incluyendo un catálogo de productos, detalles de cada uno, y la posibilidad de realizar pedidos.
+Este proyecto es una aplicación móvil Android para la tienda ecommerce de bicicletas "Tienda Full Bike". El frontend está desarrollado en Java para Android y consume una API REST implementada previamente en Django. El proyecto busca ofrecer una experiencia completa de compra de bicicletas, incluyendo un catálogo de productos, detalles de cada uno, y la posibilidad de realizar pedidos.
 
 El backend de la aplicación está desplegado utilizando Django y se conecta a una base de datos MySQL alojada en la nube.
 
