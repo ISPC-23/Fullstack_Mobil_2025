@@ -52,11 +52,10 @@ public class UserViewModel extends ViewModel {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     sessionManager.saveAuthToken(response.body().getToken());
+                    sessionManager.setEmail(response.body().getUser().getEmail());
                     sessionManager.setIsAdmin(response.body().is_staff());
                     sessionManager.setUsername(response.body().getUser().getUsername());
                     cartViewModel.getCart();
-
-
                     loginResponseLiveData.postValue(response.body());
                 } else {
                     errorLiveData.postValue("Login fallido");
@@ -77,13 +76,8 @@ public class UserViewModel extends ViewModel {
                 @Override
                 public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
                     if (response.isSuccessful()){
-                        // Aquí puedes realizar cualquier limpieza necesaria
-                        // Por ejemplo, eliminar el token o limpiar la información del usuario
-
                         sessionManager.clearSession();
                         loginResponseLiveData.postValue(null); // Limpiar la información del usuario
-
-                        // Notificar que el usuario ha cerrado sesión
                         logoutLiveData.postValue(true); // Notificar logout
 
                     }

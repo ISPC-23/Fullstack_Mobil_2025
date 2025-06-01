@@ -3,6 +3,7 @@ package com.example.tiendafull.UI.Activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -31,7 +32,9 @@ public class ProductDetailFragment extends Fragment {
     private TextView productName, productDescription, productPrice;
     private ImageView productImage;
     private String productId;
-    private Button agregar, quitar;
+    private Button agregar, quitar, btnShare; // botón agregado
+
+    private Products currentProduct; // producto actual para compartir
 
     public ProductDetailFragment() {
         // Required empty public constructor
@@ -55,6 +58,8 @@ public class ProductDetailFragment extends Fragment {
         productImage = view.findViewById(R.id.ivProductImage);
         agregar = view.findViewById(R.id.agregar);
         quitar = view.findViewById(R.id.quitar);
+        btnShare = view.findViewById(R.id.btnShare); // inicialización
+
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
@@ -86,7 +91,7 @@ public class ProductDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 cartViewModel.addProductToCart(Integer.parseInt(productId), 1);
-                sessionManager.incrementCartProductCount(); // Incrementar el conteo en SessionManager
+                sessionManager.incrementCartProductCount();
                 Toast.makeText(getActivity(), "Agregado", Toast.LENGTH_SHORT).show();
                 cartViewModel.getCart();
             }
@@ -102,6 +107,19 @@ public class ProductDetailFragment extends Fragment {
             }
         });
 
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                if (cameraIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
+                    startActivity(cameraIntent);
+                } else {
+                    Toast.makeText(getContext(), "No se pudo abrir la cámara", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
         if (productId != null) {
             productViewModel.fetchProductById(productId);
         }
@@ -110,6 +128,7 @@ public class ProductDetailFragment extends Fragment {
             @Override
             public void onChanged(Products product) {
                 if (product != null) {
+                    currentProduct = product; // guardar referencia
                     productName.setText(product.getModelo());
                     productDescription.setText(product.getDetalle());
                     productPrice.setText("$" + product.getPrecio());
@@ -120,5 +139,4 @@ public class ProductDetailFragment extends Fragment {
 
         return view;
     }
-
 }

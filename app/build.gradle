@@ -39,6 +39,7 @@ dependencies {
     implementation libs.okhttp
     implementation libs.okhttp.logging.interceptor
     implementation libs.glide
+    implementation 'androidx.browser:browser:1.7.0'
     annotationProcessor libs.glide.compiler
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

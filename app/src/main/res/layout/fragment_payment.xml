@@ -22,8 +22,6 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
-
-    <!-- RadioGroup para los métodos de pago -->
     <RadioGroup
         android:id="@+id/radioGroupPaymentMethods"
         android:layout_width="match_parent"
@@ -31,12 +29,12 @@
         android:orientation="vertical"
         android:layout_marginBottom="16dp" />
 
-    <!-- Botón para confirmar la compra -->
     <Button
         android:id="@+id/confirmPurchaseButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/confirmar_compra"
         android:textAllCaps="false" />
+
 
 </LinearLayout>
