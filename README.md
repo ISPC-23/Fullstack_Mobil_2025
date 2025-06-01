@@ -8,11 +8,8 @@ Proyecto grupal para el módulo "Programador de Aplicaciones Móviles" de la tec
 - Beltramone Mateo | [GitHub](https://github.com/Mateo88XD)
 - Blasiche Andrés | [GitHub](https://github.com/blasichea)
 - Cabrera Verónica | [GitHub](https://github.com/Verosolc30)
-- Castillo Fernanda | [GitHub](https://github.com/FernandaACastillo)
 - Gillini Emiliano | [GitHub](https://github.com/emigillini)
 - Krenn Federico | [GitHub](https://github.com/fedekrenn)
-- Liendo Germán Emanuel | [GitHub](https://github.com/g3rm6n)
-
 
 ## 💻 Descripción del proyecto
 
