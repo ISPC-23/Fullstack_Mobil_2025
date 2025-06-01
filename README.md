@@ -10,10 +10,6 @@ Proyecto grupal para el módulo "Programador de Aplicaciones Móviles" de la tec
 - Cabrera Verónica | [GitHub](https://github.com/Verosolc30)
 - Gillini Emiliano | [GitHub](https://github.com/emigillini)
 - Krenn Federico | [GitHub](https://github.com/fedekrenn)
-<<<<<<< HEAD
-=======
-
->>>>>>> 89147837ac97d295a2215d8782c7bc96ab2eb4a9
 
 ## 💻 Descripción del proyecto
 
