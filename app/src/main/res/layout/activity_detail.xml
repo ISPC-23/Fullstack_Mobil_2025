@@ -33,7 +33,7 @@
             android:layout_marginTop="10sp"
             android:text="$0"
             android:textAlignment="center"
-            android:textColor="#FF5722"
+            android:textColor="@color/blue_dark"
             android:textSize="24sp" />
 
         <TextView
@@ -198,7 +198,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="8dp"
-            android:backgroundTint="#FF5722"
+            android:backgroundTint="@color/c_primary"
             android:onClick="retornar"
             android:text="@string/volver"
             android:textColorLink="#FF5722" />

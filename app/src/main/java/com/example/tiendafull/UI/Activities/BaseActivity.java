@@ -105,7 +105,7 @@ public class BaseActivity extends AppCompatActivity {
                     icon.setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
                 } else {
                     // Si el carrito está vacío, el ícono se muestra en negro
-                    icon.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
+                    icon.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
                 }
             }
         }
