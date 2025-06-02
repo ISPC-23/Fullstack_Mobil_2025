@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
+import android.net.Uri;
 
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.CartAdapter;
@@ -75,6 +76,10 @@ public class BaseActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("LOGOUT", true);
             startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.web) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tiendafullbike.netlify.app/productos"));
+            startActivity(browserIntent);
             return true;
         } else if (item.getItemId() == R.id.contacto) {
             Intent intent = new Intent(this, ContactActivity.class);
