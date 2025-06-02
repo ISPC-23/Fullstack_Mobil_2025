@@ -18,16 +18,17 @@ public class UserRepository {
         authService = RetrofitClient.getRetrofit(sessionManager).create(AuthService.class);
     }
 
-    public Call<LoginResponse> login(String username , String password) {
-        LoginRequest loginRequest = new LoginRequest(username , password);
+    public Call<LoginResponse> login(String username, String password) {
+        LoginRequest loginRequest = new LoginRequest(username, password);
         return authService.loginUser(loginRequest);
     }
-    public Call<User> register(String email, String password,long nrodocumento, String firstname, String lastname,  String telefono) {
-        User user = new User(email, password,nrodocumento,firstname, lastname,  telefono);
+
+    public Call<User> register(String email, String password, long nrodocumento, String firstname, String lastname, String telefono) {
+        User user = new User(email, password, nrodocumento, firstname, lastname, telefono);
         return authService.registerUser(user);
     }
-    public Call<LogoutResponse> logout() {
 
+    public Call<LogoutResponse> logout() {
         return authService.logoutUser(); //
     }
 }

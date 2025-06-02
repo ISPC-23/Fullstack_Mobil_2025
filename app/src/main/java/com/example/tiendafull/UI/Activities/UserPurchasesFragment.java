@@ -33,7 +33,7 @@ public class UserPurchasesFragment extends Fragment implements PurchaseAdapter.O
     private PurchaseViewModel purchaseViewModel;
     private RecyclerView purchaseRecyclerView;
     private PurchaseAdapter purchaseAdapter;
-    private ArrayList<Purchase> listacompras=new ArrayList<>();
+    private ArrayList<Purchase> listacompras = new ArrayList<>();
 
     public UserPurchasesFragment() {
         // Required empty public constructor
@@ -53,11 +53,10 @@ public class UserPurchasesFragment extends Fragment implements PurchaseAdapter.O
         purchaseRecyclerView = view.findViewById(R.id.purchase_recycler_view);
         purchaseRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         purchaseViewModel = new ViewModelProvider(this).get(PurchaseViewModel.class);
-        SessionManager sessionManager =SessionManager.getInstance(getContext());
+        SessionManager sessionManager = SessionManager.getInstance(getContext());
         purchaseViewModel.setSessionManager(sessionManager);
         purchaseAdapter = new PurchaseAdapter(this.listacompras, getContext(), this);
         purchaseRecyclerView.setAdapter(purchaseAdapter);
-
         purchaseViewModel.getPurchaseListLiveData().observe(getViewLifecycleOwner(), new Observer<List<Purchase>>() {
             @Override
             public void onChanged(List<Purchase> purchases) {
@@ -66,11 +65,10 @@ public class UserPurchasesFragment extends Fragment implements PurchaseAdapter.O
                 }
             }
         });
-       purchaseViewModel.getSessionExpiredLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        purchaseViewModel.getSessionExpiredLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSessionExpired) {
                 if (isSessionExpired != null && isSessionExpired) {
-
                     new AlertDialog.Builder(getContext())
                             .setTitle("Sesión expirada")
                             .setMessage("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.")
@@ -78,7 +76,6 @@ public class UserPurchasesFragment extends Fragment implements PurchaseAdapter.O
                             .setPositiveButton("Iniciar sesión", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     Intent intent = new Intent(getContext(), AuthActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpiar la pila de actividades
                                     startActivity(intent);
@@ -88,7 +85,6 @@ public class UserPurchasesFragment extends Fragment implements PurchaseAdapter.O
                 }
             }
         });
-
         purchaseViewModel.fetchUserPurchases();
         handleBackPress();
     }
@@ -98,12 +94,9 @@ public class UserPurchasesFragment extends Fragment implements PurchaseAdapter.O
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-
                 Intent intent = new Intent(requireActivity(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
-
                 requireActivity().finish();
             }
         };
@@ -118,10 +111,9 @@ public class UserPurchasesFragment extends Fragment implements PurchaseAdapter.O
                 .setPositiveButton("Sí", (dialog, which) -> {
                     purchaseViewModel.cancelPurchase(Id);
                     Toast.makeText(getContext(), "Compra Cancelada", Toast.LENGTH_SHORT).show();
-
                 })
                 .setNegativeButton("No", null)
                 .show();
-                }
+    }
 }
 

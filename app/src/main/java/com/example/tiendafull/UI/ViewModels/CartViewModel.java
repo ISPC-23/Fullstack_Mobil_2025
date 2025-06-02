@@ -44,15 +44,12 @@ public class CartViewModel extends ViewModel {
     }
 
 
-
     public Cart getCart() {
         if (sessionManager.isTokenExpired()) {
             errorLiveData.setValue("Sesión expirada");
             sessionExpiredLiveData.setValue(true);
             return null;
         }
-
-
         cartRepository.getCart().enqueue(new Callback<Cart>() {
             @Override
             public void onResponse(Call<Cart> call, Response<Cart> response) {
@@ -78,14 +75,11 @@ public class CartViewModel extends ViewModel {
             sessionExpiredLiveData.setValue(true);
             return;
         }
-
         cartRepository.addProductToCart(id_producto, cantidad).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-
                     getCart();
-
                 } else {
                     errorLiveData.setValue("Error al agregar producto");
                 }
@@ -103,27 +97,18 @@ public class CartViewModel extends ViewModel {
         if (sessionManager.isTokenExpired()) {
             errorLiveData.setValue("Sesión expirada");
             sessionExpiredLiveData.setValue(true);
-
             return;
         }
-
         cartRepository.getCart().enqueue(new Callback<Cart>() {
             @Override
             public void onResponse(Call<Cart> call, Response<Cart> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Cart cart = response.body();
-
-
                     boolean itemFound = false;
-
                     for (CartDetail item : cart.getItems()) {
-
                         if (item.getProducto().getId() == productId) {
                             itemFound = true;
                             int itemId = item.getId();
-
-
-
                             cartRepository.removeProductFromCart(itemId).enqueue(new Callback<DeleteProductResponse>() {
                                 @Override
                                 public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
@@ -131,51 +116,43 @@ public class CartViewModel extends ViewModel {
                                         Log.i("MENSAJE", "onResponse: " + response.body().toString());
                                         getCart();
                                     } else {
-
                                         errorLiveData.setValue("Error al quitar producto");
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
-
                                     errorLiveData.setValue("Error en la eliminación: " + t.getMessage());
                                 }
                             });
                             break;
                         }
                     }
-
-
                     if (!itemFound) {
                         errorLiveData.setValue("Producto no encontrado en el carrito");
                     }
                 } else {
-
                     errorLiveData.setValue("Error al obtener el carrito");
                 }
             }
 
             @Override
             public void onFailure(Call<Cart> call, Throwable t) {
-
                 errorLiveData.setValue("Error de red: " + t.getMessage());
             }
         });
     }
 
-    public int getCartTotal(){
+    public int getCartTotal() {
         Cart actual = cartLiveData.getValue();
-        if (actual != null && actual.getItems()!= null) {
-        int total= 0;
-        for (CartDetail item : actual.getItems()){
-            total+= item.getProducto().getPrecio()* item.getCantidad();
+        if (actual != null && actual.getItems() != null) {
+            int total = 0;
+            for (CartDetail item : actual.getItems()) {
+                total += item.getProducto().getPrecio() * item.getCantidad();
+            }
+            return total;
         }
-        return total;}
         return 0;
-
-
-
     }
 
     public void deleteCart() {
@@ -184,14 +161,12 @@ public class CartViewModel extends ViewModel {
             sessionExpiredLiveData.setValue(true);
             return;
         }
-
         cartRepository.deleteCart().enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
                     // Actualizar la cantidad de productos en el carrito a cero
                     sessionManager.setCartProductCount(0);
-
                     // Notificar al observador para actualizar la interfaz de usuario
                     getCart(); // Esto actualizará cartLiveData, lo que podría estar observándose en la UI
                 }
@@ -203,5 +178,4 @@ public class CartViewModel extends ViewModel {
             }
         });
     }
-
 }

@@ -5,7 +5,6 @@ public class CancelPurchaseRequest {
     private boolean es_cancelada = true;
 
     public CancelPurchaseRequest(boolean es_cancelada) {
-
         this.es_cancelada = es_cancelada;
     }
 

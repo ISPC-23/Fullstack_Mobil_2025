@@ -51,7 +51,6 @@ public class ProductDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
-
         productName = view.findViewById(R.id.tvProductName);
         productDescription = view.findViewById(R.id.tvProductDescription);
         productPrice = view.findViewById(R.id.tvProductPrice);
@@ -59,13 +58,11 @@ public class ProductDetailFragment extends Fragment {
         agregar = view.findViewById(R.id.agregar);
         quitar = view.findViewById(R.id.quitar);
         btnShare = view.findViewById(R.id.btnShare); // inicialización
-
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
         productViewModel.setSessionManager(sessionManager);
-
         cartViewModel.getSessionExpiredLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSessionExpired) {
@@ -86,7 +83,6 @@ public class ProductDetailFragment extends Fragment {
                 }
             }
         });
-
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +92,6 @@ public class ProductDetailFragment extends Fragment {
                 cartViewModel.getCart();
             }
         });
-
         quitar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +101,6 @@ public class ProductDetailFragment extends Fragment {
                 cartViewModel.getCart();
             }
         });
-
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,12 +112,9 @@ public class ProductDetailFragment extends Fragment {
                 }
             }
         });
-
-
         if (productId != null) {
             productViewModel.fetchProductById(productId);
         }
-
         productViewModel.getProductLiveData().observe(getViewLifecycleOwner(), new Observer<Products>() {
             @Override
             public void onChanged(Products product) {
@@ -136,7 +127,6 @@ public class ProductDetailFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 }

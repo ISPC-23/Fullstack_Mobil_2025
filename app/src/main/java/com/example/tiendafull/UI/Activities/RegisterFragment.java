@@ -1,15 +1,20 @@
 package com.example.tiendafull.UI.Activities;
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.tiendafull.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +53,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         etEmail = view.findViewById(R.id.et_email);
         etPassword = view.findViewById(R.id.et_password);
         etPassword2 = view.findViewById(R.id.et_confirm_password);
@@ -57,7 +61,7 @@ public class RegisterFragment extends Fragment {
         etNroDocumento = view.findViewById(R.id.et_nro_documento);
         etTelefono = view.findViewById(R.id.et_telefono);
         btnRegister = view.findViewById(R.id.btn_register);
-        tvLogin=view.findViewById(R.id.tv_login);
+        tvLogin = view.findViewById(R.id.tv_login);
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,11 +71,9 @@ public class RegisterFragment extends Fragment {
                         .commit();
             }
         });
-
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         userViewModel.setSessionManager(sessionManager);
-
         userViewModel.getRegistrationSuccessLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean registered) {
@@ -82,7 +84,6 @@ public class RegisterFragment extends Fragment {
                 }
             }
         });
-
         btnRegister.setOnClickListener(v -> attemptRegister());
     }
 
@@ -94,7 +95,6 @@ public class RegisterFragment extends Fragment {
         String lastName = etLastName.getText().toString().trim();
         String nroDocumentoStr = etNroDocumento.getText().toString().trim();
         String telefono = etTelefono.getText().toString().trim();
-
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Por favor ingrese su correo");
             etEmail.requestFocus();
@@ -104,7 +104,6 @@ public class RegisterFragment extends Fragment {
             etEmail.requestFocus();
             return;
         }
-
         if (TextUtils.isEmpty(password)) {
             etPassword.setError("Por favor ingrese su contraseña");
             etPassword.requestFocus();
@@ -122,7 +121,6 @@ public class RegisterFragment extends Fragment {
             etPassword2.requestFocus();
             return;
         }
-
         if (TextUtils.isEmpty(firstName)) {
             etFirstName.setError("Por favor ingrese su nombre");
             etFirstName.requestFocus();
@@ -132,7 +130,6 @@ public class RegisterFragment extends Fragment {
             etFirstName.requestFocus();
             return;
         }
-
         if (TextUtils.isEmpty(lastName)) {
             etLastName.setError("Por favor ingrese su apellido");
             etLastName.requestFocus();
@@ -142,7 +139,6 @@ public class RegisterFragment extends Fragment {
             etLastName.requestFocus();
             return;
         }
-
         if (TextUtils.isEmpty(nroDocumentoStr)) {
             etNroDocumento.setError("Por favor ingrese su número de documento");
             etNroDocumento.requestFocus();
@@ -152,7 +148,6 @@ public class RegisterFragment extends Fragment {
             etNroDocumento.requestFocus();
             return;
         }
-
         if (TextUtils.isEmpty(telefono)) {
             etTelefono.setError("Por favor ingrese su teléfono");
             etTelefono.requestFocus();
@@ -162,11 +157,9 @@ public class RegisterFragment extends Fragment {
             etTelefono.requestFocus();
             return;
         }
-
         long nroDocumento = Long.parseLong(nroDocumentoStr);
         userViewModel.register(email, password, firstName, lastName, nroDocumento, telefono);
         Toast.makeText(getContext(), "Registro enviado", Toast.LENGTH_LONG).show();
-
     }
 
     private boolean isValidPassword(String password) {

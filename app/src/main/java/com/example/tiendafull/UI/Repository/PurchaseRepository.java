@@ -24,15 +24,15 @@ public class PurchaseRepository {
     public Call<PurchaseConfirmResponse> confirmPurchase() {
         return purchaseService.confirmPurchase();
     }
-    public Call<List<Purchase>> getUserPurchases(){
+
+    public Call<List<Purchase>> getUserPurchases() {
         return purchaseService.getUserPurchases();
     }
-    public Call<CancelPurchaseResponse> cancelPurchase(String id){
 
-        CancelPurchaseRequest cancelPurchaseRequest=new CancelPurchaseRequest(true);
+    public Call<CancelPurchaseResponse> cancelPurchase(String id) {
+        CancelPurchaseRequest cancelPurchaseRequest = new CancelPurchaseRequest(true);
         return purchaseService.cancelPurchase(id, cancelPurchaseRequest);
     }
-
 }
 
 

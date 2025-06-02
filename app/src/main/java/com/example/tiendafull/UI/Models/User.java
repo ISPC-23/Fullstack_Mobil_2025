@@ -1,6 +1,7 @@
 package com.example.tiendafull.UI.Models;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class User {

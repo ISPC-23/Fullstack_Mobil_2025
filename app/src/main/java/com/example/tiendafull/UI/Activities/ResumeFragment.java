@@ -7,6 +7,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,20 +33,17 @@ public class ResumeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_resume, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         purchaseIdTextView = view.findViewById(R.id.purchaseIdTextView);
         purchaseDateTextView = view.findViewById(R.id.purchaseDateTextView);
         totalAmountTextView = view.findViewById(R.id.totalAmountTextView);
         purchasedItemsTextView = view.findViewById(R.id.purchasedItemsTextView);
         button = view.findViewById(R.id.compras);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,30 +54,23 @@ public class ResumeFragment extends Fragment {
         });
         sessionManager = SessionManager.getInstance(getContext());
         PurchaseConfirmResponse lastPurchase = sessionManager.getLastPurchase();
-
         if (lastPurchase != null) {
             purchaseIdTextView.setText("Cancelada: " + lastPurchase.getPurchase().isEs_cancelada());
             purchaseDateTextView.setText("Numero de Factura: " + lastPurchase.getPurchase().getNro_factura());
             totalAmountTextView.setText("Total: $" + lastPurchase.getPurchase().getTotal());
             purchasedItemsTextView.setText("Fecha: " + lastPurchase.getPurchase().getFecha());
         }
-
-
         handleBackPress();
     }
-
 
 
     private void handleBackPress() {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-
                 Intent intent = new Intent(requireActivity(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
-
                 requireActivity().finish();
             }
         };

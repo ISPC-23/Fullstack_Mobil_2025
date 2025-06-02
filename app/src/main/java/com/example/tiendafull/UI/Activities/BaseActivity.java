@@ -37,21 +37,20 @@ public class BaseActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         Toolbar toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
-
         SessionManager sessionManager = SessionManager.getInstance(this);
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
         observeCartChanges();
         cartViewModel.getCart();
-
     }
+
     protected void setActivityContent(int layoutResID) {
         FrameLayout contentFrame = findViewById(R.id.frame_content);
         getLayoutInflater().inflate(layoutResID, contentFrame, true);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menudeopciones, menu);
@@ -82,18 +81,18 @@ public class BaseActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.carrito) {
-        Intent intent = new Intent(this, CartActivity.class);
-        intent.putExtra("CONTACTO", true);
-        startActivity(intent);
-        return true;
-    }
+            Intent intent = new Intent(this, CartActivity.class);
+            intent.putExtra("CONTACTO", true);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         updateCartIconColor(hasProductsInCart);
         return super.onPrepareOptionsMenu(menu);
-
     }
 
     public void updateCartIconColor(Boolean hasProductsInCart) {
@@ -110,17 +109,13 @@ public class BaseActivity extends AppCompatActivity {
             }
         }
     }
+
     private void observeCartChanges() {
         cartViewModel.getCartLiveData().observe(this, cart -> {
             if (cart != null) {
                 hasProductsInCart = !cart.getItems().isEmpty();
                 invalidateOptionsMenu(); // Llama a onPrepareOptionsMenu para actualizar el icono de la Toolbar
-
             }
         });
     }
-
-
-
-
 }

@@ -22,12 +22,11 @@ public class ProductViewModel extends ViewModel {
     private MutableLiveData<String> errorLiveData = new MutableLiveData<>();
 
     public ProductViewModel() {
-
     }
 
     public void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
-        this.productRepository= new ProductRepository(sessionManager);
+        this.productRepository = new ProductRepository(sessionManager);
     }
 
     public LiveData<List<Products>> getProductListLiveData() {
@@ -48,9 +47,7 @@ public class ProductViewModel extends ViewModel {
             public void onResponse(Call<List<Products>> call, Response<List<Products>> response) {
                 if (response.isSuccessful()) {
                     List<Products> productList = response.body();
-
                     if (productList != null) {
-
                         productListLiveData.postValue(productList);
                     }
                 } else {
@@ -82,6 +79,5 @@ public class ProductViewModel extends ViewModel {
             }
         });
     }
-
 }
 

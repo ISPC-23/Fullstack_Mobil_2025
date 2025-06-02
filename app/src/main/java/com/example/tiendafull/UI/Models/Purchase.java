@@ -81,8 +81,5 @@ public class Purchase {
         this.fecha = fecha;
         this.detalle = detalle;
         this.es_cancelada = false;
-
-
-
     }
 }

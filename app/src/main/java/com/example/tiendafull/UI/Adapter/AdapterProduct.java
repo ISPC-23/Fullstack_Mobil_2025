@@ -25,10 +25,10 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.Adaptado
 
     public AdapterProduct(List<Products> productList, Context context, OnProductClickListener listener) {
         this.productList = productList;
-        this.context= context;
-        this.listener= listener;
-
+        this.context = context;
+        this.listener = listener;
     }
+
     @NonNull
     @Override
     public AdaptadorProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,25 +52,25 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.Adaptado
         notifyDataSetChanged(); // Notificamos al adaptador que los datos han cambiado
     }
 
-    public class AdaptadorProductHolder extends RecyclerView.ViewHolder{
-        TextView tv1,tv2,tv3;
+    public class AdaptadorProductHolder extends RecyclerView.ViewHolder {
+        TextView tv1, tv2, tv3;
         ImageView iv1;
         Button button;
+
         public AdaptadorProductHolder(@NonNull View itemView) {
             super(itemView);
-            tv1= itemView.findViewById(R.id.tv1);
-            tv2= itemView.findViewById(R.id.tv2);
-            tv3= itemView.findViewById(R.id.tv3);
-            iv1=itemView.findViewById(R.id.iv1);
-            button=itemView.findViewById(R.id.goToDetail);
+            tv1 = itemView.findViewById(R.id.tv1);
+            tv2 = itemView.findViewById(R.id.tv2);
+            tv3 = itemView.findViewById(R.id.tv3);
+            iv1 = itemView.findViewById(R.id.iv1);
+            button = itemView.findViewById(R.id.goToDetail);
         }
 
         public void imprimir(int position) {
             Products product = productList.get(position);
-            tv1.setText("Nombre: "+product.getModelo());
-            tv2.setText("Descripcion: "+product.getDetalle());
-            tv3.setText("Precio: "+product.getPrecio());
-
+            tv1.setText("Nombre: " + product.getModelo());
+            tv2.setText("Descripcion: " + product.getDetalle());
+            tv3.setText("Precio: " + product.getPrecio());
             Glide.with(itemView.getContext())
                     .load(product.getImagen())
                     .placeholder(R.drawable.ic_launcher_foreground) // Imagen mostrada mientras carga
@@ -80,18 +80,12 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.Adaptado
                 @Override
                 public void onClick(View view) {
                     listener.onProductClick(String.valueOf(product.getId()));
-
-
                 }
             });
-
-
         }
-
     }
+
     public interface OnProductClickListener {
         void onProductClick(String productId);
-}
-
-
+    }
 }

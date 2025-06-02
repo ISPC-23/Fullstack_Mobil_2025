@@ -15,36 +15,91 @@ public class Products {
     private String color;
 
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getModelo() { return modelo; }
-    public void setModelo(String modelo) { this.modelo = modelo; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public double getPrecio() { return precio; }
-    public void setPrecio(double precio) { this.precio = precio; }
+    public String getModelo() {
+        return modelo;
+    }
 
-    public int getStock() { return stock; }
-    public void setStock(int stock) { this.stock = stock; }
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
 
-    public String getImagen() { return imagen; }
-    public void setImagen(String imagen) { this.imagen = imagen; }
+    public double getPrecio() {
+        return precio;
+    }
 
-    public String getDetalle() { return detalle; }
-    public void setDetalle(String detalle) { this.detalle = detalle; }
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
 
-    public String getMarca() { return marca; }
-    public void setMarca(String marca) { this.marca = marca; }
+    public int getStock() {
+        return stock;
+    }
 
-    public String getRodado() { return rodado; }
-    public void setRodado(String rodado) { this.rodado = rodado; }
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
-    public String getEstilo() { return estilo; }
-    public void setEstilo(String estilo) { this.estilo = estilo; }
+    public String getImagen() {
+        return imagen;
+    }
 
-    public String getMaterial() { return material; }
-    public void setMaterial(String material) { this.material = material; }
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
-    public String getColor() { return color; }
-    public void setColor(String color) { this.color = color; }
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getRodado() {
+        return rodado;
+    }
+
+    public void setRodado(String rodado) {
+        this.rodado = rodado;
+    }
+
+    public String getEstilo() {
+        return estilo;
+    }
+
+    public void setEstilo(String estilo) {
+        this.estilo = estilo;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

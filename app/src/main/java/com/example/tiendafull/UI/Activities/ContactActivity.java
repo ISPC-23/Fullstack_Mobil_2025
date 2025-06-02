@@ -25,18 +25,15 @@ public class ContactActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActivityContent(R.layout.activity_contact);
-
         etName = findViewById(R.id.editTextName);
         etEmail = findViewById(R.id.editTextEmail);
         etMessage = findViewById(R.id.et_message);
         btnSend = findViewById(R.id.buttonSend);
         imageButtonWhatsApp = findViewById(R.id.imageButtonWhatsApp);
         ivMap = findViewById(R.id.ivMap); // Referencia al ImageView del ícono de mapa
-
         btnSend.setOnClickListener(v -> sendEmail());
         imageButtonWhatsApp.setOnClickListener(v -> openWhatsApp());
         ivMap.setOnClickListener(v -> openMapLocation()); // Listener para abrir Maps
-
         cartViewModel.getCart(); // Método ya implementado en BaseActivity
     }
 
@@ -44,24 +41,20 @@ public class ContactActivity extends BaseActivity {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String message = etMessage.getText().toString().trim();
-
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(message)) {
             Toast.makeText(this, "Por favor completá todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Correo electrónico inválido");
             etEmail.requestFocus();
             return;
         }
-
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // Solo apps de correo
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"ispctiendafull@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Mensaje de contacto de " + name);
         intent.putExtra(Intent.EXTRA_TEXT, "Nombre: " + name + "\nCorreo: " + email + "\n\nMensaje:\n" + message);
-
         try {
             startActivity(Intent.createChooser(intent, "Enviar correo con..."));
         } catch (ActivityNotFoundException e) {
@@ -72,7 +65,6 @@ public class ContactActivity extends BaseActivity {
     private void openWhatsApp() {
         String phoneNumber = "+5493512121878";
         String message = "Hola, quiero hacer una consulta a Tienda Full Bike.";
-
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             String url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + Uri.encode(message);
@@ -89,7 +81,6 @@ public class ContactActivity extends BaseActivity {
         Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
-
         try {
             startActivity(mapIntent);
         } catch (ActivityNotFoundException e) {

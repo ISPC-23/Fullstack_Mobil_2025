@@ -10,7 +10,7 @@ public class LoginRequest {
     @SerializedName("password")
     private String password;
 
-    public LoginRequest(String username , String password) {
+    public LoginRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -24,7 +24,7 @@ public class LoginRequest {
     }
 
     public void setEmail(String username) {
-        this.username= username;
+        this.username = username;
     }
 
     public void setPassword(String password) {
