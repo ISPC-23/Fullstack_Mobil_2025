@@ -1,5 +1,7 @@
 package com.example.tiendafull.UI.ViewModels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -9,6 +11,7 @@ import com.example.tiendafull.UI.Models.Purchase;
 import com.example.tiendafull.UI.Models.PurchaseConfirmResponse;
 import com.example.tiendafull.UI.Models.SessionManager;
 import com.example.tiendafull.UI.Repository.PurchaseRepository;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -71,6 +74,8 @@ public class PurchaseViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     purchaseConfirmResponseMutableLiveData.setValue(response.body());
                     sessionManager.setLastPurchase(response.body());
+
+                    Log.d("BACKEND_RESPONSE", "Respuesta del servidor: " + new Gson().toJson(response.body()));
 
                 } else {
                     purchaseErrorLiveData.setValue("Error");

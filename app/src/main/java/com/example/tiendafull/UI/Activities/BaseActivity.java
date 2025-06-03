@@ -3,6 +3,7 @@ package com.example.tiendafull.UI.Activities;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,6 +75,10 @@ public class BaseActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("LOGOUT", true);
             startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.web) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tiendafullbike.netlify.app/productos"));
+            startActivity(browserIntent);
             return true;
         } else if (item.getItemId() == R.id.contacto) {
             Intent intent = new Intent(this, ContactActivity.class);

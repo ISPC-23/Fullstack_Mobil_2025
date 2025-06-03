@@ -33,7 +33,7 @@ Este proyecto es la evolución del desarrollo previo realizado en Angular y Djan
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/ISPC-23/Fullstack_Mobil_2024.git
+   git clone https://github.com/ISPC-23/Fullstack_Mobil_2025.git
    ```
 2. Importar el proyecto en Android Studio.
 3. Configurar la conexión a la API de Django en el archivo `config.properties`.
@@ -41,11 +41,11 @@ Este proyecto es la evolución del desarrollo previo realizado en Angular y Djan
 
 ### Backend 
 
-El backend sigue siendo el mismo desarrollado en Django. Para más detalles sobre su configuración y ejecución, consultar la [Documentación backend](https://github.com/ISPC-23/FullStack2024).
+El backend sigue siendo el mismo desarrollado en Django. Para más detalles sobre su configuración y ejecución, consultar la [Documentación backend](https://github.com/ISPC-23/Fullstack_Web_2025).
 
 ### 📃 Documentación:
 
-Toda la documentación del proyecto tal como el documento IEEE830, los diagramas (de clase, entidad-relación, etc), la documentación de las ceremonias, etc. Pueden encontrarse en la  [Wiki del repositorio](https://github.com/ISPC-23/Fullstack_Mobil_2024/wiki)
+Toda la documentación del proyecto tal como el documento IEEE830, los diagramas (de clase, entidad-relación, etc), la documentación de las ceremonias, etc. Pueden encontrarse en la  [Wiki del repositorio](https://github.com/ISPC-23/Fullstack_Mobil_2025/wiki)
 
 ## ❗ Puntos a tener en cuenta
 
