@@ -12,7 +12,7 @@
 
     <style name="ThemeOverlay.TiendaFull.Toolbar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
         <item name="colorControlNormal">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 
 </resources>
