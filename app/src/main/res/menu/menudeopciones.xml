@@ -18,6 +18,9 @@
         android:id="@+id/contacto"
         android:title="Contacto" />
     <item
+        android:id="@+id/web"
+        android:title="Ir al sitio web" />
+    <item
         android:id="@+id/salir"
         android:title="Cerrar Sesión" />
 </menu>
