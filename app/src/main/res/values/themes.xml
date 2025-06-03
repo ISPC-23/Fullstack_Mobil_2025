@@ -2,6 +2,8 @@
     <style name="Base.Theme.TiendaFull" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/c_primary</item>
         <item name="android:logo">@drawable/logo_tienda_login</item>
+        <item name="android:fontFamily">res/font/geist_regular.ttf</item> <!-- Agrega Font Family -->
+        <item name="fontFamily">res/font/geist_regular.ttf</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
