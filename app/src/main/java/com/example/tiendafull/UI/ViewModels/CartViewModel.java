@@ -92,7 +92,25 @@ public class CartViewModel extends ViewModel {
         });
     }
 
+    public void fetchCartDirectly(Callback<Cart> callback) {
+        Call<Cart> call = cartRepository.getCart();
+        call.enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Call<Cart> call, Response<Cart> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    cartLiveData.postValue(response.body());
+                    callback.onResponse(call, response);
+                } else {
+                    callback.onFailure(call, new Throwable("Error al obtener el carrito"));
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Cart> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
     public void removeProductFromCart(int productId) {
         if (sessionManager.isTokenExpired()) {
             errorLiveData.setValue("Sesión expirada");
@@ -154,6 +172,7 @@ public class CartViewModel extends ViewModel {
         }
         return 0;
     }
+
 
     public void deleteCart() {
         if (sessionManager.isTokenExpired()) {

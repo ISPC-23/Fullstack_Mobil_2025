@@ -45,4 +45,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="volver_al_inicio">Volver al inicio</string>
+    <string name="pago_rechazado">Pago Rechazado</string>
+    <string name="pago_pendiente">Pago Pendiente</string>
+    <string name="icono_de_pago_pendiente">Icono de pago pendiente</string>
 </resources>

@@ -32,6 +32,10 @@ import com.example.tiendafull.UI.ViewModels.PurchaseViewModel;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class PaymentFragment extends Fragment {
     private PurchaseViewModel purchaseViewModel;
@@ -148,12 +152,38 @@ public class PaymentFragment extends Fragment {
         super.onResume();
         if (shouldGoToHome) {
             shouldGoToHome = false;
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            requireActivity().finish();
+
+            cartViewModel.fetchCartDirectly(new Callback<Cart>() {
+                @Override
+                public void onResponse(Call<Cart> call, Response<Cart> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Cart cart = response.body();
+                        if (cart.getItems() == null || cart.getItems().isEmpty()) {
+                            // Carrito vacío → ir a pantalla de éxito
+                            requireActivity().runOnUiThread(() -> requireActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.frame3, new PaymentSuccessFragment())
+                                    .commit());
+                        } else {
+
+                            requireActivity().runOnUiThread(() -> requireActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.frame3, new PendingPaymentFragment())
+                                    .commit());
+                        }
+                    } else {
+                        requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Error al obtener carrito", Toast.LENGTH_SHORT).show());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Cart> call, Throwable t) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
+                }
+            });
         }
     }
+
 }
 
 

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#FFFDE7">
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -31,14 +32,14 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:contentDescription="Icono de pago pendiente"
+            android:contentDescription="@string/icono_de_pago_pendiente"
             android:src="@drawable/ic_pending"
-            android:tint="#FBC02D" />
+            app:tint="#FBC02D" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pago Pendiente"
+            android:text="@string/pago_pendiente"
             android:textColor="#000000"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -48,6 +49,8 @@
         android:id="@+id/buttonBackToHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Volver al inicio"
-        android:layout_marginTop="20dp"/>
+        android:text="@string/volver_al_inicio"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/blue_primary"
+        android:textColor="@android:color/white"/>
 </LinearLayout>

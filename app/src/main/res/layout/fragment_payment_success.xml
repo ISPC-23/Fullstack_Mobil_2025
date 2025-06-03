@@ -29,7 +29,7 @@
         android:id="@+id/button_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/volver_inicio"
+        android:text="@string/volver_al_inicio"
         android:backgroundTint="@color/blue_primary"
         android:textColor="@android:color/white" />
 

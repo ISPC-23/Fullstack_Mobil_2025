@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
@@ -33,12 +34,12 @@
             android:layout_height="120dp"
             android:contentDescription="Icono de pago rechazado"
             android:src="@drawable/ic_rejected"
-            android:tint="#F00707" />
+            app:tint="#F00707" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pago Rechazado"
+            android:text="@string/pago_rechazado"
             android:textColor="#000000"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -48,6 +49,8 @@
         android:id="@+id/buttonBackToHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Volver al inicio"
-        android:layout_marginTop="20dp"/>
+        android:text="@string/volver_al_inicio"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/blue_primary"
+        android:textColor="@android:color/white"/>
 </LinearLayout>
