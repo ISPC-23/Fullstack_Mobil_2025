@@ -27,14 +27,17 @@ public class UserViewModel extends ViewModel {
     public UserViewModel() {
         cartViewModel = new CartViewModel();
     }
+
     public void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
         this.userRepository = new UserRepository(sessionManager);
         cartViewModel.setSessionManager(sessionManager);
     }
+
     public LiveData<LoginResponse> getLoginResponseLiveData() {
         return loginResponseLiveData;
     }
+
     public LiveData<Boolean> getRegistrationSuccessLiveData() {
         return registrationSuccessLiveData;
     }
@@ -42,21 +45,21 @@ public class UserViewModel extends ViewModel {
     public LiveData<String> getErrorLiveData() {
         return errorLiveData;
     }
+
     public LiveData<Boolean> getLogoutLiveData() { // Método para obtener la LiveData de logout
         return logoutLiveData;
     }
 
-    public void login(String username,  String password) {
-        userRepository.login(username , password).enqueue(new Callback<LoginResponse>() {
+    public void login(String username, String password) {
+        userRepository.login(username, password).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     sessionManager.saveAuthToken(response.body().getToken());
+                    sessionManager.setEmail(response.body().getUser().getEmail());
                     sessionManager.setIsAdmin(response.body().is_staff());
                     sessionManager.setUsername(response.body().getUser().getUsername());
                     cartViewModel.getCart();
-
-
                     loginResponseLiveData.postValue(response.body());
                 } else {
                     errorLiveData.postValue("Login fallido");
@@ -70,24 +73,19 @@ public class UserViewModel extends ViewModel {
             }
         });
     }
+
     public void logout() {
         String token = sessionManager.getAuthToken();
         if (token != null) {
             userRepository.logout().enqueue(new Callback<LogoutResponse>() {
                 @Override
                 public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
-                    if (response.isSuccessful()){
-                        // Aquí puedes realizar cualquier limpieza necesaria
-                        // Por ejemplo, eliminar el token o limpiar la información del usuario
-
+                    if (response.isSuccessful()) {
                         sessionManager.clearSession();
                         loginResponseLiveData.postValue(null); // Limpiar la información del usuario
-
-                        // Notificar que el usuario ha cerrado sesión
                         logoutLiveData.postValue(true); // Notificar logout
 
-                    }
-                    else {
+                    } else {
                         errorLiveData.postValue("Token no disponible para logout");
                     }
                 }
@@ -97,12 +95,11 @@ public class UserViewModel extends ViewModel {
                     errorLiveData.postValue("Error de red: " + t.getMessage());
                 }
             });
-
         }
-
     }
+
     public void register(String email, String password, String firstName, String lastName, long nroDocumento, String telefono) {
-        userRepository.register(email, password,nroDocumento,  lastName,firstName,  telefono).enqueue(new Callback<User>() {
+        userRepository.register(email, password, nroDocumento, lastName, firstName, telefono).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {

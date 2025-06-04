@@ -23,18 +23,14 @@ import com.example.tiendafull.UI.ViewModels.CartViewModel;
 public class MainActivity extends BaseActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setActivityContent(R.layout.activity_main);
-
         cartViewModel.getCart();
-
         boolean shouldLogout = getIntent().getBooleanExtra("LOGOUT", false);
         boolean showPurchasesFragment = getIntent().getBooleanExtra("SHOW_PURCHASES_FRAGMENT", false);
-
         if (shouldLogout) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frame3, new LogoutFragment())
@@ -49,5 +45,4 @@ public class MainActivity extends BaseActivity {
                     .commit();
         }
     }
-
 }

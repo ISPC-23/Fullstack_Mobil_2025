@@ -14,6 +14,7 @@ import com.example.tiendafull.R;
 
 public class IntroActivity extends AppCompatActivity {
     private MotionLayout ml;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,29 +25,27 @@ public class IntroActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ml=findViewById(R.id.main);
+        ml = findViewById(R.id.main);
         ml.addTransitionListener(new MotionLayout.TransitionListener() {
             @Override
             public void onTransitionStarted(MotionLayout motionLayout, int startId, int endId) {
-
             }
 
             @Override
             public void onTransitionChange(MotionLayout motionLayout, int startId, int endId, float progress) {
-
             }
 
 
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int currentId) {
-                if( currentId== R.id.end){
-                    Intent x =new Intent(motionLayout.getContext(),  AuthActivity.class);
+                if (currentId == R.id.end) {
+                    Intent x = new Intent(motionLayout.getContext(), AuthActivity.class);
                     startActivity(x);
-                }}
+                }
+            }
 
             @Override
             public void onTransitionTrigger(MotionLayout motionLayout, int triggerId, boolean positive, float progress) {
-
             }
         });
     }

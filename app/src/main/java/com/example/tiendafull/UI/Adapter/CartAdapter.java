@@ -25,11 +25,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private OnProductCartClickListener listener;
     private Boolean mostrarBoton;
 
-    public CartAdapter(List<CartDetail> products, Context context,OnProductCartClickListener listener, Boolean mostrarBoton) {
+    public CartAdapter(List<CartDetail> products, Context context, OnProductCartClickListener listener, Boolean mostrarBoton) {
         this.products = products;
         this.context = context;
-        this.listener=listener;
-        this.mostrarBoton=mostrarBoton;
+        this.listener = listener;
+        this.mostrarBoton = mostrarBoton;
     }
 
     @NonNull
@@ -56,7 +56,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
-        TextView tv1, tv2,tv3;
+        TextView tv1, tv2, tv3;
         ImageView iv1;
         Button button;
 
@@ -67,45 +67,34 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             tv3 = itemView.findViewById(R.id.tvProductQuantity);
             iv1 = itemView.findViewById(R.id.ivProductImage);
             button = itemView.findViewById(R.id.buttonRemove);
-
             // Configurar el listener del botón de eliminar
-
         }
 
         public void imprimir(int position) {
             CartDetail product = products.get(position);
             tv1.setText("Nombre: " + product.getProducto().getModelo());
             tv2.setText("Descripción: " + product.getProducto().getDetalle());
-            tv3.setText(("Cantidad: " + product.getCantidad() ));
-
+            tv3.setText(("Cantidad: " + product.getCantidad()));
             Glide.with(itemView.getContext())
                     .load(product.getProducto().getImagen())
                     .placeholder(R.drawable.ic_launcher_foreground)
                     .error(R.drawable.ic_launcher_foreground)
                     .into(iv1);
-            if (mostrarBoton){
+            if (mostrarBoton) {
                 button.setVisibility(View.VISIBLE);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         listener.onProductClick(String.valueOf(product.getProducto().getId()));
-
-
                     }
                 });
-
-            }
-            else {
+            } else {
                 button.setVisibility(View.GONE);
             }
-
-
         }
-
     }
+
     public interface OnProductCartClickListener {
         void onProductClick(String productId);
-}
-
-
+    }
 }

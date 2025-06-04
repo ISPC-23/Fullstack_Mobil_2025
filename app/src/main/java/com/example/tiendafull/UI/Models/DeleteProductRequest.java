@@ -6,7 +6,6 @@ public class DeleteProductRequest {
 
     public DeleteProductRequest(int item_id) {
         this.item_id = item_id;
-
     }
 
     public int getItem_id() {
@@ -16,5 +15,4 @@ public class DeleteProductRequest {
     public void setItem_id(int item_id) {
         this.item_id = item_id;
     }
-
 }

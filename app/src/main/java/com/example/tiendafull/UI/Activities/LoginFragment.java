@@ -46,13 +46,11 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         etEmail = view.findViewById(R.id.et_email);
         etPassword = view.findViewById(R.id.et_password);
         btnLogin = view.findViewById(R.id.btn_login);
         ok = view.findViewById(R.id.ok);
         irReg = view.findViewById(R.id.tv_registrate);
-
         irReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,11 +60,9 @@ public class LoginFragment extends Fragment {
                         .commit();
             }
         });
-
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         userViewModel.setSessionManager(sessionManager);
-
         userViewModel.getLoginResponseLiveData().observe(getViewLifecycleOwner(), new Observer<LoginResponse>() {
             @Override
             public void onChanged(LoginResponse loginResponse) {
@@ -77,7 +73,6 @@ public class LoginFragment extends Fragment {
                             "\nEmail: " + loginResponse.getUser().getEmail() +
                             "\nToken: " + loginResponse.getToken() +
                             "\nIsAdmin: " + loginResponse.getUser().getIsAdmin();
-
                     Toast.makeText(getActivity(), "Bienvenido " + userInfo, Toast.LENGTH_SHORT).show();
                     Intent x = new Intent(getContext(), MainActivity.class);
                     startActivity(x);
@@ -85,7 +80,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-
         userViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), errorMessage -> {
             if (errorMessage != null) {
                 // Incrementa el contador de intentos fallidos
@@ -100,7 +94,6 @@ public class LoginFragment extends Fragment {
                 ok.setText(errorMessage);
             }
         });
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +105,6 @@ public class LoginFragment extends Fragment {
     private void attemptLogin() {
         String username = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-
         if (TextUtils.isEmpty(username)) {
             etEmail.setError("Por favor ingrese su correo");
             etEmail.requestFocus();
@@ -123,7 +115,6 @@ public class LoginFragment extends Fragment {
             etPassword.requestFocus();
             return;
         }
-
         userViewModel.login(username, password);
     }
 }

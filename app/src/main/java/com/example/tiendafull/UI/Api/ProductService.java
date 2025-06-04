@@ -16,6 +16,4 @@ public interface ProductService {
     // Obtener un producto por ID
     @GET("products/{id}")
     Call<Products> getProductById(@Path("id") String id);
-
-
 }

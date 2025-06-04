@@ -8,15 +8,12 @@ Proyecto grupal para el módulo "Programador de Aplicaciones Móviles" de la tec
 - Beltramone Mateo | [GitHub](https://github.com/Mateo88XD)
 - Blasiche Andrés | [GitHub](https://github.com/blasichea)
 - Cabrera Verónica | [GitHub](https://github.com/Verosolc30)
-- Castillo Fernanda | [GitHub](https://github.com/FernandaACastillo)
 - Gillini Emiliano | [GitHub](https://github.com/emigillini)
 - Krenn Federico | [GitHub](https://github.com/fedekrenn)
-- Liendo Germán Emanuel | [GitHub](https://github.com/g3rm6n)
-
 
 ## 💻 Descripción del proyecto
 
-Este proyecto es una aplicación móvil Android para la tienda ecommerce de bicicletas "Tienda Full". El frontend está desarrollado en Java para Android y consume una API REST implementada previamente en Django. El proyecto busca ofrecer una experiencia completa de compra de bicicletas, incluyendo un catálogo de productos, detalles de cada uno, y la posibilidad de realizar pedidos.
+Este proyecto es una aplicación móvil Android para la tienda ecommerce de bicicletas "Tienda Full Bike". El frontend está desarrollado en Java para Android y consume una API REST implementada previamente en Django. El proyecto busca ofrecer una experiencia completa de compra de bicicletas, incluyendo un catálogo de productos, detalles de cada uno, y la posibilidad de realizar pedidos.
 
 El backend de la aplicación está desplegado utilizando Django y se conecta a una base de datos MySQL alojada en la nube.
 
@@ -36,7 +33,7 @@ Este proyecto es la evolución del desarrollo previo realizado en Angular y Djan
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/ISPC-23/Fullstack_Mobil_2024.git
+   git clone https://github.com/ISPC-23/Fullstack_Mobil_2025.git
    ```
 2. Importar el proyecto en Android Studio.
 3. Configurar la conexión a la API de Django en el archivo `config.properties`.
@@ -44,11 +41,11 @@ Este proyecto es la evolución del desarrollo previo realizado en Angular y Djan
 
 ### Backend 
 
-El backend sigue siendo el mismo desarrollado en Django. Para más detalles sobre su configuración y ejecución, consultar la [Documentación backend](https://github.com/ISPC-23/FullStack2024).
+El backend sigue siendo el mismo desarrollado en Django. Para más detalles sobre su configuración y ejecución, consultar la [Documentación backend](https://github.com/ISPC-23/Fullstack_Web_2025).
 
 ### 📃 Documentación:
 
-Toda la documentación del proyecto tal como el documento IEEE830, los diagramas (de clase, entidad-relación, etc), la documentación de las ceremonias, etc. Pueden encontrarse en la  [Wiki del repositorio](https://github.com/ISPC-23/Fullstack_Mobil_2024/wiki)
+Toda la documentación del proyecto tal como el documento IEEE830, los diagramas (de clase, entidad-relación, etc), la documentación de las ceremonias, etc. Pueden encontrarse en la  [Wiki del repositorio](https://github.com/ISPC-23/Fullstack_Mobil_2025/wiki)
 
 ## ❗ Puntos a tener en cuenta
 

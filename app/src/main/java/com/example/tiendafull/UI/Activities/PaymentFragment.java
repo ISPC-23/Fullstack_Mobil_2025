@@ -1,7 +1,9 @@
 package com.example.tiendafull.UI.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -9,6 +11,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.AlertDialog;
+
 import com.example.tiendafull.R;
 import com.example.tiendafull.UI.Adapter.CartAdapter;
 import com.example.tiendafull.UI.Models.Cart;
@@ -28,6 +32,11 @@ import com.example.tiendafull.UI.ViewModels.PurchaseViewModel;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 public class PaymentFragment extends Fragment {
     private PurchaseViewModel purchaseViewModel;
     private CartViewModel cartViewModel;
@@ -35,12 +44,16 @@ public class PaymentFragment extends Fragment {
     private CartAdapter cartAdapter;
     private TextView totalTextView;
     private Button confirmButton;
-    private RadioGroup radioGroup;
     private ArrayList<String> pagos = new ArrayList<>();
+    private Cart currentCart;
+    private RadioGroup radioGroup;
+    private boolean shouldGoToHome = false;
+
 
     public PaymentFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,27 +61,24 @@ public class PaymentFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_payment, container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pagos.add("Tarjeta de Débito");
-        pagos.add("Tarjeta de Crédito");
-
+        pagos.add("Pagar en Web / Sera redirigido a la pagina web para completar pago");
+        pagos.add("Pagar desde App, solo efectivo termina proceso");
         recyclerView = view.findViewById(R.id.recyclerViewPurchaseItems);
         totalTextView = view.findViewById(R.id.totalPurchaseAmount);
         confirmButton = view.findViewById(R.id.confirmPurchaseButton);
         radioGroup = view.findViewById(R.id.radioGroupPaymentMethods);
-
         for (String pagos : pagos) {
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setText(pagos);
             radioGroup.addView(radioButton);
-
-            if ("Tarjeta de Débito".equals(pagos)) {
+            if ("Pagar en Web / Sera redirigido a la pagina web para completar pago".equals(pagos)) {
                 radioButton.setChecked(true);
             }
         }
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         cartAdapter = new CartAdapter(new ArrayList<>(), getContext(), null, false);
         recyclerView.setAdapter(cartAdapter);
@@ -77,10 +87,10 @@ public class PaymentFragment extends Fragment {
         purchaseViewModel.setSessionManager(sessionManager);
         cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
-
         cartViewModel.getCartLiveData().observe(getViewLifecycleOwner(), new Observer<Cart>() {
             @Override
             public void onChanged(Cart cart) {
+                currentCart = cart;
                 if (cart != null) {
                     int total = cartViewModel.getCartTotal();
                     totalTextView.setText("Total: " + total);
@@ -89,27 +99,37 @@ public class PaymentFragment extends Fragment {
             }
         });
         cartViewModel.getCart();
-
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmButton.setEnabled(false);
-                purchaseViewModel.confirmPurchase();
-                cartViewModel.getCart();
+        confirmButton.setOnClickListener(view1 -> {
+            confirmButton.setEnabled(false);
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            RadioButton selectedRadioButton = view.findViewById(selectedId);
+            if (selectedRadioButton != null) {
+                String selectedMethod = selectedRadioButton.getText().toString();
+                if ("Pagar en Web / Sera redirigido a la pagina web para completar pago".equals(selectedMethod)) {
+                    String token = SessionManager.getInstance(getContext()).getAuthToken();
+                    String email = SessionManager.getInstance(getContext()).getEmail();
+                    Boolean isAdmin = SessionManager.getInstance(getContext()).isAdmin();
+                    String checkoutUrl = "https://tiendafullbike.netlify.app/token-login?token=" + token + "&email=" + email + "&isadmin=" + isAdmin;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(checkoutUrl));
+                    Log.d("CheckoutURL", checkoutUrl);
+                    shouldGoToHome = true;
+                    startActivity(browserIntent);
+                    confirmButton.setEnabled(true);
+                } else if ("Pagar desde App, solo efectivo termina proceso".equals(selectedMethod)) {
+                    confirmButton.setEnabled(false);
+                    purchaseViewModel.confirmPurchase();
+                    cartViewModel.getCart();
+                }
+            } else {
+                Toast.makeText(getContext(), "Seleccione un método de pago", Toast.LENGTH_SHORT).show();
+                confirmButton.setEnabled(true);
             }
         });
-
-
-
         purchaseViewModel.getPurchaseLiveData().observe(getViewLifecycleOwner(), new Observer<PurchaseConfirmResponse>() {
             @Override
             public void onChanged(PurchaseConfirmResponse purchaseConfirmResponse) {
                 confirmButton.setEnabled(true);
                 if (purchaseConfirmResponse != null) {
-                    // Limpia el carrito en SessionManager y actualiza el color del ícono
-
-
-
                     requireActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.frame3, new ResumeFragment())
                             .commit();
@@ -118,7 +138,6 @@ public class PaymentFragment extends Fragment {
                 }
             }
         });
-
         purchaseViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -127,4 +146,46 @@ public class PaymentFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (shouldGoToHome) {
+            shouldGoToHome = false;
+
+            cartViewModel.fetchCartDirectly(new Callback<Cart>() {
+                @Override
+                public void onResponse(Call<Cart> call, Response<Cart> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Cart cart = response.body();
+                        if (cart.getItems() == null || cart.getItems().isEmpty()) {
+                            // Carrito vacío → ir a pantalla de éxito
+                            requireActivity().runOnUiThread(() -> requireActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.frame3, new PaymentSuccessFragment())
+                                    .commit());
+                        } else {
+
+                            requireActivity().runOnUiThread(() -> requireActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.frame3, new PendingPaymentFragment())
+                                    .commit());
+                        }
+                    } else {
+                        requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Error al obtener carrito", Toast.LENGTH_SHORT).show());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Cart> call, Throwable t) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
+                }
+            });
+        }
+    }
+
 }
+
+
+
+

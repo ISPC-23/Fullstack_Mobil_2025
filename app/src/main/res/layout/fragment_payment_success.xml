@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/icon_success"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/success_icon"
+        android:contentDescription="@string/pago_aprobado"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/text_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pago_aprobado"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/button_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/volver_al_inicio"
+        android:backgroundTint="@color/blue_primary"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

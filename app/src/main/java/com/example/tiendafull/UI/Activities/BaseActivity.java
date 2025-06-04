@@ -3,6 +3,7 @@ package com.example.tiendafull.UI.Activities;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,21 +38,20 @@ public class BaseActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         Toolbar toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
-
         SessionManager sessionManager = SessionManager.getInstance(this);
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.setSessionManager(sessionManager);
         observeCartChanges();
         cartViewModel.getCart();
-
     }
+
     protected void setActivityContent(int layoutResID) {
         FrameLayout contentFrame = findViewById(R.id.frame_content);
         getLayoutInflater().inflate(layoutResID, contentFrame, true);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menudeopciones, menu);
@@ -76,24 +76,28 @@ public class BaseActivity extends AppCompatActivity {
             intent.putExtra("LOGOUT", true);
             startActivity(intent);
             return true;
+        } else if (item.getItemId() == R.id.web) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tiendafullbike.netlify.app/productos"));
+            startActivity(browserIntent);
+            return true;
         } else if (item.getItemId() == R.id.contacto) {
             Intent intent = new Intent(this, ContactActivity.class);
             intent.putExtra("CONTACTO", true);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.carrito) {
-        Intent intent = new Intent(this, CartActivity.class);
-        intent.putExtra("CONTACTO", true);
-        startActivity(intent);
-        return true;
-    }
+            Intent intent = new Intent(this, CartActivity.class);
+            intent.putExtra("CONTACTO", true);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         updateCartIconColor(hasProductsInCart);
         return super.onPrepareOptionsMenu(menu);
-
     }
 
     public void updateCartIconColor(Boolean hasProductsInCart) {
@@ -105,22 +109,18 @@ public class BaseActivity extends AppCompatActivity {
                     icon.setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
                 } else {
                     // Si el carrito está vacío, el ícono se muestra en negro
-                    icon.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
+                    icon.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
                 }
             }
         }
     }
+
     private void observeCartChanges() {
         cartViewModel.getCartLiveData().observe(this, cart -> {
             if (cart != null) {
                 hasProductsInCart = !cart.getItems().isEmpty();
                 invalidateOptionsMenu(); // Llama a onPrepareOptionsMenu para actualizar el icono de la Toolbar
-
             }
         });
     }
-
-
-
-
 }

@@ -23,21 +23,14 @@ import com.example.tiendafull.UI.ViewModels.CartViewModel;
 public class PurchaseActivity extends BaseActivity {
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setActivityContent(R.layout.activity_purchase);
         cartViewModel.getCart();
-
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.frame3, new PaymentFragment())
                 .commit();
     }
-
-
-
-
 }

@@ -8,6 +8,16 @@
     android:minHeight="20dp"
     tools:context="UI.Activities.ContactActivity">
 
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contacto"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivlogo"
@@ -50,12 +60,16 @@
         <EditText
             android:id="@+id/et_message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/tu_mensaje"
             android:inputType="textMultiLine"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:minLines="5"
+            android:maxLines="10"
+            android:scrollbars="vertical"
+            android:overScrollMode="always" />
 
         <Button
             android:id="@+id/buttonSend"
@@ -66,26 +80,55 @@
             android:padding="12dp"
             android:text="@string/enviar"
             android:contentDescription="@string/enviar" />
-
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="match_parent"
-            android:layout_height="279dp"
-            android:src="@drawable/mapas"
-            android:contentDescription="@string/mapas"
-            />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/titleTextView"
+    <!-- Botón de WhatsApp flotante -->
+    <ImageButton
+        android:id="@+id/imageButtonWhatsApp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="86dp"
+        android:background="@drawable/btn_whatsapp_background"
+        android:contentDescription="Contactar por WhatsApp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_whatsapp"
+        android:elevation="8dp"
+        app:tint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Dirección con ícono de ubicación -->
+    <LinearLayout
+        android:id="@+id/locationContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/contacto"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ExtraText">
+
+
+        <ImageView
+            android:id="@+id/ivMap"
+            android:layout_width="34dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_location"
+            android:contentDescription="Javier Lascano Colodrero 2908, X5008 Córdoba"
+            app:tint="@color/bordo" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Javier Lascano Colodrero 2908, Córdoba, Argentina"
+            android:textSize="14sp"
+            android:paddingEnd="8dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

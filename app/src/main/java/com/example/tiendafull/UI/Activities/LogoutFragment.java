@@ -28,7 +28,6 @@ public class LogoutFragment extends Fragment {
 
 
     public LogoutFragment() {
-
     }
 
     @Override
@@ -41,19 +40,16 @@ public class LogoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        textView=view.findViewById(R.id.tvframent2);
-        btnLogout=view.findViewById(R.id.confirmarlogout);
-        userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
+        textView = view.findViewById(R.id.tvframent2);
+        btnLogout = view.findViewById(R.id.confirmarlogout);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         userViewModel.setSessionManager(sessionManager);
-
         textView.setText(("Estas por cerrar tu sesión"));
-
         userViewModel.getLogoutLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean LoggedOut) {
-                if( LoggedOut){
-
+                if (LoggedOut) {
                     String username = sessionManager.getUsername(); // Obtener el nombre de usuario
                     Toast.makeText(getContext(), "Hasta la próxima ", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), AuthActivity.class);
@@ -62,15 +58,11 @@ public class LogoutFragment extends Fragment {
                 }
             }
         });
-
-
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userViewModel.logout();
-
             }
         });
-
     }
 }

@@ -23,5 +23,4 @@ public class ProductRepository {
     public Call<Products> getProductById(String id) {
         return productService.getProductById(id);
     }
-
 }

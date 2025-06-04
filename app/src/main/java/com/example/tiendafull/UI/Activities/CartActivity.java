@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -41,23 +42,17 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnProductC
     private Button checkoutButton;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActivityContent(R.layout.activity_cart);
-
-
         checkoutButton = findViewById(R.id.checkoutButton);
         rvCartItems = findViewById(R.id.recyclerViewCart);
         tvTotalPrice = findViewById(R.id.totalPriceTextView);
-
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
-
         cartAdapter = new CartAdapter(this.arrayList, this, this, true);
         rvCartItems.setAdapter(cartAdapter);
         cartViewModel.getCart();
-
         // Observador para manejar la expiración de sesión
         cartViewModel.getSessionExpiredLiveData().observe(this, new Observer<Boolean>() {
             @Override
@@ -79,7 +74,6 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnProductC
                 }
             }
         });
-
         // Observador para obtener el carrito
         cartViewModel.getCartLiveData().observe(this, new Observer<Cart>() {
             @Override
@@ -95,17 +89,14 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnProductC
                         updateTotalPrice(cart.getItems());
                         checkoutButton.setEnabled(true);
                     }
-
                 } else {
                     checkoutButton.setEnabled(false);
                 }
             }
         });
-
         cartViewModel.getErrorLiveData().observe(this, error -> {
             Log.i("MENSAJE", "onResponse:Error " + error);
         });
-
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,9 +105,6 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnProductC
             }
         });
     }
-
-
-
 
 
     private void updateTotalPrice(List<CartDetail> products) {
@@ -132,5 +120,4 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnProductC
         cartViewModel.removeProductFromCart(Integer.parseInt(productId));
         Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
     }
-
 }

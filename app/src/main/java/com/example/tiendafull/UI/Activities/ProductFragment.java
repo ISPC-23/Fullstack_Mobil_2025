@@ -31,7 +31,6 @@ public class ProductFragment extends Fragment implements AdapterProduct.OnProduc
     private ArrayList<Products> listaproducts = new ArrayList<>();
 
 
-
     public ProductFragment() {
         //
     }
@@ -43,27 +42,20 @@ public class ProductFragment extends Fragment implements AdapterProduct.OnProduc
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_product, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView=view.findViewById(R.id.rv2);
-
-
+        recyclerView = view.findViewById(R.id.rv2);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         SessionManager sessionManager = SessionManager.getInstance(getContext());
         productViewModel.setSessionManager(sessionManager);
-
         productAdapter = new AdapterProduct(this.listaproducts, getContext(), this);
         recyclerView.setAdapter(productAdapter);
-
         productViewModel.fetchAllProducts();
-
         productViewModel.getProductListLiveData().observe(getViewLifecycleOwner(), new Observer<List<Products>>() {
             @Override
             public void onChanged(List<Products> products) {
@@ -80,7 +72,6 @@ public class ProductFragment extends Fragment implements AdapterProduct.OnProduc
         Bundle args = new Bundle();
         args.putString("productId", productId);
         productDetailFragment.setArguments(args);
-
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame3, productDetailFragment)
                 .addToBackStack(null)

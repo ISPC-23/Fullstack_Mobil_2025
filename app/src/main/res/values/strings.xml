@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tienda Full</string>
+    <string name="app_name">Tienda Full Bike</string>
     <string name="logo_description">Logo Tienda Full</string>
     <string name="correo_electronico">Correo electrónico</string>
     <string name="contrasenia">Contraseña</string>
@@ -39,10 +39,14 @@
     <string name="descripcion_breve_bicicleta">Descripción breve de la bicicleta</string>
     <string name="modelo_bicicleta">Modelo de la Bicicleta</string>
     <string name="precio_00.00">Precio: $00.00</string>
-
-
+    <string name="pago_aprobado">Pago Aprobado</string>
+    <string name="volver_inicio">Volver al inicio</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="volver_al_inicio">Volver al inicio</string>
+    <string name="pago_rechazado">Pago Rechazado</string>
+    <string name="pago_pendiente">Pago Pendiente</string>
+    <string name="icono_de_pago_pendiente">Icono de pago pendiente</string>
 </resources>

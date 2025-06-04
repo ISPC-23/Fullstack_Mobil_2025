@@ -8,6 +8,7 @@ public class SessionManager {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private static final String PREF_NAME = "session_pref";
+    private static final String EMAIL = "email";
     private static final String AUTH_TOKEN = "auth_token";
     private static final String USERNAME = "username";
     private static final String IS_ADMIN = "is_admin";
@@ -36,7 +37,6 @@ public class SessionManager {
         return lastPurchase;
     }
 
-    // Guardar el token de autenticación
     public void saveAuthToken(String token) {
         long expirationTime = System.currentTimeMillis() + TOKEN_LIFETIME;
         editor.putLong(TOKEN_EXPIRATION_TIME, expirationTime);
@@ -44,7 +44,6 @@ public class SessionManager {
         editor.apply();
     }
 
-    // Obtener el token de autenticación
     public String getAuthToken() {
         long expirationTime = sharedPreferences.getLong(TOKEN_EXPIRATION_TIME, 0);
         if (System.currentTimeMillis() > expirationTime) {
@@ -60,13 +59,11 @@ public class SessionManager {
         return (currentTime - expirationTime) >= TOKEN_LIFETIME;
     }
 
-    // Limpiar el token de autenticación
     public void clearSession() {
-        editor.clear(); // Limpiar todas las preferencias
+        editor.clear();
         editor.apply();
     }
 
-    // Guardar el estado de isAdmin
     public void setIsAdmin(boolean isAdmin) {
         editor.putBoolean(IS_ADMIN, isAdmin);
         editor.apply();
@@ -75,6 +72,15 @@ public class SessionManager {
     public void setUsername(String username) {
         editor.putString(USERNAME, username);
         editor.apply();
+    }
+
+    public void setEmail(String email) {
+        editor.putString(EMAIL, email);
+        editor.apply();
+    }
+
+    public String getEmail() {
+        return sharedPreferences.getString(EMAIL, null);
     }
 
     public String getUsername() {

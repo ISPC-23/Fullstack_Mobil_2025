@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CartDetail {
 
-    private int  id;
+    private int id;
     private int cantidad;
 
     private Products producto;
@@ -12,7 +12,6 @@ public class CartDetail {
     public CartDetail(int id, int cantidad, Products producto) {
         this.id = id;
         this.cantidad = cantidad;
-
         this.producto = producto;
     }
 
